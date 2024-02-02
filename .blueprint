@@ -1,0 +1,27 @@
+created:
+    - database/factories/HeadingFactory.php
+    - database/factories/TopicFactory.php
+    - database/factories/TroveFactory.php
+    - database/factories/ItemFactory.php
+    - database/factories/SubTopicFactory.php
+    - database/factories/AimFactory.php
+    - database/migrations/2024_02_02_152408_create_headings_table.php
+    - database/migrations/2024_02_02_152409_create_topics_table.php
+    - database/migrations/2024_02_02_152410_create_troves_table.php
+    - database/migrations/2024_02_02_152411_create_items_table.php
+    - database/migrations/2024_02_02_152412_create_sub_topics_table.php
+    - database/migrations/2024_02_02_152413_create_aims_table.php
+    - database/migrations/2024_02_02_152414_create_aimables_table.php
+    - app/Models/Heading.php
+    - app/Models/Topic.php
+    - app/Models/Trove.php
+    - app/Models/Item.php
+    - app/Models/SubTopic.php
+    - app/Models/Aim.php
+models:
+    Heading: { label: 'string:400', description: longtext, relationships: { hasMany: Topic } }
+    Topic: { label: 'string:400', description: longtext, heading_id: 'foreign:headings', relationships: { hasMany: 'Item, SubTopic' } }
+    Trove: { label: 'string:400', relationships: { hasMany: Item } }
+    Item: { topic_id: 'foreign:topics', trove_id: 'foreign:troves', description: longtext }
+    SubTopic: { topic_id: 'foreign:topics', label: 'string:400', description: longtext, relationships: { hasMany: Aim } }
+    Aim: { label: 'string:400', description: longtext, relationships: { morphedByMany: Item } }

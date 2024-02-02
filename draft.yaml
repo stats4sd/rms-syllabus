@@ -1,0 +1,37 @@
+models:
+
+  Heading:
+    label: string:400
+    description: longtext
+    relationships:
+      hasMany: Topic
+
+  Topic:
+    label: string:400
+    description: longtext
+    heading_id: foreign:headings
+    relationships:
+      hasMany: Item, SubTopic
+
+  Trove:
+    label: string:400
+    relationships:
+      hasMany: Item
+
+  Item:
+    topic_id: foreign:topics
+    trove_id: foreign:troves
+    description: longtext
+      
+  SubTopic:
+    topic_id: foreign:topics
+    label: string:400
+    description: longtext
+    relationships:
+      hasMany: Aim
+
+  Aim:
+    label: string:400
+    description: longtext
+    relationships:
+      morphedByMany: Item
