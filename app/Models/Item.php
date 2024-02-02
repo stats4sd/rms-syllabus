@@ -2,34 +2,30 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Item extends Model
 {
     use HasFactory;
+    use HasTranslations;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'topic_id',
         'trove_id',
         'description',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
         'topic_id' => 'integer',
         'trove_id' => 'integer',
+    ];
+
+    public $translatable = [
+        'description',
     ];
 
     public function topic(): BelongsTo

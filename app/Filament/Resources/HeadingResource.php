@@ -2,19 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HeadingResource\Pages;
-use App\Filament\Resources\HeadingResource\RelationManagers;
-use App\Models\Heading;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Heading;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Concerns\Translatable;
+use App\Filament\Resources\HeadingResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\HeadingResource\RelationManagers;
 
 class HeadingResource extends Resource
 {
+    use Translatable;
+    
     protected static ?string $model = Heading::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

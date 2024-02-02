@@ -2,19 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TopicResource\Pages;
-use App\Filament\Resources\TopicResource\RelationManagers;
-use App\Models\Topic;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Topic;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Concerns\Translatable;
+use App\Filament\Resources\TopicResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\TopicResource\RelationManagers;
 
 class TopicResource extends Resource
 {
+    use Translatable;
+    
     protected static ?string $model = Topic::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

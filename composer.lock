@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46229fd720f94dfda4d4b3423cc3f5ef",
+    "content-hash": "882b933632643be372b0c0aefde68b99",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -71,460 +71,6 @@
                 "source": "https://github.com/AnourValar/eloquent-serialize/tree/1.2.17"
             },
             "time": "2023-12-06T15:54:01+00:00"
-        },
-        {
-            "name": "backpack/basset",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/basset.git",
-                "reference": "4858f63d4036d3054a4d578aabbff77516aad334"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/basset/zipball/4858f63d4036d3054a4d578aabbff77516aad334",
-                "reference": "4858f63d4036d3054a4d578aabbff77516aad334",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.5",
-                "laravel/framework": "^10.15"
-            },
-            "require-dev": {
-                "nunomaduro/collision": "^6.0|^7.2",
-                "orchestra/testbench": "^7.22|^8.5",
-                "pestphp/pest": "^1.22|^2.5",
-                "pestphp/pest-plugin-laravel": "^1.4|^2.0",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "~9.0|~10.0"
-            },
-            "suggest": {
-                "ext-zip": "Required to use @bassetArchive with .zip archives."
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Backpack\\Basset\\BassetServiceProvider"
-                    ],
-                    "aliases": {
-                        "Basset": "Backpack\\Basset\\Facades\\Basset"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\Basset\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "hello@tabacitu.ro",
-                    "homepage": "https://tabacitu.ro"
-                }
-            ],
-            "description": "Dead-simple way to load CSS or JS assets only once per page, when using Laravel 10+.",
-            "homepage": "https://github.com/laravel-backpack/basset",
-            "keywords": [
-                "Load CSS once",
-                "Load JS once",
-                "assets",
-                "basset",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/basset/issues",
-                "source": "https://github.com/Laravel-Backpack/basset/tree/1.1.1"
-            },
-            "time": "2023-08-02T17:41:54+00:00"
-        },
-        {
-            "name": "backpack/crud",
-            "version": "6.1.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/CRUD.git",
-                "reference": "c39ccb8074e15b075b8f2e09275d5514196955f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/c39ccb8074e15b075b8f2e09275d5514196955f0",
-                "reference": "c39ccb8074e15b075b8f2e09275d5514196955f0",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/basset": "^1.1.1",
-                "creativeorange/gravatar": "~1.0",
-                "doctrine/dbal": "^3.0",
-                "guzzlehttp/guzzle": "^7.0",
-                "laravel/framework": "^10.0",
-                "prologue/alerts": "^1.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^8.0",
-                "phpunit/phpunit": "~10.0|~9.0",
-                "scrutinizer/ocular": "~1.7",
-                "spatie/laravel-translatable": "^6.0"
-            },
-            "suggest": {
-                "backpack/filemanager": "Required to use the browse and browse_multiple fields.",
-                "backpack/generators": "Required on localhost to easily generate CRUDs, models, controllers etc.",
-                "backpack/revise-operation": "Optional operation to remember all entry changes, undo and redo them (aka audit trait)."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\CRUD\\BackpackServiceProvider"
-                    ],
-                    "aliases": {
-                        "CRUD": "Backpack\\CRUD\\app\\Library\\CrudPanel\\CrudPanelFacade",
-                        "Widget": "Backpack\\CRUD\\app\\Library\\Widget"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\CRUD\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "cristian.tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Creator & Maintainer"
-                }
-            ],
-            "description": "Quickly build admin interfaces using Laravel, Bootstrap and JavaScript.",
-            "homepage": "https://github.com/laravel-backpack/CRUD",
-            "keywords": [
-                "Admin Interface",
-                "Content management system",
-                "admin panel",
-                "admin panel for laravel",
-                "admin template for laravel",
-                "backpack",
-                "base",
-                "bootstrap 5 admin panel laravel",
-                "bread",
-                "cms",
-                "content management framework",
-                "coreui for laravel",
-                "create",
-                "crud",
-                "dashboard for laravel",
-                "delete",
-                "laravel admin",
-                "read",
-                "tabler for laravel",
-                "update"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/CRUD/issues",
-                "source": "https://github.com/Laravel-Backpack/CRUD/tree/6.1.9"
-            },
-            "time": "2023-08-17T10:28:33+00:00"
-        },
-        {
-            "name": "backpack/editable-columns",
-            "version": "3.0.2",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:Laravel-Backpack/editable-columns.git",
-                "reference": "a7a72fb8205102ad094c84cc32114287defbdce2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.backpackforlaravel.com/dist/backpack/editable-columns/backpack-editable-columns-a7a72fb8205102ad094c84cc32114287defbdce2-zip-fc5e3c.zip",
-                "reference": "a7a72fb8205102ad094c84cc32114287defbdce2",
-                "shasum": "3b90e9b9bf302d02b0825f299076852cabbe1980"
-            },
-            "require": {
-                "backpack/crud": "^6.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "~5|~6",
-                "phpunit/phpunit": "~9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Backpack\\EditableColumns\\AddonServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\EditableColumns\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\EditableColumns\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit --testdox"
-                ]
-            },
-            "license": [
-                "EULA"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "cristian.tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com"
-                }
-            ],
-            "description": "Add input columns to your tables, to let your admins edit values right then and there.",
-            "homepage": "https://github.com/backpack/editable-columns",
-            "keywords": [
-                "Backpack",
-                "Backpack Addon",
-                "Backpack for Laravel",
-                "EditableColumns",
-                "Laravel"
-            ],
-            "support": {
-                "source": "https://github.com/Laravel-Backpack/editable-columns/tree/3.0.2",
-                "issues": "https://github.com/Laravel-Backpack/editable-columns/issues"
-            },
-            "time": "2023-07-24T10:41:36+00:00"
-        },
-        {
-            "name": "backpack/permissionmanager",
-            "version": "7.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/PermissionManager.git",
-                "reference": "2831a3e4e4e694de94dd3695da2e3d209bcbcd69"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/PermissionManager/zipball/2831a3e4e4e694de94dd3695da2e3d209bcbcd69",
-                "reference": "2831a3e4e4e694de94dd3695da2e3d209bcbcd69",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "^6.0",
-                "spatie/laravel-permission": "^5.0||^4.0||^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0||^7.0",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\PermissionManager\\PermissionManagerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\PermissionManager\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Marius Constantin",
-                    "email": "marius@updivision.com",
-                    "homepage": "http://www.updivision.com",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Chief Architect"
-                }
-            ],
-            "description": "Users and permissions management interface for Laravel 5 using Backpack CRUD.",
-            "homepage": "https://github.com/laravel-backpack/permissionmanager",
-            "keywords": [
-                "backpack",
-                "backpack permission",
-                "backpack roles",
-                "backpack user management",
-                "laravel backpack",
-                "manage permission",
-                "manage roles",
-                "manage users",
-                "tabacitu",
-                "updivision",
-                "users roles admin"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/PermissionManager/issues",
-                "source": "https://github.com/Laravel-Backpack/PermissionManager/tree/7.0.0"
-            },
-            "time": "2023-07-01T06:01:45+00:00"
-        },
-        {
-            "name": "backpack/pro",
-            "version": "2.0.11",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:Laravel-Backpack/PRO.git",
-                "reference": "45696fb2ec6d08e3f1f1d61ef3a724d482b249b8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.backpackforlaravel.com/dist/backpack/pro/backpack-pro-45696fb2ec6d08e3f1f1d61ef3a724d482b249b8-zip-72828c.zip",
-                "reference": "45696fb2ec6d08e3f1f1d61ef3a724d482b249b8",
-                "shasum": "afef1a7b31772c4169db3b1921017616cf9c9be5"
-            },
-            "require": {
-                "backpack/crud": "^6.0.1"
-            },
-            "require-dev": {
-                "orchestra/testbench": "~5|~6",
-                "phpunit/phpunit": "~9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Backpack\\Pro\\AddonServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\Pro\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Backpack\\Pro\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit --testdox"
-                ]
-            },
-            "license": [
-                "Proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "cristian.tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com"
-                }
-            ],
-            "description": "Operations, Fields, Columns, Filters and Widgets for not-so-simple admin panels.",
-            "homepage": "https://github.com/digitallyhappy/backpack-pro",
-            "keywords": [
-                "Backpack",
-                "Backpack Addon",
-                "Backpack for Laravel",
-                "Laravel",
-                "Pro"
-            ],
-            "support": {
-                "source": "https://github.com/Laravel-Backpack/PRO/tree/2.0.11",
-                "issues": "https://github.com/Laravel-Backpack/PRO/issues"
-            },
-            "time": "2023-08-11T11:47:48+00:00"
-        },
-        {
-            "name": "backpack/theme-tabler",
-            "version": "1.0.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/theme-tabler.git",
-                "reference": "fad0d3cbe045178e8e52fb2ac635f1c5e69c48ea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/theme-tabler/zipball/fad0d3cbe045178e8e52fb2ac635f1c5e69c48ea",
-                "reference": "fad0d3cbe045178e8e52fb2ac635f1c5e69c48ea",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "^6.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "~5|~6",
-                "phpunit/phpunit": "~9.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "1.0.x-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\ThemeTabler\\AddonServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\ThemeTabler\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mauro Martinez",
-                    "email": "maurohmartinez@gmail.com",
-                    "homepage": "https://backpackforlaravel.com"
-                },
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "hello@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com"
-                },
-                {
-                    "name": "Antonio Almeida",
-                    "email": "promatik@gmail.com",
-                    "homepage": "https://backpackforlaravel.com"
-                }
-            ],
-            "description": "UI for Backpack v6 that uses Tabler and Bootstrap v5.",
-            "homepage": "https://github.com/backpack/theme-tabler",
-            "keywords": [
-                "Backpack Addon",
-                "Backpack for Laravel",
-                "ThemeTabler",
-                "backpack",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/theme-tabler/issues",
-                "source": "https://github.com/Laravel-Backpack/theme-tabler/tree/1.0.11"
-            },
-            "time": "2023-08-15T13:12:54+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -799,69 +345,6 @@
                 }
             ],
             "time": "2023-12-11T17:09:12+00:00"
-        },
-        {
-            "name": "creativeorange/gravatar",
-            "version": "v1.0.23",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/creativeorange/gravatar.git",
-                "reference": "3a1b227c48091b039b967265ec13c0800c70ac79"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/creativeorange/gravatar/zipball/3a1b227c48091b039b967265ec13c0800c70ac79",
-                "reference": "3a1b227c48091b039b967265ec13c0800c70ac79",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^5|^6|^7|^8|^9|^10.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "nunomaduro/larastan": "^0.6.2|^2.4",
-                "orchestra/testbench": "^5.4|^8.0",
-                "php": ">=7.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Creativeorange\\Gravatar\\GravatarServiceProvider"
-                    ],
-                    "aliases": {
-                        "Gravatar": "Creativeorange\\Gravatar\\Facades\\Gravatar"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Creativeorange\\Gravatar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jaco Tijssen",
-                    "email": "jaco@creativeorange.nl",
-                    "homepage": "https://www.creativeorange.nl",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel Gravatar package for retrieving gravatar image URLs or checking the existance of an image.",
-            "keywords": [
-                "avatar",
-                "gravatar",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/creativeorange/gravatar/issues",
-                "source": "https://github.com/creativeorange/gravatar/tree/v1.0.23"
-            },
-            "time": "2023-02-06T07:57:20+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -1959,6 +1442,51 @@
                 "source": "https://github.com/filamentphp/filament"
             },
             "time": "2024-01-15T12:25:21+00:00"
+        },
+        {
+            "name": "filament/spatie-laravel-translatable-plugin",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filamentphp/spatie-laravel-translatable-plugin.git",
+                "reference": "cb2f42bda7ca3e0667e581048ec4642fc01b776f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filamentphp/spatie-laravel-translatable-plugin/zipball/cb2f42bda7ca3e0667e581048ec4642fc01b776f",
+                "reference": "cb2f42bda7ca3e0667e581048ec4642fc01b776f",
+                "shasum": ""
+            },
+            "require": {
+                "filament/support": "self.version",
+                "illuminate/support": "^10.0",
+                "php": "^8.1",
+                "spatie/laravel-translatable": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Filament\\SpatieLaravelTranslatablePluginServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Filament\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Filament support for `spatie/laravel-translatable`.",
+            "homepage": "https://github.com/filamentphp/filament",
+            "support": {
+                "issues": "https://github.com/filamentphp/filament/issues",
+                "source": "https://github.com/filamentphp/filament"
+            },
+            "time": "2024-01-15T12:25:13+00:00"
         },
         {
             "name": "filament/support",
@@ -4641,75 +4169,6 @@
             "time": "2023-11-12T21:59:55+00:00"
         },
         {
-            "name": "prologue/alerts",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/prologuephp/alerts.git",
-                "reference": "33e86d1f64dae7a8d6e29e7d6c282abc77a89b97"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/prologuephp/alerts/zipball/33e86d1f64dae7a8d6e29e7d6c282abc77a89b97",
-                "reference": "33e86d1f64dae7a8d6e29e7d6c282abc77a89b97",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "~9|^10",
-                "illuminate/session": "~9|^10",
-                "illuminate/support": "~9|^10"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^9"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Prologue\\Alerts\\AlertsServiceProvider"
-                    ],
-                    "aliases": {
-                        "Alert": "Prologue\\Alerts\\Facades\\Alert"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Prologue\\Alerts\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dries Vints",
-                    "email": "dries.vints@gmail.com",
-                    "homepage": "http://driesvints.com",
-                    "role": "Creator"
-                },
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "hello@tabacitu.ro",
-                    "homepage": "http://tabacitu.ro",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Prologue Alerts is a package that handles global site messages.",
-            "keywords": [
-                "alerts",
-                "laravel",
-                "messages"
-            ],
-            "support": {
-                "issues": "https://github.com/prologuephp/alerts/issues",
-                "source": "https://github.com/prologuephp/alerts/tree/1.1.0"
-            },
-            "time": "2023-02-01T06:54:14+00:00"
-        },
-        {
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -6035,49 +5494,44 @@
             "time": "2024-01-11T08:43:00+00:00"
         },
         {
-            "name": "spatie/laravel-permission",
-            "version": "5.10.2",
+            "name": "spatie/laravel-translatable",
+            "version": "6.5.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "671e46e079cbd4990a98427daaa09f4977b57ca9"
+                "url": "https://github.com/spatie/laravel-translatable.git",
+                "reference": "d6dc7c9fe3c678ce50b2d6a4a7434fcbcfc3df4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/671e46e079cbd4990a98427daaa09f4977b57ca9",
-                "reference": "671e46e079cbd4990a98427daaa09f4977b57ca9",
+                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/d6dc7c9fe3c678ce50b2d6a4a7434fcbcfc3df4c",
+                "reference": "d6dc7c9fe3c678ce50b2d6a4a7434fcbcfc3df4c",
                 "shasum": ""
             },
             "require": {
-                "illuminate/auth": "^7.0|^8.0|^9.0|^10.0",
-                "illuminate/container": "^7.0|^8.0|^9.0|^10.0",
-                "illuminate/contracts": "^7.0|^8.0|^9.0|^10.0",
-                "illuminate/database": "^7.0|^8.0|^9.0|^10.0",
-                "php": "^7.3|^8.0"
+                "illuminate/database": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.11"
             },
             "require-dev": {
-                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
-                "phpunit/phpunit": "^9.4",
-                "predis/predis": "^1.1"
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^7.0|^8.0",
+                "pestphp/pest": "^1.20"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "5.x-dev",
-                    "dev-master": "5.x-dev"
-                },
                 "laravel": {
                     "providers": [
-                        "Spatie\\Permission\\PermissionServiceProvider"
+                        "Spatie\\Translatable\\TranslatableServiceProvider"
                     ]
+                },
+                "aliases": {
+                    "Translatable": "Spatie\\Translatable\\Facades\\Translatable"
                 }
             },
             "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
                 "psr-4": {
-                    "Spatie\\Permission\\": "src"
+                    "Spatie\\Translatable\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -6090,23 +5544,28 @@
                     "email": "freek@spatie.be",
                     "homepage": "https://spatie.be",
                     "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 }
             ],
-            "description": "Permission handling for Laravel 6.0 and up",
-            "homepage": "https://github.com/spatie/laravel-permission",
+            "description": "A trait to make an Eloquent model hold translations",
+            "homepage": "https://github.com/spatie/laravel-translatable",
             "keywords": [
-                "acl",
-                "laravel",
-                "permission",
-                "permissions",
-                "rbac",
-                "roles",
-                "security",
-                "spatie"
+                "eloquent",
+                "i8n",
+                "laravel-translatable",
+                "model",
+                "multilingual",
+                "spatie",
+                "translate"
             ],
             "support": {
-                "issues": "https://github.com/spatie/laravel-permission/issues",
-                "source": "https://github.com/spatie/laravel-permission/tree/5.10.2"
+                "issues": "https://github.com/spatie/laravel-translatable/issues",
+                "source": "https://github.com/spatie/laravel-translatable/tree/6.5.5"
             },
             "funding": [
                 {
@@ -6114,7 +5573,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-04T13:38:13+00:00"
+            "time": "2023-12-06T10:56:22+00:00"
         },
         {
             "name": "symfony/console",
@@ -8713,76 +8172,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "backpack/generators",
-            "version": "v4.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravel-Backpack/Generators.git",
-                "reference": "e5314899f3b449c3f23dff06f2569371b0de35df"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/Generators/zipball/e5314899f3b449c3f23dff06f2569371b0de35df",
-                "reference": "e5314899f3b449c3f23dff06f2569371b0de35df",
-                "shasum": ""
-            },
-            "require": {
-                "backpack/crud": "^6.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.0||^7.0",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Backpack\\Generators\\GeneratorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Backpack\\Generators\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Cristian Tabacitu",
-                    "email": "tabacitu@backpackforlaravel.com",
-                    "homepage": "https://backpackforlaravel.com",
-                    "role": "Lead Developer & Maintainer"
-                },
-                {
-                    "name": "Cristian Tone",
-                    "email": "cristitone@outlook.com",
-                    "homepage": "http://updivision.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Generate files for laravel projects",
-            "homepage": "https://github.com/laravel-backpack/generators",
-            "keywords": [
-                "config",
-                "generators",
-                "model",
-                "request",
-                "view"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravel-Backpack/Generators/issues",
-                "source": "https://github.com/Laravel-Backpack/Generators/tree/v4.0.2"
-            },
-            "time": "2023-07-24T10:35:15+00:00"
-        },
         {
             "name": "fakerphp/faker",
             "version": "v1.23.0",

@@ -2,19 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AimResource\Pages;
-use App\Filament\Resources\AimResource\RelationManagers;
 use App\Models\Aim;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\AimResource\Pages;
+use Filament\Resources\Concerns\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\AimResource\RelationManagers;
 
 class AimResource extends Resource
 {
+    use Translatable;
+    
     protected static ?string $model = Aim::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

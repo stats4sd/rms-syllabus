@@ -14,6 +14,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
 use App\Filament\Resources\HeadingResource;
 use App\Filament\Resources\SubTopicResource;
+use Filament\SpatieLaravelTranslatablePlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -69,6 +70,10 @@ class AdminPanelProvider extends PanelProvider
                     ...SubTopicResource::getNavigationItems(),
                     ...AimResource::getNavigationItems(),
                 ]);
-            });
+            })
+            ->plugin(
+                SpatieLaravelTranslatablePlugin::make()
+                    ->defaultLocales(['en', 'es', 'fr'])
+                );
     }
 }
