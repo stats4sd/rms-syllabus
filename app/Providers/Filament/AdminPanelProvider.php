@@ -7,17 +7,20 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use App\Filament\Resources\AimResource;
-use App\Filament\Resources\ItemResource;
-use App\Filament\Resources\TopicResource;
+use App\Filament\Clusters\Competencies;
+use Filament\Navigation\NavigationGroup;
+use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
-use App\Filament\Resources\HeadingResource;
-use App\Filament\Resources\SubTopicResource;
+use App\Filament\Resources\SectionResource;
+use App\Filament\Resources\ActivityResource;
 use Filament\SpatieLaravelTranslatablePlugin;
+use App\Filament\Resources\CompetencyResource;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use App\Filament\Resources\ResearchComponentResource;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use App\Filament\Resources\CompetencyCategoryResource;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -39,6 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
                 Pages\Dashboard::class,
             ])
@@ -63,12 +67,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder
-                ->items([
-                    ...HeadingResource::getNavigationItems(),
-                    ...TopicResource::getNavigationItems(),
-                    ...ItemResource::getNavigationItems(),
-                    ...SubTopicResource::getNavigationItems(),
-                    ...AimResource::getNavigationItems(),
+                ->groups([
+                    NavigationGroup::make('Syllabus')
+                        ->items([
+                            ...ResearchComponentResource::getNavigationItems(),
+                            ...ModuleResource::getNavigationItems(),
+                            ...SectionResource::getNavigationItems(),
+                            ...ActivityResource::getNavigationItems(),
+                        ]),
+                    NavigationGroup::make('')
+                        ->items([
+                            ...Competencies::getNavigationItems(),
+                        ]),
                 ]);
             })
             ->plugin(

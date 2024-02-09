@@ -1,27 +1,32 @@
 created:
-    - database/factories/HeadingFactory.php
-    - database/factories/TopicFactory.php
+    - database/factories/CompetencyCategoryFactory.php
+    - database/factories/CompetencyFactory.php
+    - database/factories/ResearchComponentFactory.php
+    - database/factories/ModuleFactory.php
+    - database/factories/SectionFactory.php
     - database/factories/TroveFactory.php
-    - database/factories/ItemFactory.php
-    - database/factories/SubTopicFactory.php
-    - database/factories/AimFactory.php
-    - database/migrations/2024_02_02_152408_create_headings_table.php
-    - database/migrations/2024_02_02_152409_create_topics_table.php
-    - database/migrations/2024_02_02_152410_create_troves_table.php
-    - database/migrations/2024_02_02_152411_create_items_table.php
-    - database/migrations/2024_02_02_152412_create_sub_topics_table.php
-    - database/migrations/2024_02_02_152413_create_aims_table.php
-    - database/migrations/2024_02_02_152414_create_aimables_table.php
-    - app/Models/Heading.php
-    - app/Models/Topic.php
+    - database/factories/ActivityFactory.php
+    - database/migrations/2024_02_07_191201_create_competency_categories_table.php
+    - database/migrations/2024_02_07_191202_create_competencies_table.php
+    - database/migrations/2024_02_07_191203_create_research_components_table.php
+    - database/migrations/2024_02_07_191204_create_modules_table.php
+    - database/migrations/2024_02_07_191205_create_sections_table.php
+    - database/migrations/2024_02_07_191206_create_troves_table.php
+    - database/migrations/2024_02_07_191207_create_activities_table.php
+    - database/migrations/2024_02_07_191208_create_competencyables_table.php
+    - app/Models/CompetencyCategory.php
+    - app/Models/Competency.php
+    - app/Models/ResearchComponent.php
+    - app/Models/Module.php
+    - app/Models/Section.php
     - app/Models/Trove.php
-    - app/Models/Item.php
-    - app/Models/SubTopic.php
-    - app/Models/Aim.php
+    - app/Models/Activity.php
 models:
-    Heading: { label: 'string:400', description: longtext, relationships: { hasMany: Topic } }
-    Topic: { label: 'string:400', description: longtext, heading_id: 'foreign:headings', relationships: { hasMany: 'Item, SubTopic' } }
-    Trove: { label: 'string:400', relationships: { hasMany: Item } }
-    Item: { topic_id: 'foreign:topics', trove_id: 'foreign:troves', description: longtext }
-    SubTopic: { topic_id: 'foreign:topics', label: 'string:400', description: longtext, relationships: { hasMany: Aim } }
-    Aim: { label: 'string:400', description: longtext, relationships: { morphedByMany: Item } }
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }
+    CompetencyCategory: { name: 'string:400', description: longtext, relationships: { hasMany: Competency } }
+    Competency: { name: 'string:400', description: longtext, competency_category_id: 'foreign:competencies', relationships: { hasMany: 'Item, SubTopic', morphedByMany: Module } }
+    ResearchComponent: { name: 'string:400', description: longtext, relationships: { hasMany: Module } }
+    Module: { name: 'string:400', description: longtext, research_component_id: 'foreign:research_components', relationships: { hasMany: 'Section, Competency' } }
+    Section: { name: 'string:400', description: longtext, module_id: 'foreign:modules', relationships: { hasMany: Activity } }
+    Trove: { name: 'string:400', relationships: { hasMany: Activity } }
+    Activity: { name: 'string:400', description: longtext, section_id: 'foreign:sections', trove_id: 'foreign:troves' }

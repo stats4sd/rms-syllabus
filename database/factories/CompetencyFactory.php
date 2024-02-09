@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Trove;
+use App\Models\Competency;
 
-class TroveFactory extends Factory
+class CompetencyFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Trove::class;
+    protected $model = Competency::class;
 
     /**
      * Define the model's default state.
@@ -22,6 +22,7 @@ class TroveFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'description' => $this->faker->text(),
         ];
     }
 }

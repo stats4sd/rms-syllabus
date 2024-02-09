@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
+
+class Section extends Model
+{
+    use HasFactory;
+    use HasTranslations;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'module_id',
+    ];
+
+    protected $casts = [
+        'id' => 'integer',
+        'module_id' => 'integer',
+    ];
+
+    public $translatable = [
+        'name',
+        'description',
+    ];
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function module(): BelongsTo
+    {
+        return $this->belongsTo(Module::class);
+    }
+}

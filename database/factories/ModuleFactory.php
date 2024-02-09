@@ -4,16 +4,17 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Trove;
+use App\Models\Module;
+use App\Models\ResearchComponent;
 
-class TroveFactory extends Factory
+class ModuleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Trove::class;
+    protected $model = Module::class;
 
     /**
      * Define the model's default state.
@@ -22,6 +23,8 @@ class TroveFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'description' => $this->faker->text(),
+            'research_component_id' => ResearchComponent::factory(),
         ];
     }
 }

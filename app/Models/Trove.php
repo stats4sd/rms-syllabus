@@ -5,31 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class Trove extends Model
 {
     use HasFactory;
+    use HasTranslations;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'label',
-    ];
+    protected $table = 'troves';
+    protected $connection = 'trove_mysql';
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-    ];
-
-    public function items(): HasMany
+    public function __construct(array $attributes = [])
     {
-        return $this->hasMany(Item::class);
+        $this->table = config('database.connections.trove_mysql.database') . '.' . $this->table;
+        parent::__construct($attributes);
+    }
+
+    protected $translatable = [
+        'title',
+    ];
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
     }
 }

@@ -1,37 +1,45 @@
 models:
 
-  Heading:
-    label: string:400
+  CompetencyCategory:
+    name: string:400
     description: longtext
     relationships:
-      hasMany: Topic
+      hasMany: Competency
 
-  Topic:
-    label: string:400
+  Competency:
+    name: string:400
     description: longtext
-    heading_id: foreign:headings
+    competency_category_id: foreign:competencies
     relationships:
-      hasMany: Item, SubTopic
+      morphedByMany: Module
+
+  ResearchComponent:
+    name: string:400
+    description: longtext
+    relationships:
+      hasMany: Module
+
+  Module:
+    name: string:400
+    description: longtext
+    research_component_id: foreign:research_components
+    relationships:
+      hasMany: Section, Competency
+
+  Section:
+    name: string:400
+    description: longtext
+    module_id: foreign:modules
+    relationships:
+      hasMany: Activity
 
   Trove:
-    label: string:400
+    name: string:400
     relationships:
-      hasMany: Item
-
-  Item:
-    topic_id: foreign:topics
+      hasMany: Activity
+  
+  Activity:
+    name: string:400
+    description: longtext
+    section_id: foreign:sections
     trove_id: foreign:troves
-    description: longtext
-      
-  SubTopic:
-    topic_id: foreign:topics
-    label: string:400
-    description: longtext
-    relationships:
-      hasMany: Aim
-
-  Aim:
-    label: string:400
-    description: longtext
-    relationships:
-      morphedByMany: Item
