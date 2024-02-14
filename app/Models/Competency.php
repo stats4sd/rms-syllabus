@@ -35,6 +35,6 @@ class Competency extends Model
 
     public function competencyCategories(): BelongsToMany
     {
-        return $this->belongsToMany(competencyCategory::class, 'competency_category_competency');
+        return $this->belongsToMany(CompetencyCategory::class, 'competency_category_competency');
     }
 }
