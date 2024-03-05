@@ -47,16 +47,19 @@ class ModuleResource extends Resource
                             ->columns(3)
                             ->schema([
                                 Forms\Components\TextInput::make('name')->hiddenOn(['edit', 'create']),
-                                Forms\Components\TextInput::make('name_en')
+                                Forms\Components\Textarea::make('name_en')
                                                 ->label('English')
+                                                ->rows(2)
                                                 ->requiredWithoutAll('name_es, label_fr')
                                                 ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
-                                Forms\Components\TextInput::make('name_es')
+                                Forms\Components\Textarea::make('name_es')
                                                 ->label('Spanish')
+                                                ->rows(2)
                                                 ->requiredWithoutAll('name_en, label_fr')
                                                 ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
-                                Forms\Components\TextInput::make('name_fr')
+                                Forms\Components\Textarea::make('name_fr')
                                                 ->label('French')
+                                                ->rows(2)
                                                 ->requiredWithoutAll('name_es, name_en')
                                                 ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
                             ]),
@@ -67,15 +70,18 @@ class ModuleResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),
                                 Forms\Components\Textarea::make('description_en')
-                                                ->label('English'),
+                                                ->label('English')
+                                                ->rows(8),
                                                 // ->requiredWithoutAll('description_es, description_fr')
                                                 // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                                 Forms\Components\Textarea::make('description_es')
-                                                ->label('Spanish'),
+                                                ->label('Spanish')
+                                                ->rows(8),
                                                 // ->requiredWithoutAll('description_en, description_fr')
                                                 // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                                 Forms\Components\Textarea::make('description_fr')
-                                                ->label('French'),
+                                                ->label('French')
+                                                ->rows(8),
                                                 // ->requiredWithoutAll('description_es, description_en')
                                                 // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                             ]),
@@ -94,6 +100,17 @@ class ModuleResource extends Resource
                                             ->noSearchResultsMessage('No competencies match your search')
                                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                     ]),
+
+                Forms\Components\Section::make('Time estimate')
+                    ->description('Enter an estimate of the time it takes to complete the moudle in hours e.g., 1 hour, 2.5 hours')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('time_estimate')
+                            ->label('')
+                            ->numeric()
+                            ->inputMode('decimal')
+                            ->placeholder('Enter a time estimate')
+                    ]),
             ]);
     }
 
@@ -104,6 +121,7 @@ class ModuleResource extends Resource
                 Tables\Columns\TextColumn::make('researchComponent.name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
+                Tables\Columns\TextColumn::make('time_estimate')->suffix(' hours'),
 
             ])
             ->filters([
