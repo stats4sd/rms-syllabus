@@ -41,6 +41,14 @@ class User extends Authenticatable implements FilamentUser
         'password' => 'hashed',
     ];
 
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'social_id',
+        'social_type'
+    ];
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

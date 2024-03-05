@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
     ->name('socialite.redirect');
-Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
+Route::get('/callback/{provider}', [SocialiteController::class, 'callback'])
     ->name('socialite.callback');
 

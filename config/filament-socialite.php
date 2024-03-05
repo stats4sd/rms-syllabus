@@ -18,28 +18,8 @@ return [
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
     ],
-
+    
     'registration' => true,
 
-    'providers' => [
-         'google' => [
-         	'icon' => 'fab-google',
-         	'label' => 'Google',
-         ],
-        //  'linkedin' => [
-        //     'icon' => 'fab-linkedin',
-        //     'label' => 'LinkedIn',
-        // ],
-        // 'github' => [
-        //     'icon' => 'fab-github',
-        //     'label' => 'GitHub',
-        // ],
-        // 'facebook' => [
-        //     'icon' => 'fab-facebook',
-        //     'label' => 'Facebook',
-        // ],
-    ],
-
-    'user_model' => \App\Models\User::class,
 
 ];

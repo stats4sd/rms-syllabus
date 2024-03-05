@@ -17,6 +17,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
 use DutchCodingCompany\FilamentSocialite\Facades\FilamentSocialite;
 
 class AppPanelProvider extends PanelProvider
@@ -52,10 +53,30 @@ class AppPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->renderHook( 
-                    'panels::auth.login.form.after',
-                    fn () => view('auth.socialite.google')
-                )
+            ->plugin(
+                FilamentSocialitePlugin::make()
+                    ->setProviders([
+                        'google' => [
+                            'label' => 'Google',
+                            'icon' => 'fab-google'
+                        ],
+                        'linkedin' => [
+                            'icon' => 'fab-linkedin',
+                            'label' => 'LinkedIn',
+                        ],
+                        'github' => [
+                            'label' => 'GitHub',
+                            'icon' => 'fab-github',
+                            // 'color' => 'primary',
+                            'outlined' => false,
+                        ],
+                        'facebook' => [
+                            'icon' => 'fab-facebook',
+                            'label' => 'Facebook',
+                        ],
+                    ])
+                    ->setRegistrationEnabled(true)
+            )
             ->authMiddleware([
                 Authenticate::class,
             ]);
