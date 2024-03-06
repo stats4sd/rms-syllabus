@@ -44,4 +44,9 @@ class Module extends Model
     {
         return $this->belongsTo(ResearchComponent::class);
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'module_user', 'user_id', 'module_id');
+    }
 }
