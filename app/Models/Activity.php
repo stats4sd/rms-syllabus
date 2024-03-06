@@ -39,4 +39,10 @@ class Activity extends Model
     {
         return $this->belongsTo(Trove::class);
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'activity_user', 'user_id', 'activity_id');
+    }
+
 }
