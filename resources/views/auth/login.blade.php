@@ -43,5 +43,8 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+
+        <x-filament-socialite::buttons />
+
     </form>
 </x-guest-layout>

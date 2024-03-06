@@ -8,6 +8,7 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Filament\Clusters\Competencies;
+use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationGroup;
 use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
@@ -35,7 +36,8 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('')
+            ->path('admin')
+            // ->passwordReset()
             ->login()
             ->colors([
                 'primary' => Color::Red,
@@ -78,6 +80,10 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('')
                         ->items([
                             ...Competencies::getNavigationItems(),
+                        ]),
+                    NavigationGroup::make('')
+                        ->items([
+                            ...UserResource::getNavigationItems(),
                         ]),
                 ]);
             })
