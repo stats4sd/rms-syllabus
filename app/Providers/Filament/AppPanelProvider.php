@@ -6,8 +6,16 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use App\Filament\App\Pages\Home;
 use Filament\Support\Colors\Color;
+use Filament\Navigation\NavigationItem;
+use Filament\Navigation\NavigationGroup;
+use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
+use Filament\Navigation\NavigationBuilder;
+use App\Filament\Resources\ActivityResource;
+use Filament\SpatieLaravelTranslatablePlugin;
+use App\Filament\App\Resources\PathwayResource;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -29,19 +37,22 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->login()
             ->passwordReset()
+            ->homeUrl('/home')
             ->colors([
                 'primary' => Color::Amber,
+                'stats4sd' => Color::hex('#D32229'),
+                'darkblue' => Color::hex('#383B6D'),
             ])
+            ->font('Open Sans')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                // Pages\Dashboard::class,
             ])
+            // ->resources([
+            //    ModuleResource::class
+            // ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
-            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -53,6 +64,7 @@ class AppPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->navigation(false)
             ->plugin(
                 FilamentSocialitePlugin::make()
                     ->setProviders([
@@ -78,7 +90,11 @@ class AppPanelProvider extends PanelProvider
                     ->setRegistrationEnabled(true)
             )
             ->authMiddleware([
-                Authenticate::class,
-            ]);
+                // Authenticate::class,
+            ])
+            ->plugin(
+                SpatieLaravelTranslatablePlugin::make()
+                    ->defaultLocales(['en', 'es', 'fr'])
+                );
     }
 }
