@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Pathway;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Repeater;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,19 +49,27 @@ class PathwayResource extends Resource
                                         ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
                     ]),
 
-                
-
-                Forms\Components\Select::make('modules')
-                    ->relationship('modules', 'name')
-                    // ->required()
-                    ->multiple()
-                    ->preload()
-                    ->placeholder('Select modules')
-                    ->loadingMessage('Loading modules...')
-                    ->searchable()
-                    ->noSearchResultsMessage('No modules match your search')
-                    ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
-            
+                Forms\Components\Section::make('Modules')
+                    ->schema([
+                        Repeater::make('modules')
+                                ->label('')
+                                ->defaultItems(1)
+                                ->addActionLabel('Add another module')
+                                ->columns(2)
+                                ->schema([
+                                    Forms\Components\Select::make('modules')
+                                        ->relationship('modules', 'name')
+                                        ->label('')
+                                        ->distinct()
+                                        ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                                        ->preload()
+                                        ->placeholder('Select a module')
+                                        ->loadingMessage('Loading modules...')
+                                        ->searchable()
+                                        ->noSearchResultsMessage('No modules match your search')
+                                        ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
+                                ])
+                    ])
             ]);
     }
 
