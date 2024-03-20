@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pathway_id');
             $table->foreignId('module_id');
+            $table->integer('module_order');
             $table->timestamps();
         });
     }

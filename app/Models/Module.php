@@ -50,7 +50,8 @@ class Module extends Model implements HasMedia
 
     public function pathways(): BelongsToMany
     {
-        return $this->belongsToMany(Pathway::class, 'module_pathway', 'pathway_id', 'module_id');
+        return $this->belongsToMany(Pathway::class, 'module_pathway', 'pathway_id', 'module_id')
+                    ->withPivot('module_order');
     }
     
     public function users(): BelongsToMany

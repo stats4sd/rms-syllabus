@@ -22,6 +22,7 @@ class Pathway extends Model
 
     public function modules(): BelongsToMany
     {
-        return $this->belongsToMany(Module::class, 'module_pathway', 'module_id', 'pathway_id');
+        return $this->belongsToMany(Module::class, 'module_pathway', 'module_id', 'pathway_id')
+                    ->withPivot('module_order');
     }
 }
