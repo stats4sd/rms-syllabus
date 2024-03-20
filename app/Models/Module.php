@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
 
-class Module extends Model
+class Module extends Model implements HasMedia
 {
     use HasFactory;
     use HasTranslations;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -45,8 +48,14 @@ class Module extends Model
         return $this->belongsTo(ResearchComponent::class);
     }
 
+    public function pathways(): BelongsToMany
+    {
+        return $this->belongsToMany(Pathway::class, 'module_pathway', 'pathway_id', 'module_id');
+    }
+    
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'module_user', 'user_id', 'module_id');
+        return $this->belongsToMany(User::class, 'module_user', 'user_id', 'module_id')
+                    ->withPivot('is_complete');
     }
 }
