@@ -94,10 +94,14 @@ class SectionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('module.researchComponent.name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('module.name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
+                Tables\Columns\TextColumn::make('activities_count')
+                                            ->counts('activities')
+                                            ->label('# Activities')
+                                            ->sortable(),
+                Tables\Columns\TextColumn::make('module.name')->wrap()->sortable(),
+                Tables\Columns\TextColumn::make('module.researchComponent.name')->wrap()->sortable(),
             ])
             ->filters([
                 //

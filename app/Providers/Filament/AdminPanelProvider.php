@@ -13,6 +13,7 @@ use Filament\Navigation\NavigationGroup;
 use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
+use App\Filament\Resources\PathwayResource;
 use App\Filament\Resources\SectionResource;
 use App\Filament\Resources\ActivityResource;
 use Filament\SpatieLaravelTranslatablePlugin;
@@ -76,6 +77,7 @@ class AdminPanelProvider extends PanelProvider
                             ...ModuleResource::getNavigationItems(),
                             ...SectionResource::getNavigationItems(),
                             ...ActivityResource::getNavigationItems(),
+                            ...PathwayResource::getNavigationItems(),
                         ]),
                     NavigationGroup::make('')
                         ->items([

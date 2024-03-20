@@ -85,6 +85,17 @@ class ActivitiesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
+                Tables\Columns\IconColumn::make('type')
+                                    ->sortable()
+                                    ->icon(fn (string $state): string => match ($state) {
+                                        'document' => 'heroicon-m-document-duplicate',
+                                        'website' => 'heroicon-m-link',
+                                        'video' => 'heroicon-m-video-camera',
+                                        'presentation' => 'heroicon-m-presentation-chart-bar',
+                                        'picture' => 'heroicon-m-photo',
+                                        'course' => 'heroicon-m-academic-cap',
+                                        'other' => 'heroicon-m-ellipsis-horizontal-circle',
+                                    }),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
             ])

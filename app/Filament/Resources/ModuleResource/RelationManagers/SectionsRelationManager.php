@@ -71,6 +71,10 @@ class SectionsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
+                Tables\Columns\TextColumn::make('activities_count')
+                                            ->counts('activities')
+                                            ->label('# Activities')
+                                            ->sortable(),
             ])
             ->filters([
                 //

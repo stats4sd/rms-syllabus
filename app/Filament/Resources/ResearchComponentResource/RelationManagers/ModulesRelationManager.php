@@ -85,6 +85,12 @@ class ModulesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
+                Tables\Columns\TextColumn::make('time_estimate')->suffix(' hours'),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('cover_image')->collection('module_cover'),
+                Tables\Columns\TextColumn::make('sections_count')
+                                            ->counts('sections')
+                                            ->label('# Sections')
+                                            ->sortable(),
             ])
             ->filters([
                 //
