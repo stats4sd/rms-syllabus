@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Actions;
@@ -80,7 +82,23 @@ class PathwayResource extends Resource
                                                 ->label('View')
                                                 ->icon('heroicon-m-arrow-long-right')
                                                 ->color('stats4sd')
+                                                ->requiresConfirmation()
+                                                ->modalHeading('Keep Track of Your Journey')
+                                                ->modalIcon('heroicon-o-bookmark')
+                                                ->modalIconColor('stats4sd')
+                                                ->modalDescription('Save your progress with a free account.')
+                                                ->modalAlignment(Alignment::Start)
+                                                ->modalSubmitActionLabel('Login or Signup')
+                                                ->modalCancelActionLabel('Continue without tracking')
+                                                ->modalCancelAction(false)
+                                                ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
+                                                ->visible(Auth::guest()),
+                                        Action::make('view')
+                                                ->label('View')
+                                                ->icon('heroicon-m-arrow-long-right')
+                                                ->color('stats4sd')
                                                 ->url(fn (Module $record): string => ModuleResource::getUrl('view', ['record' => $record]))
+                                                ->hidden(Auth::guest()),
                                     ])
                                 ->alignRight()
                                 ->columnStart(2),

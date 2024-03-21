@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\IconPosition;
@@ -150,7 +151,24 @@ class ModuleResource extends Resource
                                                         ->icon('heroicon-m-pencil-square')
                                                         ->iconPosition(IconPosition::After)
                                                         ->color('darkblue')
-                                                        ->url('stats4sd.org'),
+                                                        ->requiresConfirmation()
+                                                        ->modalHeading('Keep Track of Your Journey')
+                                                        ->modalIcon('heroicon-o-bookmark')
+                                                        ->modalIconColor('stats4sd')
+                                                        ->modalDescription('Save your progress with a free account.')
+                                                        ->modalAlignment(Alignment::Start)
+                                                        ->modalSubmitActionLabel('Login or Signup')
+                                                        ->modalCancelActionLabel('Continue without tracking')
+                                                        ->modalCancelAction(false)
+                                                        ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
+                                                        ->visible(Auth::guest()),
+                                                Action::make('mark_complete')
+                                                        ->label('Mark complete ')
+                                                        ->icon('heroicon-m-pencil-square')
+                                                        ->iconPosition(IconPosition::After)
+                                                        ->color('darkblue')
+                                                        ->url('stats4sd.org')
+                                                        ->hidden(Auth::guest()),
                                             ]),
 
                                         ])->columns(2)
@@ -167,7 +185,24 @@ class ModuleResource extends Resource
                             ->icon('heroicon-m-pencil-square')
                             ->iconPosition(IconPosition::After)
                             ->color('darkblue')
-                            ->url('stats4sd.org'),
+                            ->requiresConfirmation()
+                            ->modalHeading('Keep Track of Your Journey')
+                            ->modalIcon('heroicon-o-bookmark')
+                            ->modalIconColor('stats4sd')
+                            ->modalDescription('Save your progress with a free account.')
+                            ->modalAlignment(Alignment::Start)
+                            ->modalSubmitActionLabel('Login or Signup')
+                            ->modalCancelActionLabel('Continue without tracking')
+                            ->modalCancelAction(false)
+                            ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
+                            ->visible(Auth::guest()),
+                    Action::make('mark_mod_complete')
+                            ->label('Mark module complete ')
+                            ->icon('heroicon-m-pencil-square')
+                            ->iconPosition(IconPosition::After)
+                            ->color('darkblue')
+                            ->url('stats4sd.org')
+                            ->hidden(Auth::guest()),
                 ])->alignment(Alignment::Center),
 
             ])->columns(1);
