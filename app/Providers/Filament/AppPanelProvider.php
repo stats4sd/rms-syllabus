@@ -38,6 +38,7 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->homeUrl('/home')
+            ->topbar(false)
             ->colors([
                 'primary' => Color::Amber,
                 'stats4sd' => Color::hex('#D32229'),
