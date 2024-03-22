@@ -236,6 +236,12 @@ class ModuleResource extends Resource
                             ->action(fn (Module $record) => $record->users()->detach(Auth::User()->id))
                             ->visible(fn (Module $record) => $record->completion_status == 'Completed')
                             ->hidden(Auth::guest()),
+                    Action::make('next_module')
+                            ->label('Next module')
+                            ->icon('heroicon-s-arrow-long-right')
+                            ->color('stats4sd')
+                            ->visible(fn (Module $record) => $record->completion_status == 'Completed')
+                            // ->action()
                 ])->alignment(Alignment::Center),
 
             ])->columns(1);
