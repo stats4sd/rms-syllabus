@@ -192,7 +192,8 @@ class ModuleResource extends Resource
                                         ->visible(fn(Activity $record) => $record->completion_status != 'Completed'),
                                     Action::make('mark_incomplete')
                                         ->label('Mark incomplete ')
-                                        ->icon('heroicon-m-pencil-square')
+                                        ->badge()
+                                        ->icon('heroicon-m-arrow-uturn-left')
                                         ->iconPosition(IconPosition::After)
                                         ->color('darkblue')
                                         ->action(function (Activity $record) {
@@ -242,9 +243,10 @@ class ModuleResource extends Resource
                         ->hidden(Auth::guest()),
                     Action::make('mark_mod_incomplete')
                         ->label('Mark module incomplete ')
-                        ->icon('heroicon-m-pencil-square')
+                        ->icon('heroicon-m-arrow-uturn-left')
                         ->iconPosition(IconPosition::After)
                         ->color('darkblue')
+                        ->badge()
                         ->action(function (Module $record) {
                                             $record->users()->detach(Auth::User()->id);
                                             $record->refresh();
