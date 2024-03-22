@@ -77,6 +77,13 @@ class PathwayResource extends Resource
                                     ->columnStart(2)
                                     ->badge()
                                     ->color('darkblue'),
+                        TextEntry::make('completion_status')
+                                    ->label('')
+                                    ->color('stats4sd')
+                                    ->badge()
+                                    ->hidden(Auth::guest())
+                                    ->visible(fn (Module $record) => $record->completion_status != 'Not Started')
+                                    ->columnStart(2),
                         Actions::make([
                                         Action::make('view')
                                                 ->label('View')
