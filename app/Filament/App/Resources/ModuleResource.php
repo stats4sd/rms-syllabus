@@ -162,7 +162,7 @@ class ModuleResource extends Resource
                                                             'Completed' => 'heroicon-m-check-badge',
                             }),
                                             Actions::make([
-                                                Action::make('mark_complete')
+                                                Action::make('mark_complete_guest')
                                                         ->label('Mark complete ')
                                                         ->icon('heroicon-m-pencil-square')
                                                         ->iconPosition(IconPosition::After)
@@ -183,8 +183,17 @@ class ModuleResource extends Resource
                                                         ->icon('heroicon-m-pencil-square')
                                                         ->iconPosition(IconPosition::After)
                                                         ->color('darkblue')
-                                                        ->url('stats4sd.org')
-                                                        ->hidden(Auth::guest()),
+                                                        ->action(fn (Activity $record) => $record->users()->attach(Auth::User()->id, ['is_complete' => 1]))
+                                                        ->hidden(Auth::guest())
+                                                        ->visible(fn (Activity $record) => $record->completion_status != 'Completed'),
+                                                Action::make('mark_incomplete')
+                                                        ->label('Mark incomplete ')
+                                                        ->icon('heroicon-m-pencil-square')
+                                                        ->iconPosition(IconPosition::After)
+                                                        ->color('darkblue')
+                                                        ->action(fn (Activity $record) => $record->users()->detach(Auth::User()->id))
+                                                        ->hidden(Auth::guest())
+                                                        ->visible(fn (Activity $record) => $record->completion_status == 'Completed'),
                                             ]),
                                         ])->columns(4)
                         ]),
@@ -195,7 +204,7 @@ class ModuleResource extends Resource
                             ->icon('heroicon-m-arrow-long-left')
                             ->color('stats4sd')
                             ->url(fn (): string => PathwayResource::getUrl('view', ['record' => 1])),
-                    Action::make('mark_mod_complete')
+                    Action::make('mark_mod_complete_guest')
                             ->label('Mark module complete ')
                             ->icon('heroicon-m-pencil-square')
                             ->iconPosition(IconPosition::After)
@@ -216,7 +225,16 @@ class ModuleResource extends Resource
                             ->icon('heroicon-m-pencil-square')
                             ->iconPosition(IconPosition::After)
                             ->color('darkblue')
-                            ->url('stats4sd.org')
+                            ->action(fn (Module $record) => $record->users()->attach(Auth::User()->id, ['is_complete' => 1]))
+                            ->visible(fn (Module $record) => $record->completion_status != 'Completed')
+                            ->hidden(Auth::guest()),
+                    Action::make('mark_mod_incomplete')
+                            ->label('Mark module incomplete ')
+                            ->icon('heroicon-m-pencil-square')
+                            ->iconPosition(IconPosition::After)
+                            ->color('darkblue')
+                            ->action(fn (Module $record) => $record->users()->detach(Auth::User()->id))
+                            ->visible(fn (Module $record) => $record->completion_status == 'Completed')
                             ->hidden(Auth::guest()),
                 ])->alignment(Alignment::Center),
 
