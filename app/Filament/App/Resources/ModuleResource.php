@@ -25,6 +25,7 @@ use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\ModuleResource\Pages;
+use App\Filament\Infolists\Components\ListRepeatableEntry;
 use App\Filament\App\Resources\ModuleResource\RelationManagers;
 
 class ModuleResource extends Resource
@@ -72,7 +73,11 @@ class ModuleResource extends Resource
                                 ->icon('heroicon-s-arrow-long-right')
                                 ->color('gray')
                                 // ->outlined()
-                                ->url(fn(Module $record): string => ModuleResource::getUrl('view', ['record' => $record]))
+                                ->url(function (Module $record) {
+                                    $next_record= $record->next->first();
+                                    return ModuleResource::getUrl('view', ['record' => $next_record]);
+                                })
+                                ->hidden(fn(Module $record) => $record->last ===1),
                         ]),
                     ])->columns(3),
 
@@ -90,15 +95,28 @@ class ModuleResource extends Resource
                         TextEntry::make('description')
                             ->label(''),
 
-                        // TextEntry::make('previousModules.name')
+                        // TextEntry::make('previous')
                         //             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
                         //             ->listWithLineBreaks()
-                        //             ->bulleted(),
+                        //             ->bulleted()
+                        //             ->hidden(fn(Module $record) => $record->first ===1)
+                        //             ->formatStateUsing(fn (string $state): string => strtoupper($state)),
+
+                        ListRepeatableEntry::make('previous.name')
+                                            ->label('Before completing this module, you should be familiar with the contents of the following modules:')
+                                            ->contained(false)
+                                            ->extraAttributes(['class' => 'space-y-0'])
+                                            ->hidden(fn(Module $record) => $record->first ===1)
+                                            ->schema([
+                                                TextEntry::make('previous.name')->hiddenLabel()->columnSpanFull()
+                                                ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
+                                                    ->extraAttributes(['class' => 'y-0']),
+                                            ]),
 
                         TextEntry::make('competencies.name')
                             ->label('This module is linked to the following competencies:')
                             ->listWithLineBreaks()
-                            ->bulleted()
+                            ->bulleted(),
 
                     ]),
 

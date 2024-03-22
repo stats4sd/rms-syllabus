@@ -52,7 +52,7 @@ class Module extends Model implements HasMedia
 
     public function pathways(): BelongsToMany
     {
-        return $this->belongsToMany(Pathway::class, 'module_pathway', 'pathway_id', 'module_id')
+        return $this->belongsToMany(Pathway::class, 'module_pathway')
                     ->withPivot('module_order');
     }
     
@@ -115,6 +115,43 @@ class Module extends Model implements HasMedia
         }
 
         return $status;
+    }
+
+    public function getFirstAttribute() {  // pass in the pathway id instead of 1 when we upgrade to multiple pathways
+        
+        $mod_pathway = $this->pathways->where('id', 1)->first();
+
+        return $mod_pathway->pivot->module_order === 1 ? 1 : 0;
+
+    }
+
+    public function getLastAttribute() {  // pass in the pathway id instead of 1 when we upgrade to multiple pathways
+
+        $mod_pathway = $this->pathways->where('id', 1)->first();
+        
+        $max = Pathway::find(1)->modules->collect()->map(function ($module) {
+            return $module->pivot->module_order;
+        })->max();
+
+        return $mod_pathway->pivot->module_order === $max ? 1 : 0;
+
+    }
+
+    public function getPreviousAttribute() {  // pass in the pathway id instead of 1 when we upgrade to multiple pathways
+        if ($this->first===0) {
+            $this_mod_order = $this->pathways->where('id', 1)->first()->pivot->module_order;
+            $prev_modules = Pathway::find(1)->modules->collect()->where('pivot.module_order', '<', $this_mod_order);
+            return $prev_modules;
+        }
+    }
+
+    public function getNextAttribute() {  // pass in the pathway id instead of 1 when we upgrade to multiple pathways
+        if ($this->last===0) {
+            $this_mod_order = $this->pathways->where('id', 1)->first()->pivot->module_order;
+            $next_order = $this_mod_order + 1;
+            $next_module = Pathway::find(1)->modules->collect()->where('pivot.module_order', $next_order);
+            return $next_module;
+        }
     }
 
 }
