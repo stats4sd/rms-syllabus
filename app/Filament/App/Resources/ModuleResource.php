@@ -57,9 +57,15 @@ class ModuleResource extends Resource
                                     ->icon('heroicon-m-clock')
                                     ->prefix('Est. duration: ')
                                     ->suffix(' hours'),
-                        TextEntry::make('research_component_id')
-                                    ->label('')
-                                    ->icon('heroicon-m-cog-8-tooth'),
+                        TextEntry::make('completion_status')
+                            ->label('')
+                            ->hidden(Auth::guest())
+                            ->icon(fn (string $state): string => match ($state) {
+                                'guest' => 'heroicon-m-arrow-right-end-on-rectangle',
+                                'Not Started' => 'heroicon-m-exclamation-circle',
+                                'In Progress' => 'heroicon-m-cog-8-tooth',
+                                'Completed' => 'heroicon-m-check-badge',
+                            }),
                         Actions::make([
                             Action::make('continue')
                                     ->label('Continue learning')
@@ -146,6 +152,16 @@ class ModuleResource extends Resource
                                                         ->icon('heroicon-m-arrow-top-right-on-square')
                                                         ->color('stats4sd')
                                                         ->url('stats4sd.org'),
+                                            ]),
+                                            TextEntry::make('completion_status')
+                                                        ->label('')
+                                                        ->hidden(Auth::guest())
+                                                        ->icon(fn (string $state): string => match ($state) {
+                                                            'guest' => 'heroicon-m-arrow-right-end-on-rectangle',
+                                                            'Not Completed' => 'heroicon-m-exclamation-circle',
+                                                            'Completed' => 'heroicon-m-check-badge',
+                            }),
+                                            Actions::make([
                                                 Action::make('mark_complete')
                                                         ->label('Mark complete ')
                                                         ->icon('heroicon-m-pencil-square')
@@ -170,8 +186,7 @@ class ModuleResource extends Resource
                                                         ->url('stats4sd.org')
                                                         ->hidden(Auth::guest()),
                                             ]),
-
-                                        ])->columns(2)
+                                        ])->columns(4)
                         ]),
 
                 Actions::make([

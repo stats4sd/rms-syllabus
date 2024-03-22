@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Module extends Model implements HasMedia
 {
@@ -56,7 +58,63 @@ class Module extends Model implements HasMedia
     
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'module_user', 'user_id', 'module_id')
+        return $this->belongsToMany(User::class, 'module_user')
                     ->withPivot('is_complete');
     }
+
+    public function getCompletionStatusAttribute()
+    {
+        // GET USER
+
+        if(Auth::guest()) {
+            $user ='guest';
+        }
+        else {
+            $user = $this->users->where('id', Auth::user()->id);
+        }
+
+
+        // GET STATUS
+
+        if ($user=='guest') {
+            $status = 'guest';
+        }
+
+        elseif ($user->isEmpty()) {
+            
+            // CHECK IF AT LEAST ONE ACTIVITY HAS BEEN COMPLETED
+            $activity_complete = 0;
+            $sections = $this->sections->all();
+
+            foreach ($sections as $section) {
+                $activities = $section->activities->all();
+
+                foreach($activities as $activity) {
+
+                    $activity_user = $activity->users->where('id', Auth::user()->id);
+
+                    if(!$activity_user->isEmpty()){
+                        if($activity_user->first()->pivot->is_complete === 1) {
+                            $activity_complete = 1;
+                        }
+                    }
+
+                }
+            }
+
+            if($activity_complete===1) {
+                $status = 'In Progress';
+            }
+            else {
+                $status = 'Not Started';
+            }
+        }
+
+        elseif ($user->first()->pivot->is_complete === 1){
+            $status = 'Completed';
+        }
+
+        return $status;
+    }
+
 }

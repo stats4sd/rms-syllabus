@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Activity extends Model
 {
@@ -42,8 +44,30 @@ class Activity extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'activity_user', 'user_id', 'activity_id')
+        return $this->belongsToMany(User::class, 'activity_user')
                     ->withPivot('is_complete');
     }
 
+    public function getCompletionStatusAttribute()
+    {
+        if(Auth::guest()) {
+            $user ='guest';
+        }
+        else {
+            $user = $this->users->where('id', Auth::user()->id);
+        }
+
+        if ($user=='guest') {
+            $status = 'guest';
+        }
+        elseif ($user->isEmpty()) {
+            $status = 'Not Completed';
+        }
+        elseif ($user->first()->pivot->is_complete === 1){
+            $status = 'Completed';
+        }
+
+        return $status;
+    }
+    
 }
