@@ -27,7 +27,7 @@ class Home extends Page
                     ->icon('heroicon-o-arrow-long-right')
                     ->iconPosition(IconPosition::After)
                     ->color('gray')
-                    ->url(fn (): string => PathwayResource::getUrl('view', ['record' => 1])),
+                    ->url(fn (): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
             Action::make('findOutMore')
                     ->label('Find out more')
                     ->icon('heroicon-o-light-bulb')

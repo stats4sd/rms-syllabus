@@ -36,6 +36,11 @@ class Module extends Model implements HasMedia
         'description',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);

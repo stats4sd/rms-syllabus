@@ -7,11 +7,12 @@ use Filament\Tables;
 use App\Models\Pathway;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Filament\Forms\Components\Repeater;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Resources\Concerns\Translatable;
 use App\Filament\Resources\PathwayResource\Pages;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,6 +20,8 @@ use App\Filament\Resources\PathwayResource\RelationManagers;
 
 class PathwayResource extends Resource
 {
+    use Translatable;
+    
     protected static ?string $model = Pathway::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
@@ -47,6 +50,28 @@ class PathwayResource extends Resource
                                         ->rows(2)
                                         ->requiredWithoutAll('name_es, name_en')
                                         ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                    ]),
+
+                Forms\Components\Fieldset::make('description_field')
+                    ->label('Description')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),
+                        Forms\Components\Textarea::make('description_en')
+                                        ->label('English')
+                                        ->rows(8),
+                                        // ->requiredWithoutAll('description_es, description_fr')
+                                        // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
+                        Forms\Components\Textarea::make('description_es')
+                                        ->label('Spanish')
+                                        ->rows(8),
+                                        // ->requiredWithoutAll('description_en, description_fr')
+                                        // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
+                        Forms\Components\Textarea::make('description_fr')
+                                        ->label('French')
+                                        ->rows(8),
+                                        // ->requiredWithoutAll('description_es, description_en')
+                                        // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                     ]),
 
                 Forms\Components\Section::make('Modules')

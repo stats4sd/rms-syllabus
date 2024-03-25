@@ -87,7 +87,7 @@ class ModuleResource extends Resource
                         ->icon('heroicon-m-chevron-left')
                         ->color('stats4sd')
                         ->link()
-                        ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 1])),
+                        ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
                 ]),
 
                 Section::make('')
@@ -230,7 +230,7 @@ class ModuleResource extends Resource
                         ->label('Return to pathway')
                         ->icon('heroicon-m-arrow-long-left')
                         ->color('stats4sd')
-                        ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 1])),
+                        ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
                     Action::make('mark_mod_complete_guest')
                         ->label('Mark module complete ')
                         ->icon('heroicon-m-pencil-square')
