@@ -96,6 +96,14 @@ class AppPanelProvider extends PanelProvider
             ->plugin(
                 SpatieLaravelTranslatablePlugin::make()
                     ->defaultLocales(['en', 'es', 'fr'])
-                );
+            )
+            ->renderHook(
+                'panels::body.start',
+                fn () => view('header'),
+            )
+            ->renderHook(
+                'panels::footer',
+                fn () => view('footer'),
+            );
     }
 }
