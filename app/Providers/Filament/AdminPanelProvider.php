@@ -39,6 +39,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             // ->passwordReset()
+            ->homeUrl('/home')
+            ->brandName('RM Syllabus')
             ->login()
             ->colors([
                 'primary' => Color::Red,
@@ -71,12 +73,15 @@ class AdminPanelProvider extends PanelProvider
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder
                 ->groups([
-                    NavigationGroup::make('Syllabus')
+                    NavigationGroup::make('')
                         ->items([
                             ...ResearchComponentResource::getNavigationItems(),
                             ...ModuleResource::getNavigationItems(),
                             ...SectionResource::getNavigationItems(),
                             ...ActivityResource::getNavigationItems(),
+                        ]),
+                    NavigationGroup::make('')
+                        ->items([
                             ...PathwayResource::getNavigationItems(),
                         ]),
                     NavigationGroup::make('')
