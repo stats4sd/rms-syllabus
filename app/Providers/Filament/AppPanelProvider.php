@@ -6,7 +6,6 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
-use App\Filament\App\Pages\Home;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
 use Filament\Navigation\NavigationGroup;
@@ -35,12 +34,15 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->id('app')
             ->path('')
-            ->login()
-            ->passwordReset()
             ->homeUrl('/home')
             ->topbar(false)
+            ->login()
+            ->profile()
+            ->passwordReset()
+            ->registration()
+            ->darkMode(false)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#383B6D'),
                 'stats4sd' => Color::hex('#D32229'),
                 'darkblue' => Color::hex('#383B6D'),
             ])

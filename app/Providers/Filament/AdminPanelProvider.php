@@ -38,10 +38,13 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            // ->passwordReset()
             ->homeUrl('/home')
             ->brandName('RM Syllabus')
             ->login()
+            ->profile()
+            ->passwordReset()
+            ->registration()
+            ->darkMode(false)
             ->colors([
                 'primary' => Color::Red,
             ])
