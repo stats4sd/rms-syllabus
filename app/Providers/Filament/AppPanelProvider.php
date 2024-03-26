@@ -46,6 +46,7 @@ class AppPanelProvider extends PanelProvider
                 'stats4sd' => Color::hex('#D32229'),
                 'darkblue' => Color::hex('#383B6D'),
             ])
+            ->viteTheme('resources/css/filament/app/theme.css')
             ->font('Open Sans')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
