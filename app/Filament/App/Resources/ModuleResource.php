@@ -277,7 +277,10 @@ class ModuleResource extends Resource
                             ->icon('heroicon-s-arrow-long-right')
                             ->color('stats4sd')
                             ->visible(fn (Module $record) => $record->completion_status == 'Completed')
-                            // ->action()
+                            ->url(function (Module $record) {
+                                $next_record= $record->next->first();
+                                return ModuleResource::getUrl('view', ['record' => $next_record]);
+                            })
                 ])->alignment(Alignment::Center),
 
             ])->columns(1);
