@@ -34,6 +34,11 @@ class ModuleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationItems(): array 
+    {
+        return [] ;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -319,7 +324,7 @@ class ModuleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListModules::route('/'),
+            // 'index' => Pages\ListModules::route('/'),
             'view' => Pages\ViewModule::route('/{record}'),
             // 'create' => Pages\CreateModule::route('/create'),
             // 'edit' => Pages\EditModule::route('/{record}/edit'),

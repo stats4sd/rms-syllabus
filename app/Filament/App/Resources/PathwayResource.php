@@ -33,6 +33,11 @@ class PathwayResource extends Resource
 
     protected static ?string $navigationLabel = 'Pathway';
 
+    public static function getNavigationItems(): array 
+    {
+        return [] ;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -145,7 +150,7 @@ class PathwayResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPathways::route('/'),
+            // 'index' => Pages\ListPathways::route('/'),
             'view' => Pages\ViewPathway::route('/{record}'),
             // 'create' => Pages\CreatePathway::route('/create'),
             // 'edit' => Pages\EditPathway::route('/{record}/edit'),
