@@ -109,7 +109,15 @@ class PathwayResource extends Resource
                                                 ->label('View')
                                                 ->icon('heroicon-m-arrow-long-right')
                                                 ->color('stats4sd')
-                                                ->url(fn (Module $record): string => ModuleResource::getUrl('view', ['record' => $record]))
+                                                ->action(function (Module $record) {
+                                                                    if ($record->view_status === 'Not Viewed' && $record->completion_status != 'Completed') {
+                                                                        $record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
+                                                                    }
+                                                                    elseif ($record->view_status === 'Not Viewed' && $record->completion_status === 'Completed') {
+                                                                        $record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
+                                                                    }
+                                                                    redirect(ModuleResource::getUrl('view', ['record' => $record]));
+                                                                })
                                                 ->hidden(Auth::guest()),
                                     ])
                                 ->alignRight()

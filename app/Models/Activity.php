@@ -79,7 +79,7 @@ class Activity extends Model
             return 'Completed';
         }
 
-        return 'unkown';
+        return 'unknown';
     }
     
 }

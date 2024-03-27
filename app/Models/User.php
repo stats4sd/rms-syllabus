@@ -67,7 +67,7 @@ class User extends Authenticatable implements FilamentUser
     public function modules(): BelongsToMany
     {
         return $this->belongstoMany(Module::class, 'module_user')
-                    ->withPivot('is_complete');
+                    ->withPivot('is_complete', 'viewed');
     }
 
 }

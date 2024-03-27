@@ -65,62 +65,46 @@ class Module extends Model implements HasMedia
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'module_user')
-                    ->withPivot('is_complete');
+                    ->withPivot('is_complete', 'viewed');
+    }
+
+    public function getViewStatusAttribute()
+    {
+        if(auth()->check()) {
+           $user = $this->users->find(auth()->id());
+
+           if($user && $user->pivot->viewed === 1) {
+            return 'Viewed';
+           }
+        }
+
+        return 'Not Viewed';
     }
 
     public function getCompletionStatusAttribute()
     {
-        // GET USER
-
-        if(Auth::guest()) {
-            $user ='guest';
-        }
-        else {
-            $user = $this->users->where('id', Auth::user()->id);
+        $user = Auth::guest() ? 'guest' : $this->users->find(Auth::id());
+  
+        if ($user === 'guest') {
+            return 'guest';
         }
 
-
-        // GET STATUS
-
-        if ($user=='guest') {
-            $status = 'guest';
+        if ($user && $user->pivot->is_complete === 1){
+            return 'Completed';
         }
 
-        elseif ($user->isEmpty()) {
-            
-            // CHECK IF AT LEAST ONE ACTIVITY HAS BEEN COMPLETED
-            $activity_complete = 0;
-            $sections = $this->sections->all();
+        if ($user && $user->pivot->viewed === 1){
+            $activity_complete = $this->sections->flatMap->activities->contains(function ($activity) {
+                return $activity->users->where('id', auth()->id())
+                                        ->where('pivot.is_complete', 1)
+                                        ->isNotEmpty();
+            }) ? 1 : 0;
 
-            foreach ($sections as $section) {
-                $activities = $section->activities->all();
-
-                foreach($activities as $activity) {
-
-                    $activity_user = $activity->users->where('id', Auth::user()->id);
-
-                    if(!$activity_user->isEmpty()){
-                        if($activity_user->first()->pivot->is_complete === 1) {
-                            $activity_complete = 1;
-                        }
-                    }
-
-                }
-            }
-
-            if($activity_complete===1) {
-                $status = 'In Progress';
-            }
-            else {
-                $status = 'Not Started';
-            }
+            return $activity_complete === 1 ? 'In Progress' : 'Not Started';
         }
 
-        elseif ($user->first()->pivot->is_complete === 1){
-            $status = 'Completed';
-        }
+        return 'Not Started';
 
-        return $status;
     }
 
     public function getFirstAttribute() {  // pass in the pathway id instead of 1 when we upgrade to multiple pathways
