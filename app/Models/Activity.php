@@ -45,29 +45,41 @@ class Activity extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'activity_user')
-                    ->withPivot('is_complete');
+                    ->withPivot('is_complete', 'link_opened');
+    }
+
+    public function getLinkStatusAttribute()
+    {
+        if(auth()->check()) {
+           $user = $this->users->find(auth()->id());
+
+           if($user && $user->pivot->link_opened === 1) {
+            return 'Opened';
+           }
+        }
+
+        return 'Not Opened';
     }
 
     public function getCompletionStatusAttribute()
     {
         if(Auth::guest()) {
-            $user ='guest';
-        }
-        else {
-            $user = $this->users->where('id', Auth::user()->id);
+            return 'guest';
         }
 
-        if ($user=='guest') {
-            $status = 'guest';
+        $user = $this->users->find(auth()->id());
+
+        if (!$user || ($user->pivot->link_opened === 0 & $user->pivot->is_complete === 0)) {
+            return 'Not Started';
         }
-        elseif ($user->isEmpty()) {
-            $status = 'Not Completed';
+        elseif ($user->pivot->link_opened === 1 & $user->pivot->is_complete === 0){
+            return 'In Progress';
         }
-        elseif ($user->first()->pivot->is_complete === 1){
-            $status = 'Completed';
+        elseif ($user->pivot->is_complete === 1){
+            return 'Completed';
         }
 
-        return $status;
+        return 'unkown';
     }
     
 }

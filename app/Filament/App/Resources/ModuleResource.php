@@ -170,18 +170,40 @@ class ModuleResource extends Resource
                                     ->label('')
                                     ->columnStart(1),
                                 Actions::make([
+                                    Action::make('open_guest')
+                                        ->label('Open')
+                                        ->icon('heroicon-m-arrow-top-right-on-square')
+                                        ->color('stats4sd')
+                                        ->url('stats4sd.org')
+                                        ->openUrlInNewTab()
+                                        ->visible(Auth::guest()),
                                     Action::make('open')
                                         ->label('Open')
                                         ->icon('heroicon-m-arrow-top-right-on-square')
                                         ->color('stats4sd')
-                                        ->url('stats4sd.org'),
+                                        ->action(function (Activity $record) {
+                                            if ($record->link_status === 'Not Opened' && $record->completion_status != 'Completed') {
+                                                $record->users()->attach(auth()->id(), ['link_opened' => 1, 'is_complete' => 0]);
+                                                $record->refresh();
+                                                $record->users;
+                                            }
+                                            elseif ($record->link_status === 'Not Opened' && $record->completion_status === 'Completed') {
+                                                $record->users()->updateExistingPivot(auth()->id(), ['link_opened' => 1]);
+                                                $record->refresh();
+                                                $record->users;
+                                            }
+                                            return url('/stats4sd.org');
+                                        })
+                                        ->hidden(Auth::guest()),
                                 ]),
+                                
                                 TextEntry::make('completion_status')
                                     ->label('')
                                     ->hidden(Auth::guest())
                                     ->icon(fn(string $state): string => match ($state) {
                                         'guest' => 'heroicon-m-arrow-right-end-on-rectangle',
-                                        'Not Completed' => 'heroicon-m-exclamation-circle',
+                                        'Not Started' => 'heroicon-m-exclamation-circle',
+                                        'In Progress' => 'heroicon-m-cog-8-tooth',
                                         'Completed' => 'heroicon-m-check-badge',
                                     }),
                                 Actions::make([
@@ -207,7 +229,12 @@ class ModuleResource extends Resource
                                         ->iconPosition(IconPosition::After)
                                         ->color('darkblue')
                                         ->action(function (Activity $record) {
-                                            $record->users()->attach(Auth::User()->id, ['is_complete' => 1]);
+                                            if($record->completion_status === 'In Progress') {
+                                                $record->users()->updateExistingPivot(auth()->id(), ['is_complete' => 1]);
+                                            }
+                                            elseif($record->completion_status === 'Not Started') {
+                                                $record->users()->attach(auth()->id(), ['link_opened' => 0, 'is_complete' => 1]);
+                                            }  
                                             $record->refresh();
                                             $record->users;
                                         })
@@ -220,7 +247,13 @@ class ModuleResource extends Resource
                                         ->iconPosition(IconPosition::After)
                                         ->color('darkblue')
                                         ->action(function (Activity $record) {
-                                            $record->users()->detach(Auth::User()->id);
+                                            if($record->link_status==='Opened') {
+                                                $record->users()->updateExistingPivot(auth()->id(), ['is_complete' => 0]);
+                                            }
+                                            else {
+                                                $record->users()->detach(auth()->id());
+                                            }
+                                            
                                             $record->refresh();
                                             $record->users;
                                         })
@@ -258,7 +291,7 @@ class ModuleResource extends Resource
                         ->iconPosition(IconPosition::After)
                         ->color('darkblue')
                         ->action(function (Module $record) {
-                                            $record->users()->attach(Auth::User()->id, ['is_complete' => 1]);
+                                            $record->users()->attach(auth()->id(), ['is_complete' => 1]);
                                             $record->refresh();
                                             $record->users;
                                         })
@@ -271,7 +304,7 @@ class ModuleResource extends Resource
                         ->color('darkblue')
                         ->badge()
                         ->action(function (Module $record) {
-                                            $record->users()->detach(Auth::User()->id);
+                                            $record->users()->detach(auth()->id());
                                             $record->refresh();
                                             $record->users;
                                         })
