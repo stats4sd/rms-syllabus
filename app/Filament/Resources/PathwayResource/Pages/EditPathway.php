@@ -64,7 +64,7 @@ class EditPathway extends EditRecord
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
         }
 
-        $this->record->slug = Str::slug($this->record->name);
+        $this->record['slug'] = Str::slug($this->data['name_en'] ?? $this->data['name_es'] ?? $this->data['name_fr'] ?? '');
         
         $this->record->save();
     }
