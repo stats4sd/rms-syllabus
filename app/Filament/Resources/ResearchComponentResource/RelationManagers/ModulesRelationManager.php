@@ -84,6 +84,7 @@ class ModulesRelationManager extends RelationManager
                             ->numeric()
                             ->inputMode('decimal')
                             ->placeholder('Enter a time estimate')
+                            ->required()
                     ]),
 
                 Forms\Components\Section::make('Cover image')
@@ -160,7 +161,7 @@ class ModulesRelationManager extends RelationManager
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            -> recordUrl(fn(Module $record) => ModuleResource::getUrl('edit', ['record' => $record])
+            -> recordUrl(fn(Module $record) => ModuleResource::getUrl('edit', ['record' => $record->slug])
         );
     }
 }

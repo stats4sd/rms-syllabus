@@ -110,6 +110,7 @@ class ModuleResource extends Resource
                             ->numeric()
                             ->inputMode('decimal')
                             ->placeholder('Enter a time estimate')
+                            ->required()
                     ]),
 
                 Forms\Components\Section::make('Cover image')
