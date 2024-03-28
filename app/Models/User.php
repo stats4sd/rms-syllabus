@@ -51,17 +51,23 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
+        if ($panel->getId() === 'admin') {
+            return str_ends_with($this->email, '@stats4sd.org');
+        }
+
         return true;
     }
 
     public function activities(): BelongsToMany
     {
-        return $this->belongsToMany(Activity::class, 'activity_user', 'activity_id', 'user_id');
+        return $this->belongsToMany(Activity::class, 'activity_user', 'activity_id', 'user_id')
+                    ->withPivot('is_complete', 'link_opened');
     }
 
     public function modules(): BelongsToMany
     {
-        return $this->belongstoMany(Module::class, 'module_user', 'module_id', 'user_id');
+        return $this->belongstoMany(Module::class, 'module_user')
+                    ->withPivot('is_complete', 'viewed');
     }
 
 }

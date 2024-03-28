@@ -63,6 +63,8 @@ class EditModule extends EditRecord
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
         }
 
+        $this->record->slug = Str::slug($this->record->name);
+        
         $this->record->save();
     }
 }

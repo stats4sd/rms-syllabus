@@ -72,8 +72,7 @@ class ResearchComponentResource extends Resource
                                                 // ->requiredWithoutAll('description_es, description_en')
                                                 // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                             ]),
-                        
-                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover_image')
+
                     ]),
 
             ]);
@@ -85,7 +84,10 @@ class ResearchComponentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('cover_image')
+                Tables\Columns\TextColumn::make('modules_count')
+                                            ->counts('modules')
+                                            ->label('# Modules')
+                                            ->sortable(),
             ])
             ->filters([
                 //

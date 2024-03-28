@@ -111,6 +111,13 @@ class ModuleResource extends Resource
                             ->inputMode('decimal')
                             ->placeholder('Enter a time estimate')
                     ]),
+
+                Forms\Components\Section::make('Cover image')
+                    ->schema([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover_image')
+                                                                        ->collection('module_cover')
+                    ]),
+
             ]);
     }
 
@@ -118,11 +125,15 @@ class ModuleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('researchComponent.name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('time_estimate')->suffix(' hours'),
-
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('cover_image')->collection('module_cover'),
+                Tables\Columns\TextColumn::make('sections_count')
+                                            ->counts('sections')
+                                            ->label('# Sections')
+                                            ->sortable(),
+                Tables\Columns\TextColumn::make('researchComponent.name')->badge()->wrap()->sortable(),
             ])
             ->filters([
                 //

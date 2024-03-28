@@ -13,6 +13,7 @@ use Filament\Navigation\NavigationGroup;
 use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
+use App\Filament\Resources\PathwayResource;
 use App\Filament\Resources\SectionResource;
 use App\Filament\Resources\ActivityResource;
 use Filament\SpatieLaravelTranslatablePlugin;
@@ -37,8 +38,13 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            // ->passwordReset()
+            ->homeUrl('/home')
+            ->brandName('RM Syllabus')
             ->login()
+            ->profile()
+            ->passwordReset()
+            ->registration()
+            ->darkMode(false)
             ->colors([
                 'primary' => Color::Red,
             ])
@@ -70,12 +76,16 @@ class AdminPanelProvider extends PanelProvider
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder
                 ->groups([
-                    NavigationGroup::make('Syllabus')
+                    NavigationGroup::make('')
                         ->items([
                             ...ResearchComponentResource::getNavigationItems(),
                             ...ModuleResource::getNavigationItems(),
                             ...SectionResource::getNavigationItems(),
                             ...ActivityResource::getNavigationItems(),
+                        ]),
+                    NavigationGroup::make('')
+                        ->items([
+                            ...PathwayResource::getNavigationItems(),
                         ]),
                     NavigationGroup::make('')
                         ->items([

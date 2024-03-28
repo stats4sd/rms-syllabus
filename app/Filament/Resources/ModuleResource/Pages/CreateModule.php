@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\ModuleResource\Pages;
 
-use App\Filament\Resources\ModuleResource;
 use Filament\Actions;
+use Illuminate\Support\Str;
+use App\Filament\Resources\ModuleResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateModule extends CreateRecord
@@ -47,6 +48,8 @@ class CreateModule extends CreateRecord
         if(!is_null($this->data['description_fr'])){
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
         }
+
+        $this->record->slug = Str::slug($this->record->name);
 
         $this->record->save();
     }
