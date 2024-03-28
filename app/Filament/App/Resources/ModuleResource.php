@@ -22,7 +22,6 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use App\Filament\App\Resources\ModuleResource;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
