@@ -215,7 +215,7 @@ class ModuleResource extends Resource
                                         'Completed' => 'heroicon-m-check-badge',
                                     }),
                                 Actions::make([
-                                    LoginPromptAction::make('Mark asdf'),
+                                    LoginPromptAction::make('Mark as Complete'),
                                     Action::make('mark_complete')
                                         ->label('Mark complete ')
                                         ->icon('heroicon-m-pencil-square')

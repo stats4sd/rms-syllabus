@@ -95,7 +95,7 @@ class PathwayResource extends Resource
                                                 ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
                                             Actions::make([
                                                 LoginPromptAction::make('view')
-                                                ->redirectTo(fn(Module $record) => ModuleResource::getUrl('view', ['record' => $record])),
+                                                ->cancelRedirectsTo(fn(Module $record) => ModuleResource::getUrl('view', ['record' => $record])),
                                                 Action::make('view')
                                                     ->label('View')
                                                     ->icon('heroicon-m-arrow-long-right')
