@@ -2,3 +2,10 @@
 
 @config 'tailwind.config.js';
 
+.divider {
+    height: 0.4rem;
+    width: 60px;
+    background-color: red;
+    margin-bottom: 1.2rem;
+    position:relative;
+  }

@@ -4,6 +4,8 @@
 
     <div>What is the RM Syllabus?</div>
 
+    <div class="divider"></div>
+    
     <div>Competency Framework</div>
     <div>
         We've set out what we believe to be the essential research methods skills that are needed 
