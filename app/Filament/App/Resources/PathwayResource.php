@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
+use App\Filament\Infolists\Actions\LoginPromptAction;
 use App\Filament\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 use Filament\Forms;
 use Filament\Infolists\Components\Fieldset;
@@ -93,21 +94,8 @@ class PathwayResource extends Resource
                                                 ->hidden(Auth::guest())
                                                 ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
                                             Actions::make([
-                                                Action::make('view')
-                                                    ->label('View')
-                                                    ->icon('heroicon-m-arrow-long-right')
-                                                    ->color('stats4sd')
-                                                    ->requiresConfirmation()
-                                                    ->modalHeading('Keep Track of Your Journey')
-                                                    ->modalIcon('heroicon-o-bookmark')
-                                                    ->modalIconColor('darkblue')
-                                                    ->modalDescription('Save your progress with a free account.')
-                                                    ->modalAlignment(Alignment::Start)
-                                                    ->modalSubmitActionLabel('Login or Signup')
-                                                    ->modalCancelActionLabel('Continue without tracking')
-                                                    // ->modalCancelAction(false)
-                                                    ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
-                                                    ->visible(Auth::guest()),
+                                                LoginPromptAction::make('view')
+                                                ->redirectTo(fn(Module $record) => ModuleResource::getUrl('view', ['record' => $record])),
                                                 Action::make('view')
                                                     ->label('View')
                                                     ->icon('heroicon-m-arrow-long-right')

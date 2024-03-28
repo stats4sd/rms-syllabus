@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources;
 
+use App\Filament\Infolists\Actions\LoginPromptAction;
+use App\Models\Pathway;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Module;
@@ -214,22 +216,7 @@ class ModuleResource extends Resource
                                         'Completed' => 'heroicon-m-check-badge',
                                     }),
                                 Actions::make([
-                                    Action::make('mark_complete_guest')
-                                        ->label('Mark complete ')
-                                        ->icon('heroicon-m-pencil-square')
-                                        ->iconPosition(IconPosition::After)
-                                        ->color('darkblue')
-                                        ->requiresConfirmation()
-                                        ->modalHeading('Keep Track of Your Journey')
-                                        ->modalIcon('heroicon-o-bookmark')
-                                        ->modalIconColor('stats4sd')
-                                        ->modalDescription('Save your progress with a free account.')
-                                        ->modalAlignment(Alignment::Start)
-                                        ->modalSubmitActionLabel('Login or Signup')
-                                        ->modalCancelActionLabel('Continue without tracking')
-                                        ->modalCancelAction(false)
-                                        ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
-                                        ->visible(Auth::guest()),
+                                    LoginPromptAction::make('Mark asdf'),
                                     Action::make('mark_complete')
                                         ->label('Mark complete ')
                                         ->icon('heroicon-m-pencil-square')
@@ -275,22 +262,7 @@ class ModuleResource extends Resource
                         ->icon('heroicon-m-arrow-long-left')
                         ->color('stats4sd')
                         ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
-                    Action::make('mark_mod_complete_guest')
-                        ->label('Mark module complete ')
-                        ->icon('heroicon-m-pencil-square')
-                        ->iconPosition(IconPosition::After)
-                        ->color('darkblue')
-                        ->requiresConfirmation()
-                        ->modalHeading('Keep Track of Your Journey')
-                        ->modalIcon('heroicon-o-bookmark')
-                        ->modalIconColor('stats4sd')
-                        ->modalDescription('Save your progress with a free account.')
-                        ->modalAlignment(Alignment::Start)
-                        ->modalSubmitActionLabel('Login or Signup')
-                        ->modalCancelActionLabel('Continue without tracking')
-                        ->modalCancelAction(false)
-                        ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
-                        ->visible(Auth::guest()),
+                   LoginPromptAction::make('Mark Module Complete'),
                     Action::make('mark_mod_complete')
                         ->label('Mark module complete ')
                         ->icon('heroicon-m-pencil-square')
@@ -378,6 +350,7 @@ class ModuleResource extends Resource
 
     public static function getPages(): array
     {
+
         return [
             // 'index' => Pages\ListModules::route('/'),
             'view' => Pages\ViewModule::route('/{record}'),
