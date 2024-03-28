@@ -2,7 +2,11 @@
 
 namespace App\Filament\App\Resources;
 
+use App\Filament\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 use Filament\Forms;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Split;
 use Filament\Tables;
 use App\Models\Module;
 use App\Models\Pathway;
@@ -33,9 +37,9 @@ class PathwayResource extends Resource
 
     protected static ?string $navigationLabel = 'Pathway';
 
-    public static function getNavigationItems(): array 
+    public static function getNavigationItems(): array
     {
-        return [] ;
+        return [];
     }
 
     public static function form(Form $form): Form
@@ -51,80 +55,83 @@ class PathwayResource extends Resource
         return $infolist
             ->schema([
                 RepeatableEntry::make('modules')->label('')
-                ->schema([
-                    Section::make('')
                     ->schema([
-                        // SpatieMediaLibraryImageEntry::make('cover_image')
-                        //             ->label('')
-                        //             ->collection('module_cover')
-                        //             ->height(40)
-                        //             ->square(),
-                        // ImageEntry::make('cover_image')
-                        //             ->label('')
-                        //             ->collection('module_cover')
-                        //             ->height(40)
-                        //             ->square(),
-                        TextEntry::make('name')
-                                    ->columnStart(2)
-                                    ->label('')
-                                    ->color('stats4sd')
-                                    ->size(TextEntry\TextEntrySize::Large)
-                                    ->weight(FontWeight::Bold),
-                        TextEntry::make('time_estimate')
-                                    ->label('')
-                                    ->columnStart(2)
-                                    ->icon('heroicon-m-clock')
-                                    ->prefix('Est. duration: ')
-                                    ->suffix(' hours'),
-                        TextEntry::make('description')->label('')->columnStart(2),
-                        TextEntry::make('researchComponent.name')
-                                    ->label('')
-                                    ->columnStart(2)
-                                    ->badge()
-                                    ->color('darkblue'),
-                        TextEntry::make('completion_status')
-                                    ->label('')
-                                    ->color('stats4sd')
-                                    ->badge()
-                                    ->hidden(Auth::guest())
-                                    ->visible(fn (Module $record) => $record->completion_status != 'Not Started')
-                                    ->columnStart(2),
-                        Actions::make([
-                                        Action::make('view')
-                                                ->label('View')
-                                                ->icon('heroicon-m-arrow-long-right')
+                        Section::make('')
+                            ->schema([
+                                Grid::make(3)
+                                ->schema([
+
+                                    SpatieMediaLibraryImageEntryInRepeater::make('cover_image')
+                                        ->label('')
+                                        ->collection('module_cover')
+                                        ->size(300)
+                                        ->alignEnd()
+                                        ->circular(),
+
+
+                                    Grid::make(1)
+                                        ->schema([
+                                            TextEntry::make('name')
+                                                ->label('')
                                                 ->color('stats4sd')
-                                                ->requiresConfirmation()
-                                                ->modalHeading('Keep Track of Your Journey')
-                                                ->modalIcon('heroicon-o-bookmark')
-                                                ->modalIconColor('darkblue')
-                                                ->modalDescription('Save your progress with a free account.')
-                                                ->modalAlignment(Alignment::Start)
-                                                ->modalSubmitActionLabel('Login or Signup')
-                                                ->modalCancelActionLabel('Continue without tracking')
-                                                // ->modalCancelAction(false)
-                                                ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
-                                                ->visible(Auth::guest()),
-                                        Action::make('view')
-                                                ->label('View')
-                                                ->icon('heroicon-m-arrow-long-right')
+                                                ->size(TextEntry\TextEntrySize::Large)
+                                                ->weight(FontWeight::Bold),
+                                            TextEntry::make('time_estimate')
+                                                ->label('')
+                                                ->icon('heroicon-m-clock')
+                                                ->prefix('Est. duration: ')
+                                                ->suffix(' hours'),
+                                            TextEntry::make('description')->label(''),
+                                            TextEntry::make('researchComponent.name')
+                                                ->label('')
+                                                ->badge()
+                                                ->color('darkblue'),
+                                            TextEntry::make('completion_status')
+                                                ->label('')
                                                 ->color('stats4sd')
-                                                ->action(function (Module $record) {
-                                                                    if ($record->view_status === 'Not Viewed' && $record->completion_status != 'Completed') {
-                                                                        $record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
-                                                                    }
-                                                                    elseif ($record->view_status === 'Not Viewed' && $record->completion_status === 'Completed') {
-                                                                        $record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
-                                                                    }
-                                                                    redirect(ModuleResource::getUrl('view', ['record' => $record]));
-                                                                })
-                                                ->hidden(Auth::guest()),
-                                    ])
-                                ->alignRight()
-                                ->columnStart(2),
-                    ])->columns(2),
-                ])
-            ])->columns(1);         
+                                                ->badge()
+                                                ->hidden(Auth::guest())
+                                                ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
+                                            Actions::make([
+                                                Action::make('view')
+                                                    ->label('View')
+                                                    ->icon('heroicon-m-arrow-long-right')
+                                                    ->color('stats4sd')
+                                                    ->requiresConfirmation()
+                                                    ->modalHeading('Keep Track of Your Journey')
+                                                    ->modalIcon('heroicon-o-bookmark')
+                                                    ->modalIconColor('darkblue')
+                                                    ->modalDescription('Save your progress with a free account.')
+                                                    ->modalAlignment(Alignment::Start)
+                                                    ->modalSubmitActionLabel('Login or Signup')
+                                                    ->modalCancelActionLabel('Continue without tracking')
+                                                    // ->modalCancelAction(false)
+                                                    ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
+                                                    ->visible(Auth::guest()),
+                                                Action::make('view')
+                                                    ->label('View')
+                                                    ->icon('heroicon-m-arrow-long-right')
+                                                    ->color('stats4sd')
+                                                    ->action(function (Module $record) {
+                                                        if ($record->view_status === 'Not Viewed' && $record->completion_status != 'Completed') {
+                                                            $record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
+                                                        } elseif ($record->view_status === 'Not Viewed' && $record->completion_status === 'Completed') {
+                                                            $record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
+                                                        }
+                                                        redirect(ModuleResource::getUrl('view', ['record' => $record]));
+                                                    })
+                                                    ->hidden(Auth::guest()),
+                                            ])
+                                                ->alignRight(),
+                                        ])
+                                    ->columnSpan(2)
+
+                                ]),
+                                   // ->columns(3),
+                            ])
+                    ])
+                ->columns(1)
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
