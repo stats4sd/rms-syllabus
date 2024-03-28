@@ -69,6 +69,11 @@ class Module extends Model implements HasMedia
                     ->withPivot('is_complete', 'viewed');
     }
 
+    public function modulePathways(): HasMany
+    {
+        return $this->hasMany(ModulePathway::class);
+    }
+
     public function getViewStatusAttribute()
     {
         if(auth()->check()) {
