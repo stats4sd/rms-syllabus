@@ -23,7 +23,8 @@ class Module extends Model implements HasMedia
         'name',
         'description',
         'research_component_id',
-        'time_estimate'
+        'time_estimate',
+        'slug'
     ];
 
     protected $casts = [

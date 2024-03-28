@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\ModuleResource\Pages;
 
-use App\Filament\Resources\ModuleResource;
 use Filament\Actions;
+use Illuminate\Support\Str;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\ModuleResource;
 
 class EditModule extends EditRecord
 {
@@ -63,8 +64,8 @@ class EditModule extends EditRecord
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
         }
 
-        $this->record->slug = Str::slug($this->record->name);
-        
+        $this->record['slug'] = Str::slug($this->data['name_en'] ?? $this->data['name_es'] ?? $this->data['name_fr'] ?? '');
+
         $this->record->save();
     }
 }
