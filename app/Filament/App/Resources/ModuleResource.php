@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\ModuleResource\Pages;
 use App\Filament\Infolists\Components\ListRepeatableEntry;
 use App\Filament\App\Resources\ModuleResource\RelationManagers;
+use Illuminate\Support\HtmlString;
 
 class ModuleResource extends Resource
 {
@@ -34,7 +35,7 @@ class ModuleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getNavigationItems(): array 
+    public static function getNavigationItems(): array
     {
         return [] ;
     }
@@ -113,13 +114,13 @@ class ModuleResource extends Resource
                         //             ->hidden(fn(Module $record) => $record->first ===1)
                         //             ->formatStateUsing(fn (string $state): string => strtoupper($state)),
 
-                        ListRepeatableEntry::make('previous.name')
+                        ListRepeatableEntry::make('previous')
                                             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
                                             ->contained(false)
                                             ->extraAttributes(['class' => 'space-y-0'])
                                             ->hidden(fn(Module $record) => $record->first ===1)
                                             ->schema([
-                                                TextEntry::make('previous.name')->hiddenLabel()->columnSpanFull()
+                                                TextEntry::make('name')->hiddenLabel()->columnSpanFull()
                                                             ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
                                                             ->extraAttributes(['class' => 'y-0']),
                                             ]),
@@ -202,7 +203,7 @@ class ModuleResource extends Resource
                                                         })
                                         ->hidden(Auth::guest()),
                                 ]),
-                                
+
                                 TextEntry::make('completion_status')
                                     ->label('')
                                     ->hidden(Auth::guest())
@@ -240,7 +241,7 @@ class ModuleResource extends Resource
                                                             }
                                                             elseif($record->completion_status === 'Not Started') {
                                                                 $record->users()->attach(auth()->id(), ['link_opened' => 0, 'is_complete' => 1]);
-                                                            }  
+                                                            }
                                                             $record->refresh();
                                                             $record->users;
                                                         })
