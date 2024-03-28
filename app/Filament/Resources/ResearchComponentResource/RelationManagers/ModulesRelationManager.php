@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Module;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ModuleResource;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -119,6 +120,7 @@ class ModulesRelationManager extends RelationManager
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['name'] = 'names added after creation';
                         $data['description'] = 'descriptions added after creation';
+                        $data['slug'] = Str::slug($data['name_en'] ?? $data['name_es'] ?? $data['name_fr'] ?? '');
                         return $data;
                     })
                     ->after(function (Module $record, array $data) {
