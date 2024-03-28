@@ -19,6 +19,7 @@ class Activity extends Model
         'description',
         'section_id',
         'trove_id',
+        'type',
     ];
 
     protected $casts = [

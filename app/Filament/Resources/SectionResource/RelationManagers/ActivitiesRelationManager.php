@@ -65,6 +65,20 @@ class ActivitiesRelationManager extends RelationManager
                     ]),
 
                     Forms\Components\Section::make('')
+                    ->schema([
+                        Forms\Components\Select::make('type')
+                                            ->options([
+                                                'document' => 'Document',
+                                                'website' => 'Website',
+                                                'video' => 'Video',
+                                                'presentation' => 'Presentation',
+                                                'picture' => 'Picture',
+                                                'course' => 'Course',
+                                                'other' => 'Other',
+                                            ])
+                    ]),
+
+                    Forms\Components\Section::make('')
                         // ->description('description here........')
                         ->schema([
                             Forms\Components\Select::make('trove_id')
@@ -87,6 +101,7 @@ class ActivitiesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\IconColumn::make('type')
                                     ->sortable()
+                                    ->color('primary')
                                     ->icon(fn (string $state): string => match ($state) {
                                         'document' => 'heroicon-m-document-duplicate',
                                         'website' => 'heroicon-m-link',

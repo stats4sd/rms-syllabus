@@ -75,6 +75,23 @@ class ModulesRelationManager extends RelationManager
                                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                     ]),
 
+                Forms\Components\Section::make('Time estimate')
+                    ->description('Enter an estimate of the time it takes to complete the moudle in hours e.g., 1 hour, 2.5 hours')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('time_estimate')
+                            ->label('')
+                            ->numeric()
+                            ->inputMode('decimal')
+                            ->placeholder('Enter a time estimate')
+                    ]),
+
+                Forms\Components\Section::make('Cover image')
+                    ->schema([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover_image')
+                                                                        ->collection('module_cover')
+                    ]),
+
             ]);
     }
 

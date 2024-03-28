@@ -124,6 +124,7 @@ class ActivityResource extends Resource
             ->columns([
                 Tables\Columns\IconColumn::make('type')
                                     ->sortable()
+                                    ->color('primary')
                                     ->icon(fn (string $state): string => match ($state) {
                                         'document' => 'heroicon-m-document-duplicate',
                                         'website' => 'heroicon-m-link',
