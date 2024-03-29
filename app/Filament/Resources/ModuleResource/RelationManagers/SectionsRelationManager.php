@@ -119,7 +119,7 @@ class SectionsRelationManager extends RelationManager
                     })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

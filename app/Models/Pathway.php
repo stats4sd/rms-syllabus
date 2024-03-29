@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -15,6 +16,7 @@ class Pathway extends Model
     protected $fillable = [
         'name',
         'description',
+        'slug'
     ];
 
     public $translatable = [
@@ -32,5 +34,10 @@ class Pathway extends Model
         return $this->belongsToMany(Module::class, 'module_pathway')
                     ->withPivot('module_order')
                     ->orderBy('module_order');
+    }
+
+    public function modulePathways(): HasMany
+    {
+        return $this->hasMany(ModulePathway::class);
     }
 }

@@ -76,14 +76,15 @@ class PathwayResource extends Resource
 
                 Forms\Components\Section::make('Modules')
                     ->schema([
-                        Repeater::make('modules')
+                        Repeater::make('modulePathways')
+                                ->relationship()
                                 ->label('')
                                 ->defaultItems(1)
                                 ->addActionLabel('Add another module')
                                 ->columns(2)
                                 ->schema([
-                                    Forms\Components\Select::make('modules')
-                                        ->relationship('modules', 'name')
+                                    Forms\Components\Select::make('module_id')
+                                        ->relationship('module', 'name')
                                         ->label('')
                                         ->distinct()
                                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
@@ -92,8 +93,8 @@ class PathwayResource extends Resource
                                         ->loadingMessage('Loading modules...')
                                         ->searchable()
                                         ->noSearchResultsMessage('No modules match your search')
-                                        ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
-                                ])
+                                        ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
+                                ])->orderColumn('module_order')
                     ])
             ]);
     }
@@ -103,7 +104,7 @@ class PathwayResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('modules_count')
                                 ->counts('modules')
                                 ->label('# Modules')
@@ -113,7 +114,7 @@ class PathwayResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -135,7 +136,6 @@ class PathwayResource extends Resource
         return [
             'index' => Pages\ListPathways::route('/'),
             'create' => Pages\CreatePathway::route('/create'),
-            'view' => Pages\ViewPathway::route('/{record}'),
             'edit' => Pages\EditPathway::route('/{record}/edit'),
         ];
     }

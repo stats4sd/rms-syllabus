@@ -17,6 +17,8 @@ class CreateModule extends CreateRecord
     {
         $data['name'] = 'names added after creation';
         $data['description'] = 'descriptions added after creation';
+        $data['slug'] = Str::slug($data['name_en'] ?? $data['name_es'] ?? $data['name_fr'] ?? '');
+
         return $data;
     }
 
@@ -49,7 +51,6 @@ class CreateModule extends CreateRecord
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
         }
 
-        $this->record->slug = Str::slug($this->record->name);
 
         $this->record->save();
     }

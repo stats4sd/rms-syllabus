@@ -23,7 +23,8 @@ class Module extends Model implements HasMedia
         'name',
         'description',
         'research_component_id',
-        'time_estimate'
+        'time_estimate',
+        'slug'
     ];
 
     protected $casts = [
@@ -66,6 +67,11 @@ class Module extends Model implements HasMedia
     {
         return $this->belongsToMany(User::class, 'module_user')
                     ->withPivot('is_complete', 'viewed');
+    }
+
+    public function modulePathways(): HasMany
+    {
+        return $this->hasMany(ModulePathway::class);
     }
 
     public function getViewStatusAttribute()

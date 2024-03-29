@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Module;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ModuleResource;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -84,6 +85,7 @@ class ModulesRelationManager extends RelationManager
                             ->numeric()
                             ->inputMode('decimal')
                             ->placeholder('Enter a time estimate')
+                            ->required()
                     ]),
 
                 Forms\Components\Section::make('Cover image')
@@ -118,6 +120,7 @@ class ModulesRelationManager extends RelationManager
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['name'] = 'names added after creation';
                         $data['description'] = 'descriptions added after creation';
+                        $data['slug'] = Str::slug($data['name_en'] ?? $data['name_es'] ?? $data['name_fr'] ?? '');
                         return $data;
                     })
                     ->after(function (Module $record, array $data) {
@@ -152,7 +155,7 @@ class ModulesRelationManager extends RelationManager
                     })
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -160,7 +163,7 @@ class ModulesRelationManager extends RelationManager
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            -> recordUrl(fn(Module $record) => ModuleResource::getUrl('edit', ['record' => $record])
+            -> recordUrl(fn(Module $record) => ModuleResource::getUrl('edit', ['record' => $record->slug])
         );
     }
 }
