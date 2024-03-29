@@ -2,6 +2,9 @@
 
 namespace App\Filament\App\Resources;
 
+use App\Filament\Infolists\Actions\LoginPromptAction;
+use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
+use App\Models\Pathway;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Module;
@@ -20,13 +23,13 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use App\Filament\App\Resources\ModuleResource;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\ModuleResource\Pages;
 use App\Filament\Infolists\Components\ListRepeatableEntry;
 use App\Filament\App\Resources\ModuleResource\RelationManagers;
+use Illuminate\Support\HtmlString;
 
 class ModuleResource extends Resource
 {
@@ -34,7 +37,7 @@ class ModuleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getNavigationItems(): array 
+    public static function getNavigationItems(): array
     {
         return [] ;
     }
@@ -113,13 +116,13 @@ class ModuleResource extends Resource
                         //             ->hidden(fn(Module $record) => $record->first ===1)
                         //             ->formatStateUsing(fn (string $state): string => strtoupper($state)),
 
-                        ListRepeatableEntry::make('previous.name')
+                        ListRepeatableEntry::make('previous')
                                             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
                                             ->contained(false)
                                             ->extraAttributes(['class' => 'space-y-0'])
                                             ->hidden(fn(Module $record) => $record->first ===1)
                                             ->schema([
-                                                TextEntry::make('previous.name')->hiddenLabel()->columnSpanFull()
+                                                TextEntry::make('name')->hiddenLabel()->columnSpanFull()
                                                             ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
                                                             ->extraAttributes(['class' => 'y-0']),
                                             ]),
@@ -202,7 +205,7 @@ class ModuleResource extends Resource
                                                         })
                                         ->hidden(Auth::guest()),
                                 ]),
-                                
+
                                 TextEntry::make('completion_status')
                                     ->label('')
                                     ->hidden(Auth::guest())
@@ -213,22 +216,7 @@ class ModuleResource extends Resource
                                         'Completed' => 'heroicon-m-check-badge',
                                     }),
                                 Actions::make([
-                                    Action::make('mark_complete_guest')
-                                        ->label('Mark complete ')
-                                        ->icon('heroicon-m-pencil-square')
-                                        ->iconPosition(IconPosition::After)
-                                        ->color('darkblue')
-                                        ->requiresConfirmation()
-                                        ->modalHeading('Keep Track of Your Journey')
-                                        ->modalIcon('heroicon-o-bookmark')
-                                        ->modalIconColor('stats4sd')
-                                        ->modalDescription('Save your progress with a free account.')
-                                        ->modalAlignment(Alignment::Start)
-                                        ->modalSubmitActionLabel('Login or Signup')
-                                        ->modalCancelActionLabel('Continue without tracking')
-                                        ->modalCancelAction(false)
-                                        ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
-                                        ->visible(Auth::guest()),
+                                    LoginPromptAction::make('Mark as Complete'),
                                     Action::make('mark_complete')
                                         ->label('Mark complete ')
                                         ->icon('heroicon-m-pencil-square')
@@ -240,7 +228,7 @@ class ModuleResource extends Resource
                                                             }
                                                             elseif($record->completion_status === 'Not Started') {
                                                                 $record->users()->attach(auth()->id(), ['link_opened' => 0, 'is_complete' => 1]);
-                                                            }  
+                                                            }
                                                             $record->refresh();
                                                             $record->users;
                                                         })
@@ -274,22 +262,7 @@ class ModuleResource extends Resource
                         ->icon('heroicon-m-arrow-long-left')
                         ->color('stats4sd')
                         ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
-                    Action::make('mark_mod_complete_guest')
-                        ->label('Mark module complete ')
-                        ->icon('heroicon-m-pencil-square')
-                        ->iconPosition(IconPosition::After)
-                        ->color('darkblue')
-                        ->requiresConfirmation()
-                        ->modalHeading('Keep Track of Your Journey')
-                        ->modalIcon('heroicon-o-bookmark')
-                        ->modalIconColor('stats4sd')
-                        ->modalDescription('Save your progress with a free account.')
-                        ->modalAlignment(Alignment::Start)
-                        ->modalSubmitActionLabel('Login or Signup')
-                        ->modalCancelActionLabel('Continue without tracking')
-                        ->modalCancelAction(false)
-                        ->action(fn(Module $record) => redirect(ModuleResource::getUrl('view', ['record' => $record])))
-                        ->visible(Auth::guest()),
+                   LoginPromptWithFormAction::make('Mark Module Complete'),
                     Action::make('mark_mod_complete')
                         ->label('Mark module complete ')
                         ->icon('heroicon-m-pencil-square')
@@ -377,6 +350,7 @@ class ModuleResource extends Resource
 
     public static function getPages(): array
     {
+
         return [
             // 'index' => Pages\ListModules::route('/'),
             'view' => Pages\ViewModule::route('/{record}'),
