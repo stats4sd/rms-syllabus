@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\Infolists\Actions\LoginPromptAction;
+use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
 use App\Filament\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 use Filament\Forms;
 use Filament\Infolists\Components\Fieldset;
@@ -94,7 +95,7 @@ class PathwayResource extends Resource
                                                 ->hidden(Auth::guest())
                                                 ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
                                             Actions::make([
-                                                LoginPromptAction::make('view')
+                                                LoginPromptWithFormAction::make('view')
                                                 ->cancelRedirectsTo(fn(Module $record) => ModuleResource::getUrl('view', ['record' => $record])),
                                                 Action::make('view')
                                                     ->label('View')
