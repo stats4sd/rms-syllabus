@@ -3,6 +3,7 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\Infolists\Actions\LoginPromptAction;
+use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
 use App\Models\Pathway;
 use Filament\Forms;
 use Filament\Tables;
@@ -261,7 +262,7 @@ class ModuleResource extends Resource
                         ->icon('heroicon-m-arrow-long-left')
                         ->color('stats4sd')
                         ->url(fn(): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
-                   LoginPromptAction::make('Mark Module Complete'),
+                   LoginPromptWithFormAction::make('Mark Module Complete'),
                     Action::make('mark_mod_complete')
                         ->label('Mark module complete ')
                         ->icon('heroicon-m-pencil-square')
