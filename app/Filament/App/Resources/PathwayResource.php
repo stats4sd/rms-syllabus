@@ -67,7 +67,7 @@ class PathwayResource extends Resource
                                         ->collection('module_cover')
                                         ->size(300)
                                         ->alignEnd()
-                                        ->circular(),
+                                        ->square(),
 
 
                                     Grid::make(1)
