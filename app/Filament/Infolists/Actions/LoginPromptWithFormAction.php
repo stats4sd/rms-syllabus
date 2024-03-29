@@ -29,7 +29,7 @@ class LoginPromptWithFormAction extends Action
             ->modalAlignment(Alignment::Start)
             ->modalFooterActions([
                 Action::make('cancel')
-                    ->url($this->getCancelRedirectsTo() ?? '#')
+                    ->url(fn() => $this->getCancelRedirectsTo() ?? '#')
                     ->close()
                     ->label('Continue as Guest')
             ])
