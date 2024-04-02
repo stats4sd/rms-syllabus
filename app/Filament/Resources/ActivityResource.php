@@ -109,7 +109,7 @@ class ActivityResource extends Resource
                                             ->relationship('trove', 'title')
                                             ->placeholder('Select a trove')
                                             ->preload()
-                                            ->required()
+                                            // ->required()
                                             ->loadingMessage('Loading troves...')
                                             ->searchable()
                                             ->noSearchResultsMessage('No troves match your search')
