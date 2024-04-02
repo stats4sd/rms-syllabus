@@ -119,13 +119,16 @@ class ActivitiesRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\LocaleSwitcher::make(),
+                Tables\Actions\AttachAction::make()
+                                            ->preloadRecordSelect(),
+                                            // ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
                 Tables\Actions\CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['name'] = 'names added after creation';
                         $data['description'] = 'descriptions added after creation';
                         return $data;
                     })
-                    ->after(function (Module $record, array $data) {
+                    ->after(function (Activity $record, array $data) {
                         $record->name = '';
                         $record->description = '';
                 
@@ -159,6 +162,7 @@ class ActivitiesRelationManager extends RelationManager
             ->actions([
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
