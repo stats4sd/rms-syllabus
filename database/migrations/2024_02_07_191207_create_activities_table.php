@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 400);
             $table->longText('description')->nullable();
             $table->foreignId('section_id')->constrained('sections');
-            $table->foreignId('trove_id')->constrained('troves');
+            $table->foreignId('trove_id');
             $table->timestamps();
         });
 
