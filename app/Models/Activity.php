@@ -33,9 +33,9 @@ class Activity extends Model
         'description',
     ];
 
-    public function section(): BelongsTo
+    public function sections(): BelongsToMany
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsToMany(Section::class);
     }
 
     public function trove(): BelongsTo
