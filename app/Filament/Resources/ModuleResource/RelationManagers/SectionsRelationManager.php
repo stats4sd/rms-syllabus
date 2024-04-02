@@ -87,7 +87,7 @@ class SectionsRelationManager extends RelationManager
                         $data['description'] = 'descriptions added after creation';
                         return $data;
                     })
-                    ->after(function (Module $record, array $data) {
+                    ->after(function (Section $record, array $data) {
                         $record->name = '';
                         $record->description = '';
                 
