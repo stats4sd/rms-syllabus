@@ -2,10 +2,59 @@
 
 @config 'tailwind.config.js';
 
+:root {
+  --stats4sd: #D32229;
+  --darkblue: #383B6D;
+}
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 27pt;
+  color: white;
+}
+
+h2 {
+  font-size: 22pt;
+}
+
+h3 {
+  font-size: 14pt;
+  color: var(--stats4sd);
+}
+
+h4 {
+  font-size: 12pt;
+  color: black;
+}
+
+body {
+  font-size: 10pt;
+  color: black;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-red {
+  color: var(--stats4sd);
+}
+
 .divider {
     height: 0.4rem;
     width: 60px;
-    background-color: red;
+    background-color: var(--stats4sd);
     margin-bottom: 1.2rem;
     position:relative;
   }
+
+.bg-darkblue {
+  background-color: var(--darkblue);
+}
