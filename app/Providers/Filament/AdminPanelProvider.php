@@ -44,6 +44,7 @@ class AdminPanelProvider extends PanelProvider
             ->profile()
             ->passwordReset()
             ->registration()
+            ->emailVerification()
             ->darkMode(false)
             ->colors([
                 'primary' => Color::Red,
