@@ -30,13 +30,14 @@ class ActivityResource extends Resource
                 Forms\Components\Section::make('')
                     ->schema([
                         Forms\Components\Select::make('section_id')
-                            ->relationship('section', 'name')
+                            ->relationship('sections', 'name')
                             ->required()
                             ->preload()
+                            ->multiple()
                             ->loadingMessage('Loading sections...')
                             ->searchable()
                             ->noSearchResultsMessage('No sections match your search')
-                            ->placeholder('Select a section')
+                            ->placeholder('Select the sections for this activity')
                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
                         ]),
 
