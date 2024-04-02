@@ -137,9 +137,7 @@ class ActivityResource extends Resource
                                     }),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
-                Tables\Columns\TextColumn::make('section.name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('section.module.name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('section.module.researchComponent.name')->wrap()->sortable(),
+                Tables\Columns\TextColumn::make('sections.name')->badge(),
             ])
             ->filters([
                 //
