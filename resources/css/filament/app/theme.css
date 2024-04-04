@@ -5,6 +5,7 @@
 :root {
   --stats4sd: #D32229;
   --darkblue: #383B6D;
+  --darkred: #9C2934;
 }
 
 h1, h2, h3, h4 {
@@ -57,4 +58,105 @@ body {
 
 .bg-darkblue {
   background-color: var(--darkblue);
+}
+
+.button-white {
+  background-color: white;
+  border: none;
+  color: var(--darkblue);
+  text-align: center;
+  text-decoration: none;
+  font-size: 19px;
+  border-radius: 50px;
+  height: 45px;
+  width: 250px;
+}
+
+.button-white:hover {
+  background-color: var(--darkblue);
+  border: 3px solid white;
+  color: white;
+}
+
+.button-darkblue {
+  background-color: var(--darkblue);
+  border: 3px solid white;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 19px;
+  border-radius: 50px;
+  height: 45px;
+  width: 250px;
+}
+
+.button-darkblue:hover {
+  background-color: white;
+  border: 3px solid var(--darkblue);
+  color: var(--darkblue);
+}
+
+.hover-icon {
+  display: none;
+}
+
+.button-wrapper:hover .default-icon {
+  display: none;
+}
+
+.button-wrapper:hover .hover-icon {
+  display: inline-block;
+}
+
+.button-red {
+  background-color: var(--stats4sd);
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 19px;
+  border-radius: 50px;
+  height: 45px;
+  width: 250px;
+}
+
+.button-red:hover {
+  background-color: var(--darkred);
+}
+
+.button-white-outline {
+  background-color: white;
+  border: 3px solid var(--darkblue);
+  color: var(--darkblue);
+  text-align: center;
+  text-decoration: none;
+  font-size: 19px;
+  border-radius: 50px;
+  height: 45px;
+  width: 250px;
+}
+
+.button-white-outline:hover {
+  background-color: var(--darkblue);
+  color: white;
+}
+
+.hover-icon {
+  display: none;
+}
+
+.button-wrapper:hover .default-icon {
+  display: none;
+}
+
+.button-wrapper:hover .hover-icon {
+  display: inline-block;
+}
+
+.section img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100px;
 }

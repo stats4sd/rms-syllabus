@@ -16,25 +16,7 @@ class Home extends Page
 
     protected static ?string $navigationLabel = 'Home';
 
-    protected static ?string $title = 'Research Methods Syllabus';
+    protected static ?string $title = '';
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            // Actions\EditAction::make(),
-            Action::make('beginLearning')
-                    ->label('Begin learning')
-                    ->icon('heroicon-o-arrow-long-right')
-                    ->iconPosition(IconPosition::After)
-                    ->color('gray')
-                    ->url(fn (): string => PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])),
-            Action::make('findOutMore')
-                    ->label('Find out more')
-                    ->icon('heroicon-o-light-bulb')
-                    ->iconPosition(IconPosition::After)
-                    ->color('gray')
-                    ->url(Info::getUrl()),
-        ];
-    }
 
 }
