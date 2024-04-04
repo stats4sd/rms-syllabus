@@ -153,6 +153,10 @@ body {
   display: inline-block;
 }
 
+.button-wide {
+  width: 320px;
+}
+
 .section img {
   display: block;
   margin: 0 auto;

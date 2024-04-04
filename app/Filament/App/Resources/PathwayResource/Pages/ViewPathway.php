@@ -14,20 +14,10 @@ class ViewPathway extends ViewRecord
 {
     protected static string $resource = PathwayResource::class;
 
-    protected function getHeaderActions(): array
+    public function getTitle(): string
     {
-        return [
-            Action::make('competencyFramework')->label('View competency framework')->color('gray')->url(CompetencyFramework::getUrl()),
-            Action::make('pathwayPDF')
-                ->label('Download my pathway (PDF)')
-                ->icon('heroicon-o-arrow-down-tray')
-                ->color('gray')
-                ->url(Download::getUrl()),
-        ];
+        return '';
     }
-
-    protected static ?string $title = 'Your pathway';
-    protected ?string $subheading = 'Essential Research Methods for Agroecology';
 
     public function getBreadcrumbs(): array
     {

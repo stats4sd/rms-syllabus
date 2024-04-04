@@ -2,13 +2,7 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\Infolists\Actions\LoginPromptAction;
-use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
-use App\Filament\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 use Filament\Forms;
-use Filament\Infolists\Components\Fieldset;
-use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\Split;
 use Filament\Tables;
 use App\Models\Module;
 use App\Models\Pathway;
@@ -19,17 +13,24 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
+use Filament\Infolists\Components\Grid;
+use Filament\Infolists\Components\Split;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Actions;
 use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\PathwayResource\Pages;
+use App\Filament\Infolists\Actions\LoginPromptAction;
+use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
 use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use App\Filament\App\Resources\PathwayResource\RelationManagers;
+use App\Filament\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 
 class PathwayResource extends Resource
 {
@@ -56,6 +57,9 @@ class PathwayResource extends Resource
     {
         return $infolist
             ->schema([
+                ViewEntry::make('pathway_header')
+                    ->view('filament.app.infolists.entries.pathway_header'),
+
                 RepeatableEntry::make('modules')->label('')
                     ->schema([
                         Section::make('')
