@@ -157,10 +157,24 @@ body {
   width: 320px;
 }
 
+.button-small {
+  font-size: 14px;
+  width: 250px;
+}
+
 .section img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
   height: auto;
   max-height: 100px;
+}
+
+main.fi-main {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.fi-main section {
+  padding-top: 0;
 }

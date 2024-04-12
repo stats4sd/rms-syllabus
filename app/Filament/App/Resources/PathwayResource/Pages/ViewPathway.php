@@ -5,6 +5,7 @@ namespace App\Filament\App\Resources\PathwayResource\Pages;
 use Filament\Actions;
 use Filament\Pages\Actions\Action;
 use App\Filament\App\Pages\Download;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\Alignment;
 use Filament\Resources\Pages\ViewRecord;
 use App\Filament\App\Pages\CompetencyFramework;
@@ -22,5 +23,10 @@ class ViewPathway extends ViewRecord
     public function getBreadcrumbs(): array
     {
         return [];
+    }
+
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::Full;
     }
 }

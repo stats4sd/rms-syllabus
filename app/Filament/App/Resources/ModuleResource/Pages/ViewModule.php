@@ -2,26 +2,28 @@
 
 namespace App\Filament\App\Resources\ModuleResource\Pages;
 
-use App\Filament\App\Resources\ModuleResource;
 use Filament\Actions;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\App\Resources\ModuleResource;
 
 class ViewModule extends ViewRecord
 {
     protected static string $resource = ModuleResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            // Actions\EditAction::make(),
-        ];
-    }
 
     public function getBreadcrumbs(): array
     {
         return [];
     }
 
-    protected static ?string $title = 'Module';
+    public function getTitle(): string
+    {
+        return '';
+    }
+
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::Full;
+    }
 
 }
