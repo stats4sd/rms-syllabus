@@ -2,17 +2,16 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\Infolists\Actions\LoginPromptAction;
-use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
-use App\Models\Pathway;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Module;
+use App\Models\Pathway;
 use App\Models\Activity;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Auth;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
@@ -23,13 +22,15 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\ModuleResource\Pages;
+use App\Filament\Infolists\Actions\LoginPromptAction;
 use App\Filament\Infolists\Components\ListRepeatableEntry;
+use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
 use App\Filament\App\Resources\ModuleResource\RelationManagers;
-use Illuminate\Support\HtmlString;
 
 class ModuleResource extends Resource
 {
@@ -54,46 +55,45 @@ class ModuleResource extends Resource
     {
         return $infolist
             ->schema([
-                TextEntry::make('name')
-                    ->label('')
-                    ->weight(FontWeight::Bold)
-                    ->size(TextEntry\TextEntrySize::Large),
 
-                Fieldset::make('')
-                    ->schema([
-                        TextEntry::make('time_estimate')
-                            ->label('')
-                            ->icon('heroicon-m-clock')
-                            ->prefix('Est. duration: ')
-                            ->suffix(' hours'),
-                        TextEntry::make('completion_status')
-                            ->label('')
-                            ->hidden(Auth::guest())
-                            ->icon(fn(string $state): string => match ($state) {
-                                'guest' => 'heroicon-m-arrow-right-end-on-rectangle',
-                                'Not Started' => 'heroicon-m-exclamation-circle',
-                                'In Progress' => 'heroicon-m-cog-8-tooth',
-                                'Completed' => 'heroicon-m-check-badge',
-                            }),
-                        Actions::make([
-                            Action::make('continue')
-                                ->label('Continue learning')
-                                ->icon('heroicon-s-arrow-long-right')
-                                ->color('gray')
-                                // ->outlined()
-                                ->url(function (Module $record) {
-                                                $next_record= $record->next->first();
-                                                if ($next_record->view_status === 'Not Viewed' && $next_record->completion_status != 'Completed') {
-                                                    $next_record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
-                                                }
-                                                elseif ($next_record->view_status === 'Not Viewed' && $next_record->completion_status === 'Completed') {
-                                                    $next_record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
-                                                }
-                                                return ModuleResource::getUrl('view', ['record' => $next_record]);
-                                            })
-                                ->hidden(fn(Module $record) => $record->last ===1),
-                        ]),
-                    ])->columns(3),
+                ViewEntry::make('module_header')
+                    ->view('filament.app.infolists.entries.module_header'),
+
+                // Fieldset::make('')
+                //     ->schema([
+                //         TextEntry::make('time_estimate')
+                //             ->label('')
+                //             ->icon('heroicon-m-clock')
+                //             ->prefix('Est. duration: ')
+                //             ->suffix(' hours'),
+                //         TextEntry::make('completion_status')
+                //             ->label('')
+                //             ->hidden(Auth::guest())
+                //             ->icon(fn(string $state): string => match ($state) {
+                //                 'guest' => 'heroicon-m-arrow-right-end-on-rectangle',
+                //                 'Not Started' => 'heroicon-m-exclamation-circle',
+                //                 'In Progress' => 'heroicon-m-cog-8-tooth',
+                //                 'Completed' => 'heroicon-m-check-badge',
+                //             }),
+                //         Actions::make([
+                //             Action::make('continue')
+                //                 ->label('Continue learning')
+                //                 ->icon('heroicon-s-arrow-long-right')
+                //                 ->color('gray')
+                //                 // ->outlined()
+                //                 ->url(function (Module $record) {
+                //                                 $next_record= $record->next->first();
+                //                                 if ($next_record->view_status === 'Not Viewed' && $next_record->completion_status != 'Completed') {
+                //                                     $next_record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
+                //                                 }
+                //                                 elseif ($next_record->view_status === 'Not Viewed' && $next_record->completion_status === 'Completed') {
+                //                                     $next_record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
+                //                                 }
+                //                                 return ModuleResource::getUrl('view', ['record' => $next_record]);
+                //                             })
+                //                 ->hidden(fn(Module $record) => $record->last ===1),
+                //         ]),
+                //     ])->columns(3),
 
                 Actions::make([
                     Action::make('return_path')
@@ -108,13 +108,6 @@ class ModuleResource extends Resource
                     ->schema([
                         TextEntry::make('description')
                             ->label(''),
-
-                        // TextEntry::make('previous')
-                        //             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
-                        //             ->listWithLineBreaks()
-                        //             ->bulleted()
-                        //             ->hidden(fn(Module $record) => $record->first ===1)
-                        //             ->formatStateUsing(fn (string $state): string => strtoupper($state)),
 
                         ListRepeatableEntry::make('previous')
                                             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
@@ -134,9 +127,9 @@ class ModuleResource extends Resource
 
                     ]),
 
-                Section::make('Activities')
-                    ->schema([
-                    ]),
+
+                ViewEntry::make('activites_banner')
+                    ->view('filament.app.infolists.entries.activities_banner'),
 
                 RepeatableEntry::make('sections')->label('')
                     ->schema([
@@ -149,18 +142,6 @@ class ModuleResource extends Resource
 
                         RepeatableEntry::make('activities')->label('')
                             ->schema([
-                                // IconEntry::make('type')
-                                //             ->color('stats4sd')
-                                //             ->label('')
-                                //             ->icon(fn (string $state): string => match ($state) {
-                                //                 'document' => 'heroicon-m-document-duplicate',
-                                //                 'website' => 'heroicon-m-link',
-                                //                 'video' => 'heroicon-m-video-camera',
-                                //                 'presentation' => 'heroicon-m-presentation-chart-bar',
-                                //                 'picture' => 'heroicon-m-photo',
-                                //                 'course' => 'heroicon-m-academic-cap',
-                                //                 'other' => 'heroicon-m-ellipsis-horizontal-circle',
-                                //             }),
                                 TextEntry::make('name')
                                     ->label('')
                                     ->weight(FontWeight::Bold)
