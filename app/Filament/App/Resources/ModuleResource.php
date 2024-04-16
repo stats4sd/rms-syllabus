@@ -164,7 +164,10 @@ class ModuleResource extends Resource
                                         ->label('Open')
                                         ->icon('heroicon-m-arrow-top-right-on-square')
                                         ->color('stats4sd')
-                                        ->url('stats4sd.org')
+                                        ->url(function (Activity $record) {
+                                            $trove = $record->trove;
+                                            return 'https://stats4sd.org/resources/' . $trove->slug;
+                                        })
                                         ->openUrlInNewTab()
                                         ->visible(Auth::guest()),
                                     Action::make('open')
@@ -182,10 +185,7 @@ class ModuleResource extends Resource
                                                                 $record->refresh();
                                                                 $record->users;
                                                             }
-                                                            return [
-                                                                'target' => '_blank',
-                                                                'url' => url('/stats4sd.org')
-                                                            ];
+                                                            return url('/stats4sd.org');
                                                         })
                                         ->hidden(Auth::guest()),
                                 ]),
