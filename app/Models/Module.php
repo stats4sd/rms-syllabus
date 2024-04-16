@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Filament\App\Resources\ModuleResource;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -147,6 +148,26 @@ class Module extends Model implements HasMedia
             $next_order = $this_mod_order + 1;
             $next_module = Pathway::find(1)->modules->collect()->where('pivot.module_order', $next_order);
             return $next_module;
+        }
+    }
+
+    public function nextRecordUrl()
+    {
+        $nextRecord_collection = $this->next;
+
+        if($nextRecord_collection) {
+            $nextRecord = $nextRecord_collection->first();
+
+            if ($nextRecord->view_status === 'Not Viewed') {
+                if ($nextRecord->completion_status != 'Completed') {
+                    $nextRecord->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
+                } elseif ($nextRecord->completion_status === 'Completed') {
+                    $nextRecord->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
+                }
+            }
+        
+        return ModuleResource::getUrl('view', ['record' => $nextRecord]);
+
         }
     }
 
