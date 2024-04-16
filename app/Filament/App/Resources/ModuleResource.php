@@ -174,19 +174,11 @@ class ModuleResource extends Resource
                                         ->label('Open')
                                         ->icon('heroicon-m-arrow-top-right-on-square')
                                         ->color('stats4sd')
-                                        ->action(function (Activity $record) {
-                                                            if ($record->link_status === 'Not Opened' && $record->completion_status != 'Completed') {
-                                                                $record->users()->attach(auth()->id(), ['link_opened' => 1, 'is_complete' => 0]);
-                                                                $record->refresh();
-                                                                $record->users;
-                                                            }
-                                                            elseif ($record->link_status === 'Not Opened' && $record->completion_status === 'Completed') {
-                                                                $record->users()->updateExistingPivot(auth()->id(), ['link_opened' => 1]);
-                                                                $record->refresh();
-                                                                $record->users;
-                                                            }
-                                                            return url('/stats4sd.org');
-                                                        })
+                                        ->url(function (Activity $record) {
+                                            $trove = $record->trove;
+                                            return 'https://stats4sd.org/resources/' . $trove->slug;
+                                        })
+                                        ->openUrlInNewTab()
                                         ->hidden(Auth::guest()),
                                 ]),
 
