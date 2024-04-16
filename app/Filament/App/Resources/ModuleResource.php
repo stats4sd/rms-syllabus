@@ -182,7 +182,10 @@ class ModuleResource extends Resource
                                                                 $record->refresh();
                                                                 $record->users;
                                                             }
-                                                            return url('/stats4sd.org');
+                                                            return [
+                                                                'target' => '_blank',
+                                                                'url' => url('/stats4sd.org')
+                                                            ];
                                                         })
                                         ->hidden(Auth::guest()),
                                 ]),
