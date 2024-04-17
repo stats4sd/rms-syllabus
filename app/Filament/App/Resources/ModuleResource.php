@@ -170,17 +170,28 @@ class ModuleResource extends Resource
                                         })
                                         ->openUrlInNewTab()
                                         ->visible(Auth::guest()),
-                                    Action::make('open')
+                                    
+                                    Action::make('open_auth')
                                         ->label('Open')
                                         ->icon('heroicon-m-arrow-top-right-on-square')
                                         ->color('stats4sd')
-                                        ->url(function (Activity $record) {
+                                        ->action(function (Activity $record) {
+                                            if ($record->link_status === 'Not Opened' && $record->completion_status != 'Completed') {
+                                                $record->users()->attach(auth()->id(), ['link_opened' => 1, 'is_complete' => 0]);
+                                                $record->refresh();
+                                                $record->users;
+                                            } elseif ($record->link_status === 'Not Opened' && $record->completion_status === 'Completed') {
+                                                $record->users()->updateExistingPivot(auth()->id(), ['link_opened' => 1]);
+                                                $record->refresh();
+                                                $record->users;
+                                            }
+                                           
                                             $trove = $record->trove;
-                                            return 'https://stats4sd.org/resources/' . $trove->slug;
+                                            $url = 'https://stats4sd.org/resources/' . $trove->slug;
+                                            redirect($url);
                                         })
-                                        ->openUrlInNewTab()
                                         ->hidden(Auth::guest()),
-                                ]),
+                                    ]),
 
                                 TextEntry::make('completion_status')
                                     ->label('')
