@@ -79,19 +79,20 @@ class AdminPanelProvider extends PanelProvider
                 ->groups([
                     NavigationGroup::make('')
                         ->items([
-                            ...ResearchComponentResource::getNavigationItems(),
+                            ...PathwayResource::getNavigationItems(),
                             ...ModuleResource::getNavigationItems(),
                             ...SectionResource::getNavigationItems(),
                             ...ActivityResource::getNavigationItems(),
                         ]),
-                    NavigationGroup::make('')
+
+                    NavigationGroup::make('Module Tags')
+                        ->icon('heroicon-o-tag')
                         ->items([
-                            ...PathwayResource::getNavigationItems(),
-                        ]),
-                    NavigationGroup::make('')
-                        ->items([
+                            ...ResearchComponentResource::getNavigationItems(),
                             ...Competencies::getNavigationItems(),
+                            
                         ]),
+
                     NavigationGroup::make('')
                         ->items([
                             ...UserResource::getNavigationItems(),
