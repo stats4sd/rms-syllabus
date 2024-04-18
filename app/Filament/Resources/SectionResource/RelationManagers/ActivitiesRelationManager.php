@@ -92,7 +92,7 @@ class ActivitiesRelationManager extends RelationManager
                                         ->searchable()
                                         ->noSearchResultsMessage('No troves match your search')
                                         ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
-                                        ->requiredWithoutAll('trove_es, trove_fr')
+                                        ->requiredWithoutAll('trove_id_es, trove_id_fr')
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                         Forms\Components\Select::make('trove_id_es')
                                         ->label('Spanish')
@@ -103,7 +103,7 @@ class ActivitiesRelationManager extends RelationManager
                                         ->searchable()
                                         ->noSearchResultsMessage('No troves match your search')
                                         ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
-                                        ->requiredWithoutAll('trove_en, trove_fr')
+                                        ->requiredWithoutAll('trove_id_en, trove_id_fr')
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                         Forms\Components\Select::make('trove_id_fr')
                                         ->label('French')
@@ -114,7 +114,7 @@ class ActivitiesRelationManager extends RelationManager
                                         ->searchable()
                                         ->noSearchResultsMessage('No troves match your search')
                                         ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
-                                        ->requiredWithoutAll('trove_es, trove_en')
+                                        ->requiredWithoutAll('trove_id_es, trove_id_en')
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                     ]),
 
