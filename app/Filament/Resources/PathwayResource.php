@@ -39,14 +39,14 @@ class PathwayResource extends Resource
                                         ->label('English')
                                         ->rows(2)
                                         ->regex('/^(?=.*[^\W_])[^\n]+$/')
-                                        ->requiredWithoutAll('name_es, label_fr')
+                                        ->requiredWithoutAll('name_es, name_fr')
                                         ->validationMessages(['regex' => 'Name cannot only contain special characters',
                                                               'required_without_all' => 'Enter the name in at least one language']),
                         Forms\Components\Textarea::make('name_es')
                                         ->label('Spanish')
                                         ->rows(2)
                                         ->regex('/^(?=.*[^\W_])[^\n]+$/')
-                                        ->requiredWithoutAll('name_en, label_fr')
+                                        ->requiredWithoutAll('name_en, name_fr')
                                         ->validationMessages(['regex' => 'Name cannot only contain special characters',
                                                               'required_without_all' => 'Enter the name in at least one language']),
                         Forms\Components\Textarea::make('name_fr')

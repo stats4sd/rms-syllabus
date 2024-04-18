@@ -32,11 +32,11 @@ class ActivitiesRelationManager extends RelationManager
                                 Forms\Components\TextInput::make('name')->hiddenOn(['edit', 'create']),
                                 Forms\Components\TextInput::make('name_en')
                                                 ->label('English')
-                                                ->requiredWithoutAll('name_es, label_fr')
+                                                ->requiredWithoutAll('name_es, name_fr')
                                                 ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
                                 Forms\Components\TextInput::make('name_es')
                                                 ->label('Spanish')
-                                                ->requiredWithoutAll('name_en, label_fr')
+                                                ->requiredWithoutAll('name_en, name_fr')
                                                 ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
                                 Forms\Components\TextInput::make('name_fr')
                                                 ->label('French')
