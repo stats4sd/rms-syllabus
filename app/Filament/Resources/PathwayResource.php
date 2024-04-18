@@ -85,8 +85,8 @@ class PathwayResource extends Resource
                         Repeater::make('modulePathways')
                                 ->relationship()
                                 ->label('')
-                                ->defaultItems(1)
-                                ->addActionLabel('Add another module')
+                                ->defaultItems(0)
+                                ->addActionLabel('Add a module')
                                 ->columns(2)
                                 ->schema([
                                     Forms\Components\Select::make('module_id')
