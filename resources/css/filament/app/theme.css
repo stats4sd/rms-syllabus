@@ -178,3 +178,7 @@ main.fi-main {
 .fi-main section {
   padding-top: 0;
 }
+
+.infolist-image {
+  max-width: 100px;
+}

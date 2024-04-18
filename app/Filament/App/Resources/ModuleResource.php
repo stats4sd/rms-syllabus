@@ -15,6 +15,7 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Auth;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
+use Filament\Infolists\Components\Grid;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Actions;
@@ -109,21 +110,34 @@ class ModuleResource extends Resource
                         TextEntry::make('description')
                             ->label(''),
 
-                        ListRepeatableEntry::make('previous')
-                                            ->label('Before completing this module, you should be familiar with the contents of the following modules:')
-                                            ->contained(false)
-                                            ->extraAttributes(['class' => 'space-y-0'])
-                                            ->hidden(fn(Module $record) => $record->first ===1)
-                                            ->schema([
-                                                TextEntry::make('name')->hiddenLabel()->columnSpanFull()
-                                                            ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
-                                                            ->extraAttributes(['class' => 'y-0']),
-                                            ]),
+                        Grid::make(8)
+                            ->schema([
+                                ViewEntry::make('previous_image')
+                                    ->view('filament.app.infolists.entries.previous_image')
+                                    ->hidden(fn(Module $record) => $record->first ===1),
+                                ListRepeatableEntry::make('previous')
+                                                    ->label('Before completing this module, you should be familiar with the contents of the following modules:')
+                                                    ->contained(false)
+                                                    ->extraAttributes(['class' => 'space-y-0'])
+                                                    ->hidden(fn(Module $record) => $record->first ===1)
+                                                    ->columnSpan(6)
+                                                    ->schema([
+                                                        TextEntry::make('name')->hiddenLabel()->columnSpanFull()
+                                                                    ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
+                                                                    ->extraAttributes(['class' => 'y-0']),
+                                                    ]),
+                            ]),
 
-                        TextEntry::make('competencies.name')
-                            ->label('This module is linked to the following competencies:')
-                            ->listWithLineBreaks()
-                            ->bulleted(),
+                        Grid::make(8)
+                            ->schema([
+                                ViewEntry::make('competencies_image')
+                                                    ->view('filament.app.infolists.entries.competencies_image'),
+                                TextEntry::make('competencies.name')
+                                    ->label('This module is linked to the following competencies:')
+                                    ->listWithLineBreaks()
+                                    ->bulleted()
+                                    ->columnSpan(6),
+                            ]),
 
                     ]),
 
@@ -155,10 +169,12 @@ class ModuleResource extends Resource
                                         'picture' => 'heroicon-m-photo',
                                         'course' => 'heroicon-m-academic-cap',
                                         'other' => 'heroicon-m-ellipsis-horizontal-circle',
-                                    }),
+                                    })
+                                    ->columnSpan(2),
                                 TextEntry::make('description')
                                     ->label('')
-                                    ->columnStart(1),
+                                    ->columnStart(1)
+                                    ->columnSpan(2),
                                 Actions::make([
                                     Action::make('open_guest')
                                         ->label('Open')
