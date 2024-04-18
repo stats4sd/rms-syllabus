@@ -137,7 +137,10 @@ class ActivityResource extends Resource
                                     }),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
                 Tables\Columns\TextColumn::make('description')->wrap(),
-                Tables\Columns\TextColumn::make('sections.name')->badge(),
+                Tables\Columns\TextColumn::make('sections_count')
+                                ->counts('sections')
+                                ->label('# Modules') //sections belong to a module
+                                ->sortable(),
             ])
             ->filters([
                 //

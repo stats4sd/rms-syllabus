@@ -29,19 +29,6 @@ class ModuleResource extends Resource
 
                 Forms\Components\Section::make('')
                     ->schema([
-                        Forms\Components\Select::make('research_component_id')
-                            ->relationship('researchComponent', 'name')
-                            ->required()
-                            ->preload()
-                            ->loadingMessage('Loading research components...')
-                            ->searchable()
-                            ->noSearchResultsMessage('No research components match your search')
-                            ->placeholder('Select a research component')
-                            ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
-                        ]),
-
-                Forms\Components\Section::make('')
-                    ->schema([
                         Forms\Components\Fieldset::make('name_field')
                             ->label('Name')
                             ->columns(3)
@@ -87,6 +74,18 @@ class ModuleResource extends Resource
                             ]),
                     ]),
 
+                Forms\Components\Section::make('Time estimate')
+                    ->description('Enter an estimate of the time it takes to complete the moudle in hours e.g., 1 hour, 2.5 hours')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('time_estimate')
+                            ->label('')
+                            ->numeric()
+                            ->inputMode('decimal')
+                            ->placeholder('Enter a time estimate')
+                            ->required()
+                    ]),    
+
                 Forms\Components\Section::make('Competencies')
                     ->description('description here........')
                     ->schema([
@@ -99,19 +98,23 @@ class ModuleResource extends Resource
                                             ->loadingMessage('Loading competencies...')
                                             ->noSearchResultsMessage('No competencies match your search')
                                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
+                                            ->searchable()
                     ]),
-
-                Forms\Components\Section::make('Time estimate')
-                    ->description('Enter an estimate of the time it takes to complete the moudle in hours e.g., 1 hour, 2.5 hours')
-                    ->columns(3)
+                
+                Forms\Components\Section::make('Research Components')
+                    ->description('description here........')
                     ->schema([
-                        Forms\Components\TextInput::make('time_estimate')
+                        Forms\Components\Select::make('research_component_id')
                             ->label('')
-                            ->numeric()
-                            ->inputMode('decimal')
-                            ->placeholder('Enter a time estimate')
-                            ->required()
-                    ]),
+                            ->relationship('researchComponents', 'name')
+                            ->placeholder('Select research components')
+                            ->multiple()
+                            ->preload()
+                            ->loadingMessage('Loading research components...')
+                            ->noSearchResultsMessage('No research components match your search')
+                            ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
+                            ->searchable()
+                        ]),
 
                 Forms\Components\Section::make('Cover image')
                     ->schema([
@@ -134,7 +137,12 @@ class ModuleResource extends Resource
                                             ->counts('sections')
                                             ->label('# Sections')
                                             ->sortable(),
-                Tables\Columns\TextColumn::make('researchComponent.name')->badge()->wrap()->sortable(),
+                Tables\Columns\TextColumn::make('pathways_count')
+                                            ->counts('pathways')
+                                            ->label('# Pathways')
+                                            ->sortable(),
+
+
             ])
             ->filters([
                 //

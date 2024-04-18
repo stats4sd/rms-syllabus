@@ -103,7 +103,6 @@ class SectionResource extends Resource
                                             ->label('# Activities')
                                             ->sortable(),
                 Tables\Columns\TextColumn::make('module.name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('module.researchComponent.name')->wrap()->sortable(),
             ])
             ->filters([
                 //

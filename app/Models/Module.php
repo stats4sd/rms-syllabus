@@ -53,9 +53,9 @@ class Module extends Model implements HasMedia
         return $this->morphToMany(Competency::class, 'competencyable');
     }
 
-    public function researchComponent(): BelongsTo
+    public function researchComponents(): MorphToMany
     {
-        return $this->belongsTo(ResearchComponent::class);
+        return $this->morphToMany(ResearchComponent::class, 'componentable');
     }
 
     public function pathways(): BelongsToMany
