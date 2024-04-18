@@ -91,6 +91,7 @@ class ActivityResource extends Resource
                 Forms\Components\Section::make('')
                     ->schema([
                         Forms\Components\Select::make('type')
+                                            ->required()
                                             ->options([
                                                 'document' => 'Document',
                                                 'website' => 'Website',
