@@ -38,18 +38,24 @@ class PathwayResource extends Resource
                         Forms\Components\Textarea::make('name_en')
                                         ->label('English')
                                         ->rows(2)
+                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
                                         ->requiredWithoutAll('name_es, label_fr')
-                                        ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                              'required_without_all' => 'Enter the name in at least one language']),
                         Forms\Components\Textarea::make('name_es')
                                         ->label('Spanish')
                                         ->rows(2)
+                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
                                         ->requiredWithoutAll('name_en, label_fr')
-                                        ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                              'required_without_all' => 'Enter the name in at least one language']),
                         Forms\Components\Textarea::make('name_fr')
                                         ->label('French')
                                         ->rows(2)
+                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
                                         ->requiredWithoutAll('name_es, name_en')
-                                        ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                                        ->validationMessages(['regex' => 'Name cannot only contain special characters', 
+                                                              'required_without_all' => 'Enter the name in at least one language']),
                     ]),
 
                 Forms\Components\Fieldset::make('description_field')
