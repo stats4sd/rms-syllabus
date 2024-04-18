@@ -31,6 +31,12 @@ class EditActivity extends EditRecord
         $data['description_es'] = isset($translations['es']) ? $this->record->getTranslation('description', 'es') : null;
         $data['description_fr'] = isset($translations['fr']) ? $this->record->getTranslation('description', 'fr') : null;
 
+        $translations = $this->record->getTranslations('trove_id');
+
+        $data['trove_id_en'] = isset($translations['en']) ? $this->record->getTranslation('trove_id', 'en') : null;
+        $data['trove_id_es'] = isset($translations['es']) ? $this->record->getTranslation('trove_id', 'es') : null;
+        $data['trove_id_fr'] = isset($translations['fr']) ? $this->record->getTranslation('trove_id', 'fr') : null;
+
         return $data;
     }
 
@@ -38,6 +44,7 @@ class EditActivity extends EditRecord
     {
         $this->record->name = '';
         $this->record->description = '';
+        $this->record->trove_id = '';
 
         if(!is_null($this->data['name_en'])){
             $this->record->setTranslation('name', 'en', $this->data['name_en']);
@@ -61,6 +68,18 @@ class EditActivity extends EditRecord
 
         if(!is_null($this->data['description_fr'])){
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
+        }
+
+        if(!is_null($this->data['trove_id_en'])){
+            $this->record->setTranslation('trove_id', 'en', $this->data['trove_id_en']);
+        }
+
+        if(!is_null($this->data['trove_id_es'])){
+            $this->record->setTranslation('trove_id', 'es', $this->data['trove_id_es']);
+        }
+
+        if(!is_null($this->data['trove_id_fr'])){
+            $this->record->setTranslation('trove_id', 'fr', $this->data['trove_id_fr']);
         }
 
         $this->record->save();

@@ -25,12 +25,12 @@ class Activity extends Model
     protected $casts = [
         'id' => 'integer',
         'section_id' => 'integer',
-        'trove_id' => 'integer',
     ];
 
     public $translatable = [
         'name',
         'description',
+        'trove_id'
     ];
 
     public function sections(): BelongsToMany

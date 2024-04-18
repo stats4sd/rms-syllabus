@@ -103,18 +103,44 @@ class ActivityResource extends Resource
                                             ])
                     ]),
 
-                Forms\Components\Section::make('')
-                    // ->description('description here........')
+                Forms\Components\Fieldset::make('trove_field')
+                    ->label('Trove')
+                    ->columns(3)
                     ->schema([
-                        Forms\Components\Select::make('trove_id')
-                                            ->relationship('trove', 'title')
-                                            ->placeholder('Select a trove')
-                                            ->preload()
-                                            ->required()
-                                            ->loadingMessage('Loading troves...')
-                                            ->searchable()
-                                            ->noSearchResultsMessage('No troves match your search')
-                                            ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
+                        Forms\Components\TextInput::make('trove_id')->hiddenOn(['edit', 'create']),
+                        Forms\Components\Select::make('trove_id_en')
+                                        ->label('English')
+                                        ->relationship('trove', 'title')
+                                        ->placeholder('Select a trove')
+                                        ->preload()
+                                        ->loadingMessage('Loading troves...')
+                                        ->searchable()
+                                        ->noSearchResultsMessage('No troves match your search')
+                                        ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
+                                        ->requiredWithoutAll('trove_es, trove_fr')
+                                        ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
+                        Forms\Components\Select::make('trove_id_es')
+                                        ->label('Spanish')
+                                        ->relationship('trove', 'title')
+                                        ->placeholder('Select a trove')
+                                        ->preload()
+                                        ->loadingMessage('Loading troves...')
+                                        ->searchable()
+                                        ->noSearchResultsMessage('No troves match your search')
+                                        ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
+                                        ->requiredWithoutAll('trove_en, trove_fr')
+                                        ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
+                        Forms\Components\Select::make('trove_id_fr')
+                                        ->label('French')
+                                        ->relationship('trove', 'title')
+                                        ->placeholder('Select a trove')
+                                        ->preload()
+                                        ->loadingMessage('Loading troves...')
+                                        ->searchable()
+                                        ->noSearchResultsMessage('No troves match your search')
+                                        ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('title', 'en'))
+                                        ->requiredWithoutAll('trove_es, trove_en')
+                                        ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                     ]),
 
             ]);
