@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('module_pathway', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pathway_id');
-            $table->foreignId('module_id');
+            $table->foreignId('pathway_id')->constrained('pathways')->cascadeOnDelete();
+            $table->foreignId('module_id')->constrained('modules')->cascadeOnDelete();
             $table->integer('module_order');
             $table->timestamps();
         });

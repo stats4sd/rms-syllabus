@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('module_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('module_id')->constrained('modules');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('module_id')->constrained('modules')->cascadeOnDelete();
             $table->boolean('is_complete');
             $table->timestamps();
         });
