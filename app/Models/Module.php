@@ -119,7 +119,12 @@ class Module extends Model implements HasMedia
         
         $mod_pathway = $this->pathways->where('id', 1)->first();
 
-        return $mod_pathway->pivot->module_order === 1 ? 1 : 0;
+        // find the module with the lowest order number - incase module with order 1 is deleted
+        $min = Pathway::find(1)->modules->collect()->map(function ($module) {
+            return $module->pivot->module_order;
+        })->min();
+
+        return $mod_pathway->pivot->module_order === $min ? 1 : 0;
 
     }
 
