@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Trove;
 use App\Models\Activity;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -110,7 +111,7 @@ class ActivityResource extends Resource
                         Forms\Components\TextInput::make('trove_id')->hiddenOn(['edit', 'create']),
                         Forms\Components\Select::make('trove_id_en')
                                         ->label('English')
-                                        ->relationship('trove', 'title')
+                                        ->options(Trove::all()->pluck('title', 'id'))
                                         ->placeholder('Select a trove')
                                         ->preload()
                                         ->loadingMessage('Loading troves...')
@@ -121,7 +122,7 @@ class ActivityResource extends Resource
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                         Forms\Components\Select::make('trove_id_es')
                                         ->label('Spanish')
-                                        ->relationship('trove', 'title')
+                                        ->options(Trove::all()->pluck('title', 'id'))
                                         ->placeholder('Select a trove')
                                         ->preload()
                                         ->loadingMessage('Loading troves...')
@@ -132,7 +133,7 @@ class ActivityResource extends Resource
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                         Forms\Components\Select::make('trove_id_fr')
                                         ->label('French')
-                                        ->relationship('trove', 'title')
+                                        ->options(Trove::all()->pluck('title', 'id'))
                                         ->placeholder('Select a trove')
                                         ->preload()
                                         ->loadingMessage('Loading troves...')
