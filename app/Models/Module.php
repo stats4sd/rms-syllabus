@@ -36,6 +36,7 @@ class Module extends Model implements HasMedia
     public $translatable = [
         'name',
         'description',
+        'time_estimate',
     ];
 
     public function getRouteKeyName(): string

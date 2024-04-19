@@ -32,6 +32,12 @@ class EditModule extends EditRecord
         $data['description_es'] = isset($translations['es']) ? $this->record->getTranslation('description', 'es') : null;
         $data['description_fr'] = isset($translations['fr']) ? $this->record->getTranslation('description', 'fr') : null;
 
+        $translations = $this->record->getTranslations('time_estimate');
+
+        $data['time_estimate_en'] = isset($translations['en']) ? $this->record->getTranslation('time_estimate', 'en') : null;
+        $data['time_estimate_es'] = isset($translations['es']) ? $this->record->getTranslation('time_estimate', 'es') : null;
+        $data['time_estimate_fr'] = isset($translations['fr']) ? $this->record->getTranslation('time_estimate', 'fr') : null;
+
         return $data;
     }
 
@@ -39,6 +45,7 @@ class EditModule extends EditRecord
     {
         $this->record->name = '';
         $this->record->description = '';
+        $this->record->time_estimate = '';
 
         if(!is_null($this->data['name_en'])){
             $this->record->setTranslation('name', 'en', $this->data['name_en']);
@@ -62,6 +69,18 @@ class EditModule extends EditRecord
 
         if(!is_null($this->data['description_fr'])){
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
+        }
+
+        if(!is_null($this->data['time_estimate_en'])){
+            $this->record->setTranslation('time_estimate', 'en', $this->data['time_estimate_en']);
+        }
+
+        if(!is_null($this->data['time_estimate_es'])){
+            $this->record->setTranslation('time_estimate', 'es', $this->data['time_estimate_es']);
+        }
+
+        if(!is_null($this->data['time_estimate_fr'])){
+            $this->record->setTranslation('time_estimate', 'fr', $this->data['time_estimate_fr']);
         }
 
         $this->record['slug'] = Str::slug($this->data['name_en'] ?? $this->data['name_es'] ?? $this->data['name_fr'] ?? '');

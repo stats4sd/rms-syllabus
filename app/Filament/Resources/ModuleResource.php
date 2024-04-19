@@ -83,17 +83,37 @@ class ModuleResource extends Resource
                 Forms\Components\Section::make('Time estimate')
                     ->description('Enter an estimate of the time it takes to complete the moudle in hours e.g., 1 hour, 2.5 hours')
                     ->columns(3)
+                    ->icon('heroicon-m-clock')
                     ->schema([
-                        Forms\Components\TextInput::make('time_estimate')
-                            ->label('')
+                        Forms\Components\TextInput::make('time_estimate_field')
+                            ->label('Time estimate')
+                            ->hiddenOn(['edit', 'create']),
+                        Forms\Components\TextInput::make('time_estimate_en')
+                            ->label('English')
                             ->numeric()
                             ->inputMode('decimal')
                             ->placeholder('Enter a time estimate')
-                            ->required()
+                            ->requiredWithoutAll('time_estimate_es, time_estimate_fr')
+                            ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
+                        Forms\Components\TextInput::make('time_estimate_es')
+                            ->label('Spanish')
+                            ->numeric()
+                            ->inputMode('decimal')
+                            ->placeholder('Enter a time estimate')
+                            ->requiredWithoutAll('time_estimate_en, time_estimate_fr')
+                            ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
+                        Forms\Components\TextInput::make('time_estimate_fr')
+                            ->label('French')
+                            ->numeric()
+                            ->inputMode('decimal')
+                            ->placeholder('Enter a time estimate')
+                            ->requiredWithoutAll('time_estimate_en, time_estimate_es')
+                            ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                     ]),    
 
                 Forms\Components\Section::make('Competencies')
                     ->description('description here........')
+                    ->icon('heroicon-m-tag')
                     ->schema([
                         Forms\Components\Select::make('competencies')
                                             ->label('')
@@ -109,6 +129,7 @@ class ModuleResource extends Resource
                 
                 Forms\Components\Section::make('Research Components')
                     ->description('description here........')
+                    ->icon('heroicon-m-tag')
                     ->schema([
                         Forms\Components\Select::make('research_component_id')
                             ->label('')
@@ -123,6 +144,7 @@ class ModuleResource extends Resource
                         ]),
 
                 Forms\Components\Section::make('Cover image')
+                    ->icon('heroicon-m-photo')
                     ->schema([
                         Forms\Components\SpatieMediaLibraryFileUpload::make('cover_image')
                                                                         ->collection('module_cover')
