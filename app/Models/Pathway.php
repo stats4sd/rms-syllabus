@@ -18,6 +18,7 @@ class Pathway extends Model
         'name',
         'description',
         'slug',
+        'status',
         'creator_id'
     ];
 
