@@ -9,6 +9,7 @@ use App\Models\Activity;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Concerns\Translatable;
 use App\Filament\Resources\ActivityResource\Pages;
@@ -144,6 +145,8 @@ class ActivityResource extends Resource
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                     ]),
 
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
+                
             ]);
     }
 
@@ -164,10 +167,13 @@ class ActivityResource extends Resource
                                         'other' => 'heroicon-m-ellipsis-horizontal-circle',
                                     }),
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('description')->wrap(),
+                // Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('sections_count')
                                 ->counts('sections')
                                 ->label('# Modules') //sections belong to a module
+                                ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                                ->label('Created by')
                                 ->sortable(),
             ])
             ->filters([

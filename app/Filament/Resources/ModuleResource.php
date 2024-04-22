@@ -8,6 +8,7 @@ use App\Models\Module;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Concerns\Translatable;
 use App\Filament\Resources\ModuleResource\Pages;
@@ -150,6 +151,8 @@ class ModuleResource extends Resource
                                                                         ->collection('module_cover')
                     ]),
 
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
+
             ]);
     }
 
@@ -158,7 +161,7 @@ class ModuleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('description')->wrap(),
+                // Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('time_estimate')->suffix(' hours'),
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('cover_image')->collection('module_cover'),
                 Tables\Columns\TextColumn::make('sections_count')
@@ -168,6 +171,9 @@ class ModuleResource extends Resource
                 Tables\Columns\TextColumn::make('pathways_count')
                                             ->counts('pathways')
                                             ->label('# Pathways')
+                                            ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                                            ->label('Created by')
                                             ->sortable(),
 
 

@@ -8,6 +8,7 @@ use App\Models\Section;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Concerns\Translatable;
 use App\Filament\Resources\SectionResource\Pages;
@@ -88,6 +89,8 @@ class SectionResource extends Resource
                                                 // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                             ]),
                     ]),
+                
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
 
             ]);
     }
@@ -97,12 +100,15 @@ class SectionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->wrap()->sortable(),
-                Tables\Columns\TextColumn::make('description')->wrap(),
+                // Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('activities_count')
                                             ->counts('activities')
                                             ->label('# Activities')
                                             ->sortable(),
                 Tables\Columns\TextColumn::make('module.name')->wrap()->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                                            ->label('Created by')
+                                            ->sortable(),
             ])
             ->filters([
                 //

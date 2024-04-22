@@ -52,5 +52,10 @@ class CreatePathway extends CreateRecord
 
         $this->record->save();
     }
+
+    protected function getRedirectUrl(): string 
+    {
+        return $this->getResource()::getUrl('index');
+    }
     
 }

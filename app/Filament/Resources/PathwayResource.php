@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\TextEntry;
@@ -101,7 +102,25 @@ class PathwayResource extends Resource
                                         ->noSearchResultsMessage('No modules match your search')
                                         ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                                 ])->orderColumn('module_order')
-                    ])
+                                ]),
+
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
+
+                Forms\Components\ToggleButtons::make('status')
+                                ->inline()
+                                ->required()
+                                ->options([
+                                    'Draft' => 'Draft - in progress',
+                                    'Published' => 'Published - live on frontend'
+                                ])
+                                ->icons([
+                                    'Draft' => 'heroicon-o-cog-8-tooth',
+                                    'Published' => 'heroicon-o-check-circle',
+                                ])
+                                ->colors([
+                                    'Draft' => 'warning',
+                                    'Published' => 'success',
+                                ]),
             ]);
     }
 
@@ -110,11 +129,20 @@ class PathwayResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('modules_count')
                                 ->counts('modules')
                                 ->label('# Modules')
                                 ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                                ->label('Created by')
+                                ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                                ->badge()
+                                ->sortable()
+                                ->color(fn (string $state): string => match ($state) {
+                                    'Draft' => 'warning',
+                                    'Published' => 'success',
+                                }),
             ])
             ->filters([
                 //
