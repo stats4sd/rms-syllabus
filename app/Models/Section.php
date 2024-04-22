@@ -17,6 +17,7 @@ class Section extends Model
         'name',
         'description',
         'module_id',
+        'creator_id'
     ];
 
     protected $casts = [
@@ -37,5 +38,10 @@ class Section extends Model
     public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
 }

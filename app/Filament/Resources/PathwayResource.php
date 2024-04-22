@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\TextEntry;
@@ -101,7 +102,10 @@ class PathwayResource extends Resource
                                         ->noSearchResultsMessage('No modules match your search')
                                         ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                                 ])->orderColumn('module_order')
-                    ])
+                                ]),
+
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
+
             ]);
     }
 
@@ -110,10 +114,12 @@ class PathwayResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description')->wrap(),
                 Tables\Columns\TextColumn::make('modules_count')
                                 ->counts('modules')
                                 ->label('# Modules')
+                                ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                                ->label('Created by')
                                 ->sortable(),
             ])
             ->filters([

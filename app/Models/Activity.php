@@ -20,6 +20,7 @@ class Activity extends Model
         'section_id',
         'trove_id',
         'type',
+        'creator_id'
     ];
 
     protected $casts = [
@@ -47,6 +48,11 @@ class Activity extends Model
     {
         return $this->belongsToMany(User::class, 'activity_user')
                     ->withPivot('is_complete', 'link_opened');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function getLinkStatusAttribute()
