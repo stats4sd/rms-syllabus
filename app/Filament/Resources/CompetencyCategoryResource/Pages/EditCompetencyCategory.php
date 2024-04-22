@@ -65,4 +65,9 @@ class EditCompetencyCategory extends EditRecord
 
         $this->record->save();
     }
+
+    protected function getRedirectUrl(): string 
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
