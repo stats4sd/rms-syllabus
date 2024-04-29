@@ -7,22 +7,22 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use App\Filament\Clusters\Competencies;
-use App\Filament\Resources\UserResource;
+use App\Filament\Admin\Clusters\Competencies;
+use App\Filament\Admin\Resources\UserResource;
 use Filament\Navigation\NavigationGroup;
-use App\Filament\Resources\ModuleResource;
+use App\Filament\Admin\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
-use App\Filament\Resources\PathwayResource;
-use App\Filament\Resources\SectionResource;
-use App\Filament\Resources\ActivityResource;
+use App\Filament\Admin\Resources\PathwayResource;
+use App\Filament\Admin\Resources\SectionResource;
+use App\Filament\Admin\Resources\ActivityResource;
 use Filament\SpatieLaravelTranslatablePlugin;
-use App\Filament\Resources\CompetencyResource;
+use App\Filament\Admin\Resources\CompetencyResource;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use App\Filament\Resources\ResearchComponentResource;
+use App\Filament\Admin\Resources\ResearchComponentResource;
 use Illuminate\Routing\Middleware\SubstituteBindings;
-use App\Filament\Resources\CompetencyCategoryResource;
+use App\Filament\Admin\Resources\CompetencyCategoryResource;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -49,13 +49,13 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Red,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
+            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
+            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
+            ->discoverClusters(in: app_path('Filament/Admin/Clusters'), for: 'App\\Filament\\Admin\\Clusters')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
