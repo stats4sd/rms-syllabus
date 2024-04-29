@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Infolists\Components;
+namespace App\Filament\App\Infolists\Components;
 
 use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Illuminate\Support\Arr;

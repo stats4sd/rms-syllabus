@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Filament\Infolists\Actions;
+namespace App\Filament\App\Infolists\Actions;
 
+use App\Providers\Filament\AppPanelProvider;
 use Closure;
-use Egulias\EmailValidator\Parser\CommentStrategy\LocalComment;
-use Filament\Facades\Filament;
 use Filament\Infolists\Components\Actions\Action;
 use Filament\Pages\Auth\Login;
 use Filament\Support\Enums\Alignment;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
-class LoginPromptWithFormAction extends Action
+class LoginPromptAction extends Action
 {
     protected Closure|string|null $cancelRedirectsTo = null;
 
@@ -20,24 +17,21 @@ class LoginPromptWithFormAction extends Action
     {
         parent::setUp();
 
-        $this
+        $this->requiresConfirmation()
             ->visible(Auth::guest())
             ->modalHeading('Keep Track of Your Journey')
             ->modalIcon('heroicon-o-bookmark')
             ->modalIconColor('darkblue')
             ->modalDescription('Save your progress with a free account.')
             ->modalAlignment(Alignment::Start)
-            ->modalFooterActions([
-                Action::make('cancel')
-                    ->url(fn() => $this->getCancelRedirectsTo() ?? '#')
-                    ->close()
-                    ->label('Continue as Guest')
-            ])
-            ->modalFooterActionsAlignment(Alignment::Center)
-            ->modalContent(fn() => view('filament.infolists.components.login-prompt-with-form-action'))
-            ->modalWidth('md');
-
-        // TODO: find the blade and add <x-filament-socialite::buttons :show-divider="true"
+            ->modalSubmitAction(fn() => Action::make('Login or Signup')
+                ->url(filament()->getLoginUrl()))
+            ->modalCancelAction(fn() =>
+            Action::make('cancel')
+                ->url($this->getCancelRedirectsTo() ?? '#')
+                ->close()
+                ->label('Continue as Guest')
+            );
     }
 
 

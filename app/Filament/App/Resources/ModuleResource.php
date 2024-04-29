@@ -30,9 +30,9 @@ use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\ModuleResource\Pages;
-use App\Filament\Infolists\Actions\LoginPromptAction;
-use App\Filament\Infolists\Components\ListRepeatableEntry;
-use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
+use App\Filament\App\Infolists\Actions\LoginPromptAction;
+use App\Filament\App\Infolists\Components\ListRepeatableEntry;
+use App\Filament\App\Infolists\Actions\LoginPromptWithFormAction;
 use App\Filament\App\Resources\ModuleResource\RelationManagers;
 
 class ModuleResource extends Resource

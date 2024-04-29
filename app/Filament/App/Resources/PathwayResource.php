@@ -27,11 +27,11 @@ use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\PathwayResource\Pages;
-use App\Filament\Infolists\Actions\LoginPromptAction;
-use App\Filament\Infolists\Actions\LoginPromptWithFormAction;
+use App\Filament\App\Infolists\Actions\LoginPromptAction;
+use App\Filament\App\Infolists\Actions\LoginPromptWithFormAction;
 use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use App\Filament\App\Resources\PathwayResource\RelationManagers;
-use App\Filament\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
+use App\Filament\App\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 
 class PathwayResource extends Resource
 {
