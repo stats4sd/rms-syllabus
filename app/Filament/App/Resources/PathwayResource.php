@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
+use ModuleResource\Pages\ViewModule;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Infolists\Components\Grid;
@@ -100,18 +101,18 @@ class PathwayResource extends Resource
                                                 ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
                                             Actions::make([
                                                 LoginPromptWithFormAction::make('view')
-                                                ->cancelRedirectsTo(fn(Module $record) => ModuleResource::getUrl('view', ['record' => $record])),
+                                                ->cancelRedirectsTo(fn(Module $record, Pathway $pathway) => PathwayResource::getUrl('modules.view', ['record' => $record, 'parent' => $pathway])),
                                                 Action::make('view')
                                                     ->label('View')
                                                     ->icon('heroicon-m-arrow-long-right')
                                                     ->color('stats4sd')
-                                                    ->action(function (Module $record) {
+                                                    ->action(function (Module $record, Pathway $pathway) {
                                                         if ($record->view_status === 'Not Viewed' && $record->completion_status != 'Completed') {
                                                             $record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
                                                         } elseif ($record->view_status === 'Not Viewed' && $record->completion_status === 'Completed') {
                                                             $record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
                                                         }
-                                                        redirect(ModuleResource::getUrl('view', ['record' => $record]));
+                                                        redirect(PathwayResource::getUrl('modules.view', ['record' => $record, 'parent' => $pathway]));
                                                     })
                                                     ->hidden(Auth::guest()),
                                             ])
@@ -158,10 +159,10 @@ class PathwayResource extends Resource
     public static function getPages(): array
     {
         return [
-            // 'index' => Pages\ListPathways::route('/'),
             'view' => Pages\ViewPathway::route('/{record}'),
-            // 'create' => Pages\CreatePathway::route('/create'),
-            // 'edit' => Pages\EditPathway::route('/{record}/edit'),
+
+            // modules
+            'modules.view' => ModuleResource\Pages\ViewModule::route('/{parent}/modules/{record}'),
         ];
     }
 }

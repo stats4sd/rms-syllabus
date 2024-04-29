@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Filament\App\Resources\ModuleResource;
+use App\Filament\App\Resources\PathwayResource;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -163,7 +164,7 @@ class Module extends Model implements HasMedia
         }
     }
 
-    public function nextRecordUrl()
+    public function nextRecordUrl($parentPathway)
     {
         $nextRecord_collection = $this->next;
 
@@ -177,8 +178,8 @@ class Module extends Model implements HasMedia
                     $nextRecord->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
                 }
             }
-        
-        return ModuleResource::getUrl('view', ['record' => $nextRecord]);
+
+        return PathwayResource::getUrl('modules.view', ['record' => $nextRecord, 'parent' => $parentPathway]);
 
         }
     }
