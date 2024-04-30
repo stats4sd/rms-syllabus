@@ -53,8 +53,10 @@
 
     </div>
 
+    <div class="px-20">
 
     {{ $this->infolist }}
 
+</div>
     
 </x-filament-panels::page>
