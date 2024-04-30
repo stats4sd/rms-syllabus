@@ -60,11 +60,6 @@ class ModuleResource extends Resource
     {
         return $infolist
             ->schema([
-
-                ViewEntry::make('module_header')
-                    // ->view('filament.app.infolists.entries.module_header', ['parent' => $livewire->parent]),
-                    ->view('filament.app.infolists.entries.module_header'),
-
                 Actions::make([
                     Action::make('return_path')
                         ->label('Return to pathway')

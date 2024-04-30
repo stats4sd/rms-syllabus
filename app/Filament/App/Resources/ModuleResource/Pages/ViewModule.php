@@ -14,6 +14,8 @@ class ViewModule extends ViewRecord
 
     protected static string $resource = ModuleResource::class;
 
+    protected static string $view = 'filament.app.resources.modules.module_header';
+
     public function getBreadcrumbs(): array
     {
         return [];
