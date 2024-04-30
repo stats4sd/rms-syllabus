@@ -12,17 +12,15 @@ class LoginResponse extends \Filament\Http\Responses\Auth\LoginResponse
     {
         if (Filament::getCurrentPanel()->getId() === 'app') {
 
-            ray('hello');
-            dd('sdofij');
+            $intended = session()->pull('intended_url', '/home');
 
-            return redirect()->to(url('/home'));
+            return redirect()->intended($intended);
         }
 
         if (Filament::getCurrentPanel()->getId() === 'admin') {
             return redirect()->to(url('/admin'));
         }
 
-        dd('sdfsdfsdf');
         return parent::toResponse($request);
     }
 }

@@ -3,18 +3,14 @@
 namespace App\Filament\App\Infolists\Actions;
 
 use Closure;
-use Egulias\EmailValidator\Parser\CommentStrategy\LocalComment;
-use Filament\Facades\Filament;
 use Filament\Infolists\Components\Actions\Action;
-use Filament\Pages\Auth\Login;
 use Filament\Support\Enums\Alignment;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class LoginPromptWithFormAction extends Action
 {
     protected Closure|string|null $cancelRedirectsTo = null;
+
 
     protected function setUp(): void
     {
@@ -35,9 +31,12 @@ class LoginPromptWithFormAction extends Action
             ])
             ->modalFooterActionsAlignment(Alignment::Center)
             ->modalContent(fn() => view('filament.app.infolists.components.login-prompt-with-form-action'))
-            ->modalWidth('md');
+            ->modalWidth('md')
+            ->mountUsing(function () {
+                // set the intended url to redirect the user after login.
+                session()->put('intended_url', $this->getCancelRedirectsTo());
+        });
 
-        // TODO: find the blade and add <x-filament-socialite::buttons :show-divider="true"
     }
 
 
@@ -49,7 +48,6 @@ class LoginPromptWithFormAction extends Action
 
         } else {
             $this->action = fn(Module $record) => redirect($this->getCancelRedirectsTo());
-
         }
 
 
