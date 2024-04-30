@@ -38,7 +38,7 @@
 
             @if(!$this->getRecord()->last)
                 <div class="w-full md:w-1/3 py-4 flex items-center flex items-center justify-end">
-                    <a href="{{ $this->getRecord()->nextRecordUrl($this->parent->slug) }}" class="mr-4">
+                    <a href="{{ $this->nextModuleUrl() }}" class="mr-4">
                         <button class="button-white button-small text-blue inline-flex items-center justify-center">
                             Continue learning
                             <svg class="w-6 h-6 ml-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

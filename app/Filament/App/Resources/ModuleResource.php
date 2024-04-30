@@ -74,23 +74,23 @@ class ModuleResource extends Resource
                         TextEntry::make('description')
                             ->label(''),
 
-                        Grid::make(8)
-                            ->schema([
-                                ViewEntry::make('previous_image')
-                                    ->view('filament.app.infolists.entries.previous_image')
-                                    ->hidden(fn(Module $record) => $record->first ===1),
-                                ListRepeatableEntry::make('previous')
-                                                    ->label('Before completing this module, you should be familiar with the contents of the following modules:')
-                                                    ->contained(false)
-                                                    ->extraAttributes(['class' => 'space-y-0'])
-                                                    ->hidden(fn(Module $record) => $record->first ===1)
-                                                    ->columnSpan(6)
-                                                    ->schema([
-                                                        TextEntry::make('name')->hiddenLabel()->columnSpanFull()
-                                                                    ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
-                                                                    ->extraAttributes(['class' => 'y-0']),
-                                                    ]),
-                            ]),
+                        // Grid::make(8)
+                        //     ->schema([
+                        //         ViewEntry::make('previous_image')
+                        //             ->view('filament.app.infolists.entries.previous_image')
+                        //             ->hidden(fn(Pages\ViewModule $livewire) => $livewire->firstInPathway() ===1),
+                        //         ListRepeatableEntry::make('previous')
+                        //                             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
+                        //                             ->contained(false)
+                        //                             ->extraAttributes(['class' => 'space-y-0'])
+                        //                             ->hidden(fn(Pages\ViewModule $livewire) => $livewire->firstInPathway() ===1)
+                        //                             ->columnSpan(6)
+                        //                             ->schema([
+                        //                                 TextEntry::make('name')->hiddenLabel()->columnSpanFull()
+                        //                                             ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
+                        //                                             ->extraAttributes(['class' => 'y-0']),
+                        //                             ]),
+                        //     ]),
 
                         Grid::make(8)
                             ->schema([
@@ -265,22 +265,22 @@ class ModuleResource extends Resource
                                         })
                         ->visible(fn(Module $record) => $record->completion_status == 'Completed')
                         ->hidden(Auth::guest()),
-                    Action::make('next_module')
-                            ->label('Next module')
-                            ->icon('heroicon-s-arrow-long-right')
-                            ->color('stats4sd')
-                            ->visible(fn (Module $record) => $record->completion_status == 'Completed')
-                            ->url(function (Module $record, Pages\ViewModule $livewire) {
-                                            $next_record= $record->next->first();
-                                            if ($next_record->view_status === 'Not Viewed' && $next_record->completion_status != 'Completed') {
-                                                $next_record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
-                                            }
-                                            elseif ($next_record->view_status === 'Not Viewed' && $next_record->completion_status === 'Completed') {
-                                                $next_record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
-                                            }
+                    // Action::make('next_module')
+                    //         ->label('Next module')
+                    //         ->icon('heroicon-s-arrow-long-right')
+                    //         ->color('stats4sd')
+                    //         ->visible(fn (Module $record) => $record->completion_status == 'Completed')
+                    //         ->url(function (Module $record, Pages\ViewModule $livewire) {
+                    //                         $next_record= $livewire->nextInPathway();
+                    //                         if ($next_record->view_status === 'Not Viewed' && $next_record->completion_status != 'Completed') {
+                    //                             $next_record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
+                    //                         }
+                    //                         elseif ($next_record->view_status === 'Not Viewed' && $next_record->completion_status === 'Completed') {
+                    //                             $next_record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
+                    //                         }
 
-                                            return PathwayResource::getUrl('modules.view', ['record' => $next_record, 'parent' => $livewire->parent]);
-                                        })
+                    //                         return PathwayResource::getUrl('modules.view', ['record' => $next_record, 'parent' => $livewire->parent]);
+                    //                     })
                 ])->alignment(Alignment::Center),
 
             ])->columns(1);
