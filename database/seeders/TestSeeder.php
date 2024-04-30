@@ -7,7 +7,6 @@ use App\Models\Module;
 use App\Models\Pathway;
 use App\Models\ResearchComponent;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TestSeeder extends Seeder
@@ -36,6 +35,7 @@ class TestSeeder extends Seeder
             'slug' => 'theory-of-change',
             'description' => 'Anim nisi minim ad ex fugiat. Pariatur duis non nostrud dolore est pariatur exercitation mollit eiusmod. Reprehenderit cupidatat qui exercitation id velit dolore non id. Ullamco enim elit adipisicing nisi aliqua culpa proident quis anim consectetur.',
             'time_estimate' => 3.5,
+            'creator_id' => 1,
         ]]);
 
         $researchComponent2->modules()->createMany([
@@ -44,6 +44,7 @@ class TestSeeder extends Seeder
                 'slug' => 'agroecological-principles',
                 'description' => 'Dolor amet commodo do adipisicing nostrud eiusmod cillum fugiat aliqua nulla elit commodo. Dolore fugiat eu aliquip ex. Elit ea deserunt adipisicing ut ad ullamco. Aliqua sit nulla amet duis enim in excepteur quis nostrud quis amet nisi duis adipisicing proident. Reprehenderit do labore irure consectetur tempor dolor officia esse nulla non. Labore deserunt pariatur non nulla aliqua quis est laboris nisi anim cupidatat officia.',
                 'time_estimate' => 1.5,
+                'creator_id' => 1,
             ]
         ]);
 
@@ -53,6 +54,7 @@ class TestSeeder extends Seeder
                 'slug' => 'agroecological-principles',
                 'description' => 'Dolor amet commodo do adipisicing nostrud eiusmod cillum fugiat aliqua nulla elit commodo. Dolore fugiat eu aliquip ex. Elit ea deserunt adipisicing ut ad ullamco. Aliqua sit nulla amet duis enim in excepteur quis nostrud quis amet nisi duis adipisicing proident. Reprehenderit do labore irure consectetur tempor dolor officia esse nulla non. Labore deserunt pariatur non nulla aliqua quis est laboris nisi anim cupidatat officia.',
                 'time_estimate' => 1.5,
+                'creator_id' => 1,
             ]
         ]);
 
@@ -98,10 +100,12 @@ class TestSeeder extends Seeder
         $pathway = Pathway::create([
             'name' => 'Essential Research Methods for Agroecology',
             'slug' => 'essential-research-methods-for-agroecology',
+            'status' => 'published',
+            'creator_id' => 1,
         ]);
 
         // use the ID as the initial ordering
-        $pathway->modules()->sync(Module::all()->pluck('id')->map(fn ($id) => ['module_order' => $id]));
+        $pathway->modules()->sync(Module::all()->mapWithKeys(fn ($module) =>  [$module->id => ['module_order' => $module->id]]));
 
         // Link competencies to modules
         $pathway->modules->each(function ($module) {
