@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\LoginPage;
+use App\Filament\App\Pages\LoginPage;
 use Filament\Actions\Action;
 use Filament\Pages;
 use Filament\Panel;
