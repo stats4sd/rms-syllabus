@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\App\Pages\LoginPage;
+use Filament\Actions\Action;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -34,7 +36,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->homeUrl('/home')
             ->topbar(false)
-            ->login()
+            ->login(LoginPage::class)
             ->profile()
             ->passwordReset()
             ->registration()
