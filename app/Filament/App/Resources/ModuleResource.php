@@ -60,55 +60,6 @@ class ModuleResource extends Resource
     {
         return $infolist
             ->schema([
-                Actions::make([
-                    Action::make('return_path')
-                        ->label('Return to pathway')
-                        ->icon('heroicon-m-chevron-left')
-                        ->color('stats4sd')
-                        ->link()
-                        ->url(fn(Pages\ViewModule $livewire): string => PathwayResource::getUrl('view', ['record' => $livewire->parent])),
-                ]),
-
-                Section::make('')
-                    ->schema([
-                        TextEntry::make('description')
-                            ->label(''),
-
-                        // Grid::make(8)
-                        //     ->schema([
-                        //         ViewEntry::make('previous_image')
-                        //             ->view('filament.app.infolists.entries.previous_image')
-                        //             ->hidden(fn(Pages\ViewModule $livewire) => $livewire->firstInPathway() ===1),
-                        //         ListRepeatableEntry::make('previous')
-                        //                             ->label('Before completing this module, you should be familiar with the contents of the following modules:')
-                        //                             ->contained(false)
-                        //                             ->extraAttributes(['class' => 'space-y-0'])
-                        //                             ->hidden(fn(Pages\ViewModule $livewire) => $livewire->firstInPathway() ===1)
-                        //                             ->columnSpan(6)
-                        //                             ->schema([
-                        //                                 TextEntry::make('name')->hiddenLabel()->columnSpanFull()
-                        //                                             ->formatStateUsing(fn($state): HtmlString => new HtmlString("<li class='list-disc list-inside'> {$state}</li>"))
-                        //                                             ->extraAttributes(['class' => 'y-0']),
-                        //                             ]),
-                        //     ]),
-
-                        Grid::make(8)
-                            ->schema([
-                                ViewEntry::make('competencies_image')
-                                                    ->view('filament.app.infolists.entries.competencies_image'),
-                                TextEntry::make('competencies.name')
-                                    ->label('This module is linked to the following competencies:')
-                                    ->listWithLineBreaks()
-                                    ->bulleted()
-                                    ->columnSpan(6),
-                            ]),
-
-                    ]),
-
-
-                ViewEntry::make('activites_banner')
-                    ->view('filament.app.infolists.entries.activities_banner'),
-
                 RepeatableEntry::make('sections')->label('')
                     ->schema([
                         TextEntry::make('name')
@@ -221,7 +172,7 @@ class ModuleResource extends Resource
                                         ->visible(fn(Activity $record) => $record->completion_status == 'Completed'),
                                 ]),
                             ])->columns(4)
-                    ]),
+                    ])->extraAttributes(['class' => 'px-20']),
 
                 Actions::make([
                     Action::make('return_path2')
@@ -265,22 +216,6 @@ class ModuleResource extends Resource
                                         })
                         ->visible(fn(Module $record) => $record->completion_status == 'Completed')
                         ->hidden(Auth::guest()),
-                    // Action::make('next_module')
-                    //         ->label('Next module')
-                    //         ->icon('heroicon-s-arrow-long-right')
-                    //         ->color('stats4sd')
-                    //         ->visible(fn (Module $record) => $record->completion_status == 'Completed')
-                    //         ->url(function (Module $record, Pages\ViewModule $livewire) {
-                    //                         $next_record= $livewire->nextInPathway();
-                    //                         if ($next_record->view_status === 'Not Viewed' && $next_record->completion_status != 'Completed') {
-                    //                             $next_record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
-                    //                         }
-                    //                         elseif ($next_record->view_status === 'Not Viewed' && $next_record->completion_status === 'Completed') {
-                    //                             $next_record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
-                    //                         }
-
-                    //                         return PathwayResource::getUrl('modules.view', ['record' => $next_record, 'parent' => $livewire->parent]);
-                    //                     })
                 ])->alignment(Alignment::Center),
 
             ])->columns(1);

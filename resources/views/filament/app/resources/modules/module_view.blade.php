@@ -1,7 +1,12 @@
-<x-filament-panels::page>
+<?php
+use App\Filament\App\Resources\PathwayResource;
+?>
 
+<x-filament-panels::page>
+<div class="bg-white">
     <div class="container-fluid w-full flex flex-wrap bg-darkblue justify-center pb-5">
 
+        <!-- module name -->
         <div class="w-full px-20">
             <h1 class="text-white pt-6">Module</h1>
             <h2 class="text-white">{{ $this->getRecord()->name }}</h2>
@@ -10,6 +15,7 @@
         
         <div class="flex flex-wrap w-full pt-5 px-20">
 
+            <!-- time estimate -->
             <div class="w-full md:w-1/3 py-4 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6 mr-3">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -17,6 +23,7 @@
                 <p class="text-white">Estimated time to complete: {{ $this->getRecord()->time_estimate }} hours</p>
             </div>
 
+            <!-- completion status -->
             @auth
             <div class="w-full md:w-1/3 py-4 flex items-center justify-center">
                 @if ($this->getRecord()->completion_status === 'Not Started')
@@ -36,11 +43,12 @@
             </div>
             @endauth
 
-            @if(!$this->getRecord()->last)
+            <!-- next module -->
+            @if(!$this->lastInPathway())
                 <div class="w-full md:w-1/3 py-4 flex items-center flex items-center justify-end">
                     <a href="{{ $this->nextModuleUrl() }}" class="mr-4">
                         <button class="button-white button-small text-blue inline-flex items-center justify-center">
-                            Continue learning
+                            Next module
                             <svg class="w-6 h-6 ml-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
@@ -53,10 +61,94 @@
 
     </div>
 
-    <div class="px-20">
+    <div class="bg-white pt-10">
+        <div class="px-20">
 
-    {{ $this->infolist }}
+            <!-- return to pathway -->
+            <a href="{{ PathwayResource::getUrl('view', ['record' => $this->parent]) }}" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--stats4sd)" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+                <h4 class="text-red ml-1">Return to pathway</h4>
+            </a>
+        
+            <!-- module info -->
+            <div class="px-20 mt-10">
+
+                <!-- description -->
+                <h5 class="text-black">{{ $this->getRecord()->description }}</h5>
+
+                <!-- previous modules -->
+                @unless($this->firstInPathway() === 1)
+                    <div class="flex items-center border-b pb-10 mb-10">
+                        
+                        <div class="mt-10 mr-20">
+                            <img src="/images/previous.png" alt="previous-image" class="w-24 h-auto">
+                        </div>
+                        
+                        <div>
+                            <h4>Before completing this module, you should be familiar with the contents of the following modules:</h4>
+                                <ul class="list-disc list-inside space-y-2 pt-2">
+                                    @foreach($this->previousModules() as $previousModule)
+                                        <li>{{ $previousModule->name }}</li>
+                                    @endforeach
+                                </ul>
+                        </div>
+
+                    </div>
+                @endunless
+
+                <!-- competencies -->
+                <div class="flex items-center mt-10 mb-20">
+                        
+                        <div class="mr-20">
+                            <img src="/images/competencies.png" alt="competencies-image" class="w-24 h-auto">
+                        </div>
+                        
+                        <div>
+                            <h4>This module is linked to the following competencies:</h4>
+                                <ul class="list-disc list-inside space-y-2 pt-2">
+                                    @foreach($this->getRecord()->competencies as $competency)
+                                        <li>{{ $competency->name }}</li>
+                                    @endforeach
+                                </ul>
+                        </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- activities banner -->
+    <div class="container-fluid w-full flex flex-wrap bg-darkblue justify-center pb-5">
+        <div class="w-full px-20">
+            <h3 class="text-white pt-6">Activities</h3>
+        </div>
+    </div>
 
 </div>
-    
+
+<div class="bg-lightgrey">
+
+    <!-- infolist -->
+    {{ $this->infolist }}
+
+    <!-- next module -->
+    @if(!$this->lastInPathway() && $this->getRecord()->completion_status === 'Completed')
+        <div class="flex items-center justify-center pt-5">
+            <a href="{{ $this->nextModuleUrl() }}" class="mr-4">
+                <button class="button-red button-small inline-flex items-center justify-center">
+                    Next module
+                    <svg class="w-6 h-6 ml-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                </button>
+            </a>
+        </div>
+    @endif
+
+</div>
+
 </x-filament-panels::page>

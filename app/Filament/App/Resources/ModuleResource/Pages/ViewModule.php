@@ -16,7 +16,7 @@ class ViewModule extends ViewRecord
 
     protected static string $resource = ModuleResource::class;
 
-    protected static string $view = 'filament.app.resources.modules.module_header';
+    protected static string $view = 'filament.app.resources.modules.module_view';
 
     public function getBreadcrumbs(): array
     {
@@ -112,6 +112,24 @@ class ViewModule extends ViewRecord
 
             return PathwayResource::getUrl('modules.view', ['record' => $next_module, 'parent' => $this->parent]);
 
+        }
+    }
+
+    public function previousModules() { 
+
+        // check that the module is not last in the pathway
+        if ($this->firstInPathway()===0) {
+
+            // get the pathway
+            $pathway = $this->parent;
+
+            // get the modules order in the pathway
+            $this_mod_order = $this->getRecord()->pathways->where('id', $pathway->id)->first()->pivot->module_order;
+
+            // get modules in the pathway before the current module
+            $prev_modules = $pathway->modules->collect()->where('pivot.module_order', '<', $this_mod_order);
+            
+            return $prev_modules;
         }
     }
 }
