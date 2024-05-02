@@ -31,6 +31,11 @@ h4 {
   color: black;
 }
 
+h5 {
+  font-size: 12pt;
+  color: black;
+}
+
 body {
   font-size: 10pt;
   color: black;
@@ -48,6 +53,10 @@ body {
   color: var(--stats4sd);
 }
 
+.return-to-pathway {
+  color: var(--stats4sd);
+}
+
 .divider {
     height: 0.4rem;
     width: 60px;
@@ -58,6 +67,10 @@ body {
 
 .bg-darkblue {
   background-color: var(--darkblue);
+}
+
+.bg-lightgrey {
+  background-color: #FAF6F6;
 }
 
 .button-white {

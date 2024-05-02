@@ -9,10 +9,8 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
 use Filament\Navigation\NavigationGroup;
-use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
-use App\Filament\Resources\ActivityResource;
 use Filament\SpatieLaravelTranslatablePlugin;
 use App\Filament\App\Resources\PathwayResource;
 use Illuminate\Session\Middleware\StartSession;
@@ -53,9 +51,6 @@ class AppPanelProvider extends PanelProvider
             ->pages([
                 // Pages\Dashboard::class,
             ])
-            // ->resources([
-            //    ModuleResource::class
-            // ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->middleware([
                 EncryptCookies::class,
