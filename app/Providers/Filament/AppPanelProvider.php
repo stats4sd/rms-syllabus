@@ -83,10 +83,6 @@ class AppPanelProvider extends PanelProvider
                             // 'color' => 'primary',
                             'outlined' => false,
                         ],
-                        'facebook' => [
-                            'icon' => 'fab-facebook',
-                            'label' => 'Facebook',
-                        ],
                     ])
                     ->setRegistrationEnabled(true)
             )
