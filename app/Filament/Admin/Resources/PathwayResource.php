@@ -128,7 +128,7 @@ class PathwayResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')->wrap(),
                 Tables\Columns\TextColumn::make('modules_count')
                                 ->counts('modules')
                                 ->label('# Modules')
@@ -150,6 +150,11 @@ class PathwayResource extends Resource
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('view')
+                                ->label('View on Frontend')
+                                ->icon('heroicon-o-eye')
+                                ->url(fn (Pathway $record): string => '/pathways/' . $record->slug)
+                                ->openUrlInNewTab()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
