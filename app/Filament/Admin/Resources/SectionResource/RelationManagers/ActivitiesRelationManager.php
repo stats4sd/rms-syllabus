@@ -8,6 +8,7 @@ use App\Models\Trove;
 use App\Models\Activity;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Admin\Resources\ActivityResource;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -46,7 +47,7 @@ class ActivitiesRelationManager extends RelationManager
                             ]),
 
                         Forms\Components\Fieldset::make('description_field')
-                            ->label('Description')
+                            ->label('Description & Instructions')
                             ->columns(3)
                             ->schema([
                                 Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),
@@ -118,7 +119,7 @@ class ActivitiesRelationManager extends RelationManager
                                         ->requiredWithoutAll('trove_id_es, trove_id_en')
                                         ->validationMessages(['required_without_all' => 'A trove must be selected in at least one lanugage']),
                     ]),
-
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
             ]);
     }
 

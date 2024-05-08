@@ -68,7 +68,7 @@ class ActivityResource extends Resource
                             ]),
 
                             Forms\Components\Fieldset::make('description_field')
-                                ->label('Description')
+                                ->label('Description & Instructions')
                                 ->columns(3)
                                 ->schema([
                                     Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),

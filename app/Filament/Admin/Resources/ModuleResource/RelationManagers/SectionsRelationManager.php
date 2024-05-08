@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Section;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Admin\Resources\SectionResource;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -60,7 +61,8 @@ class SectionsRelationManager extends RelationManager
                                         // ->requiredWithoutAll('description_es, description_en')
                                         // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                     ]),
-
+                    
+                Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
             ]);
     }
 
