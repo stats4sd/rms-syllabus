@@ -150,8 +150,8 @@ class PathwayResource extends Resource
             ->actions([
                 // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('view')
-                                ->label('View on Frontend')
+                Tables\Actions\Action::make('view_frontend')
+                                ->label('View on frontend')
                                 ->icon('heroicon-o-eye')
                                 ->url(fn (Pathway $record): string => '/pathways/' . $record->slug)
                                 ->openUrlInNewTab()
