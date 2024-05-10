@@ -80,22 +80,24 @@ use App\Filament\App\Resources\PathwayResource;
 
                 <!-- previous modules -->
                 @unless($this->firstInPathway() === 1)
-                    <div class="flex items-center border-b pb-10 mb-10">
-                        
-                        <div class="mt-10 mr-20">
-                            <img src="/images/previous.png" alt="previous-image" class="w-24 h-auto">
-                        </div>
-                        
-                        <div>
-                            <h4>Before completing this module, you should be familiar with the contents of the following modules:</h4>
-                                <ul class="list-disc list-inside space-y-2 pt-2">
-                                    @foreach($this->previousModules() as $previousModule)
-                                        <li>{{ $previousModule->name }}</li>
-                                    @endforeach
-                                </ul>
-                        </div>
+                    @if($this->parent->order_required === 1)
+                        <div class="flex items-center border-b pb-10 mb-10">
+                            
+                            <div class="mt-10 mr-20">
+                                <img src="/images/previous.png" alt="previous-image" class="w-24 h-auto">
+                            </div>
+                            
+                            <div>
+                                <h4>Before completing this module, you should be familiar with the contents of the following modules:</h4>
+                                    <ul class="list-disc list-inside space-y-2 pt-2">
+                                        @foreach($this->previousModules() as $previousModule)
+                                            <li>{{ $previousModule->name }}</li>
+                                        @endforeach
+                                    </ul>
+                            </div>
 
-                    </div>
+                        </div>
+                    @endif
                 @endunless
 
                 <!-- competencies -->

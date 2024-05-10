@@ -129,7 +129,7 @@ class ViewModule extends ViewRecord
             // get modules in the pathway before the current module
             $prev_modules = $pathway->modules->collect()->where('pivot.module_order', '<', $this_mod_order);
             
-            return $prev_modules;
+            return $prev_modules ?? [];
         }
     }
 }

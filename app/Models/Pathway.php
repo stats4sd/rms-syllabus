@@ -19,6 +19,7 @@ class Pathway extends Model
         'description',
         'slug',
         'status',
+        'order_required',
         'creator_id'
     ];
 
