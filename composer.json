@@ -22,7 +22,6 @@
         "owenvoke/blade-fontawesome": "^2.5",
         "socialiteproviders/github": "^4.1",
         "socialiteproviders/google": "^4.1",
-        "socialiteproviders/linkedin": "^4.2",
         "spatie/laravel-ignition": "^2.0"
     },
     "require-dev": {

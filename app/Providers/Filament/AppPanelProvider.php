@@ -73,10 +73,6 @@ class AppPanelProvider extends PanelProvider
                             'label' => 'Google',
                             'icon' => 'fab-google'
                         ],
-                        'linkedin' => [
-                            'icon' => 'fab-linkedin',
-                            'label' => 'LinkedIn',
-                        ],
                         'github' => [
                             'label' => 'GitHub',
                             'icon' => 'fab-github',
