@@ -88,8 +88,7 @@ class PathwayResource extends Resource
                                 ->label('')
                                 ->defaultItems(0)
                                 ->addActionLabel('Add a module')
-                                ->columns(2)
-                                ->schema([
+                                ->simple(
                                     Forms\Components\Select::make('module_id')
                                         ->relationship('module', 'name')
                                         ->label('')
@@ -101,7 +100,7 @@ class PathwayResource extends Resource
                                         ->searchable()
                                         ->noSearchResultsMessage('No modules match your search')
                                         ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
-                                ])->orderColumn('module_order')
+                                )->orderColumn('module_order')
                                 ]),
 
                 Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
