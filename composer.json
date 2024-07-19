@@ -18,6 +18,7 @@
         "itsgoingd/clockwork": "^5.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.8",
         "owenvoke/blade-fontawesome": "^2.5",
         "sentry/sentry-laravel": "^4.6",
