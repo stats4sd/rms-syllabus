@@ -31,6 +31,11 @@ h4 {
   color: black;
 }
 
+h5 {
+  font-size: 12pt;
+  color: black;
+}
+
 body {
   font-size: 10pt;
   color: black;
@@ -48,6 +53,10 @@ body {
   color: var(--stats4sd);
 }
 
+.return-to-pathway {
+  color: var(--stats4sd);
+}
+
 .divider {
     height: 0.4rem;
     width: 60px;
@@ -58,6 +67,10 @@ body {
 
 .bg-darkblue {
   background-color: var(--darkblue);
+}
+
+.bg-lightgrey {
+  background-color: #FAF6F6;
 }
 
 .button-white {
@@ -181,4 +194,38 @@ main.fi-main {
 
 .infolist-image {
   max-width: 100px;
+}
+
+.dropdown-item {
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+  border-radius: 0.375rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 2;
+  margin-top: 0.7rem;
+  padding: 0;
+  border-radius: 0.375rem;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  color: black;
+  width: 100%;
+  max-width: 6rem;
 }

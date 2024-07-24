@@ -7,7 +7,7 @@ use App\Filament\App\Pages\CompetencyFramework;
 
     <div class="w-full px-20">
         <h1 class="text-white pt-6">Your pathway:</h1>
-        <p class="text-white pt-4">Essential Research Methods for Agroecology</p>
+        <p class="text-white pt-4">{{ $this->getRecord()->name }}</p>
     </div>
 
     <div class="flex justify-center flex-col sm:flex-row mt-10 mb-5 px-20">

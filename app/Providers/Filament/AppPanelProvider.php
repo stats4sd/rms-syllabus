@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\App\Pages\LoginPage;
+use Filament\Actions\Action;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -9,10 +11,8 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
 use Filament\Navigation\NavigationGroup;
-use App\Filament\Resources\ModuleResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
-use App\Filament\Resources\ActivityResource;
 use Filament\SpatieLaravelTranslatablePlugin;
 use App\Filament\App\Resources\PathwayResource;
 use Illuminate\Session\Middleware\StartSession;
@@ -36,7 +36,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->homeUrl('/home')
             ->topbar(false)
-            ->login()
+            ->login(LoginPage::class)
             ->profile()
             ->passwordReset()
             ->registration()
@@ -53,9 +53,6 @@ class AppPanelProvider extends PanelProvider
             ->pages([
                 // Pages\Dashboard::class,
             ])
-            // ->resources([
-            //    ModuleResource::class
-            // ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->middleware([
                 EncryptCookies::class,
@@ -76,19 +73,11 @@ class AppPanelProvider extends PanelProvider
                             'label' => 'Google',
                             'icon' => 'fab-google'
                         ],
-                        'linkedin' => [
-                            'icon' => 'fab-linkedin',
-                            'label' => 'LinkedIn',
-                        ],
                         'github' => [
                             'label' => 'GitHub',
                             'icon' => 'fab-github',
                             // 'color' => 'primary',
                             'outlined' => false,
-                        ],
-                        'facebook' => [
-                            'icon' => 'fab-facebook',
-                            'label' => 'Facebook',
                         ],
                     ])
                     ->setRegistrationEnabled(true)

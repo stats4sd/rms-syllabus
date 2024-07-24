@@ -14,10 +14,6 @@ use App\Http\Controllers\SocialiteController;
 |
 */
 
-Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
-    ->name('socialite.redirect');
-Route::get('/callback/{provider}', [SocialiteController::class, 'callback'])
-    ->name('socialite.callback');
 
 Route::get('/', function () {
         return redirect('/home');

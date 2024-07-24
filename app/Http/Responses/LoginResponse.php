@@ -11,13 +11,16 @@ class LoginResponse extends \Filament\Http\Responses\Auth\LoginResponse
     public function toResponse($request): RedirectResponse|Redirector
     {
         if (Filament::getCurrentPanel()->getId() === 'app') {
-            return redirect()->to(url('/home'));
+
+            $intended = session()->pull('intended_url', '/home');
+
+            return redirect()->intended($intended);
         }
 
         if (Filament::getCurrentPanel()->getId() === 'admin') {
             return redirect()->to(url('/admin'));
         }
- 
+
         return parent::toResponse($request);
     }
 }

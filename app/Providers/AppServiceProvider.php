@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\ServiceProvider;
-use Spatie\Translatable\Facades\Translatable;
+use DutchCodingCompany\FilamentSocialite\Models\Contracts\FilamentSocialiteUser as FilamentSocialiteUserContract;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
+use DutchCodingCompany\FilamentSocialite\Facades\FilamentSocialite;
+use Illuminate\Support\ServiceProvider;
+use Spatie\Translatable\Facades\Translatable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,16 @@ class AppServiceProvider extends ServiceProvider
         Translatable::fallback(
             fallbackAny: true,
        );
+
+        // Overwrite how users are redirected after logging in through Socialite
+        FilamentSocialite::setLoginRedirectCallback(function (string $provider, FilamentSocialiteUserContract $socialiteUser) {
+
+            $intended = session()->pull('intended_url', '/');
+
+            return redirect()->intended($intended);
+        });
+
     }
 
-   
+
 }
