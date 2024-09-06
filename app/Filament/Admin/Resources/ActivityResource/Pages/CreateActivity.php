@@ -16,6 +16,7 @@ class CreateActivity extends CreateRecord
     {
         $data['name'] = 'names added after creation';
         $data['description'] = 'descriptions added after creation';
+        $data['guidance'] = 'guidance added after creation';
         $data['trove_id'] = 'trove ids added after creation';
         return $data;
     }
@@ -24,6 +25,7 @@ class CreateActivity extends CreateRecord
     {
         $this->record->name = '';
         $this->record->description = '';
+        $this->record->guidance = '';
         $this->record->trove_id = '';
 
         if(!is_null($this->data['name_en'])){
@@ -48,6 +50,18 @@ class CreateActivity extends CreateRecord
 
         if(!is_null($this->data['description_fr'])){
             $this->record->setTranslation('description', 'fr', $this->data['description_fr']);
+        }
+
+        if(!is_null($this->data['guidance_en'])){
+            $this->record->setTranslation('guidance', 'en', $this->data['guidance_en']);
+        }
+
+        if(!is_null($this->data['guidance_es'])){
+            $this->record->setTranslation('guidance', 'es', $this->data['guidance_es']);
+        }
+
+        if(!is_null($this->data['guidance_fr'])){
+            $this->record->setTranslation('guidance', 'fr', $this->data['guidance_fr']);
         }
 
         if(!is_null($this->data['trove_id_en'])){

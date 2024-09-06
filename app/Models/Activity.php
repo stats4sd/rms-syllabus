@@ -20,7 +20,8 @@ class Activity extends Model
         'section_id',
         'trove_id',
         'type',
-        'creator_id'
+        'creator_id',
+        'guidance'
     ];
 
     protected $casts = [
@@ -31,7 +32,8 @@ class Activity extends Model
     public $translatable = [
         'name',
         'description',
-        'trove_id'
+        'trove_id',
+        'guidance'
     ];
 
     public function sections(): BelongsToMany
