@@ -33,11 +33,12 @@ class ActivityResource extends Resource
                     ->icon('heroicon-m-arrow-turn-left-up')
                     ->iconColor('primary')
                     ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
-                    ->description('Which section/sections does this activity belong to? An activity can be used as part of sections in different modules.')
+                    ->description('Which section/sections does this activity belong in? An activity can be used as part of sections in different modules.')
                     ->schema([
                         Forms\Components\Select::make('section_id')
                             ->label('')
                             ->relationship('sections', 'name')
+                            ->columnSpan(2)
                             ->required()
                             ->preload()
                             ->multiple()
@@ -46,7 +47,7 @@ class ActivityResource extends Resource
                             ->noSearchResultsMessage('No sections match your search')
                             ->placeholder('Select a section/sections')
                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
-                        ]),
+                        ])->columns(3),
 
                 Forms\Components\Section::make('Trove')
                     ->description('Which trove does this activity correspond to?')
@@ -173,6 +174,7 @@ class ActivityResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('type')
                                             ->label('')
+                                            ->columnSpan(1)
                                             ->required()
                                             ->placeholder('Select the type of this activity')
                                             ->options([
@@ -184,7 +186,7 @@ class ActivityResource extends Resource
                                                 'course' => 'Course',
                                                 'other' => 'Other',
                                             ])
-                    ]),
+                    ])->columns(3),
 
                 Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
 

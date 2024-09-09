@@ -31,57 +31,67 @@ class PathwayResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Fieldset::make('name_field')
-                    ->label('Name')
-                    ->columns(3)
-                    ->schema([
-                        Forms\Components\TextInput::make('name')->hiddenOn(['edit', 'create']),
-                        Forms\Components\Textarea::make('name_en')
-                                        ->label('English')
-                                        ->rows(2)
-                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
-                                        ->requiredWithoutAll('name_es, name_fr')
-                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
-                                                              'required_without_all' => 'Enter the name in at least one language']),
-                        Forms\Components\Textarea::make('name_es')
-                                        ->label('Spanish')
-                                        ->rows(2)
-                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
-                                        ->requiredWithoutAll('name_en, name_fr')
-                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
-                                                              'required_without_all' => 'Enter the name in at least one language']),
-                        Forms\Components\Textarea::make('name_fr')
-                                        ->label('French')
-                                        ->rows(2)
-                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
-                                        ->requiredWithoutAll('name_es, name_en')
-                                        ->validationMessages(['regex' => 'Name cannot only contain special characters', 
-                                                              'required_without_all' => 'Enter the name in at least one language']),
-                    ]),
+                Forms\Components\Section::make('Pathway Name')
+                            ->columns(3)
+                            ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                            ->icon('heroicon-m-chat-bubble-oval-left-ellipsis')
+                            ->iconColor('primary')
+                            ->description('A sensible, descriptive name for the module. Ideally not too long!')
+                            ->schema([
+                                Forms\Components\TextInput::make('name')->hiddenOn(['edit', 'create']),
+                                Forms\Components\Textarea::make('name_en')
+                                                ->label('English')
+                                                ->rows(2)
+                                                ->regex('/^(?=.*[^\W_])[^\n]+$/')
+                                                ->requiredWithoutAll('name_es, name_fr')
+                                                ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                                      'required_without_all' => 'Enter the name in at least one language']),
+                                Forms\Components\Textarea::make('name_es')
+                                                ->label('Spanish')
+                                                ->rows(2)
+                                                ->regex('/^(?=.*[^\W_])[^\n]+$/')
+                                                ->requiredWithoutAll('name_en, name_fr')
+                                                ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                                      'required_without_all' => 'Enter the name in at least one language']),
+                                Forms\Components\Textarea::make('name_fr')
+                                                ->label('French')
+                                                ->rows(2)
+                                                ->regex('/^(?=.*[^\W_])[^\n]+$/')
+                                                ->requiredWithoutAll('name_es, name_en')
+                                                ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                                      'required_without_all' => 'Enter the name in at least one language']),
+                            ]),
 
-                Forms\Components\Fieldset::make('description_field')
-                    ->label('Description')
-                    ->columns(3)
-                    ->schema([
-                        Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),
-                        Forms\Components\Textarea::make('description_en')
-                                        ->label('English')
-                                        ->rows(8),
-                                        // ->requiredWithoutAll('description_es, description_fr')
-                                        // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
-                        Forms\Components\Textarea::make('description_es')
-                                        ->label('Spanish')
-                                        ->rows(8),
-                                        // ->requiredWithoutAll('description_en, description_fr')
-                                        // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
-                        Forms\Components\Textarea::make('description_fr')
-                                        ->label('French')
-                                        ->rows(8),
-                                        // ->requiredWithoutAll('description_es, description_en')
-                                        // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
-                    ]),
-
+                Forms\Components\Section::make('Pathway Description')
+                ->icon('heroicon-m-document-text')
+                ->iconColor('primary')
+                ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                ->description('A brief explanation of the topic and the scope/focus of the pathway.')
+                ->columns(3)
+                ->schema([
+                    Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),
+                    Forms\Components\Textarea::make('description_en')
+                                    ->label('English')
+                                    ->rows(6),
+                                    // ->requiredWithoutAll('description_es, description_fr')
+                                    // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
+                    Forms\Components\Textarea::make('description_es')
+                                    ->label('Spanish')
+                                    ->rows(6),
+                                    // ->requiredWithoutAll('description_en, description_fr')
+                                    // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
+                    Forms\Components\Textarea::make('description_fr')
+                                    ->label('French')
+                                    ->rows(6),
+                                    // ->requiredWithoutAll('description_es, description_en')
+                                    // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
+                ]),
+                            
                 Forms\Components\Section::make('Modules')
+                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                    ->icon('heroicon-m-bars-4')
+                    ->iconColor('primary')
+                    ->description('Which modules belong in this pathway? To change the order, click on the double arrow icon and drag the module.')
                     ->schema([
                         Repeater::make('modulePathways')
                                 ->relationship()
@@ -106,27 +116,42 @@ class PathwayResource extends Resource
 
                 Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
 
-                Forms\Components\Checkbox::make('order_required')
-                                        ->columnSpan(2)
-                                        ->label('Tick this box if users should complete the modules in this pathway in sequential order. A section will display at the top of the module page letting users know they should already be familiar with the contents of previous modules in the pathway.'),
+                Forms\Components\Section::make('Module Order')
+                    ->icon('heroicon-m-numbered-list')
+                    ->iconColor('primary')
+                    ->description('Should the modules be completed in order? A section will display at the top of the module page letting users know they should already be familiar with the contents of previous modules in the pathway.')
+                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                    ->schema([
+                        Forms\Components\Checkbox::make('order_required')
+                                            ->columnSpan(2)
+                                            ->label('Tick this box if users should complete the modules in this pathway in sequential order'),
+                    ]),
 
-                Forms\Components\ToggleButtons::make('status')
-                                ->columnStart(1)
-                                ->columnSpan(2)
-                                ->inline()
-                                ->required()
-                                ->options([
-                                    'Draft' => 'Draft - in progress',
-                                    'Published' => 'Published - live on frontend'
-                                ])
-                                ->icons([
-                                    'Draft' => 'heroicon-o-cog-8-tooth',
-                                    'Published' => 'heroicon-o-check-circle',
-                                ])
-                                ->colors([
-                                    'Draft' => 'warning',
-                                    'Published' => 'success',
-                                ]),
+                Forms\Components\Section::make('Status')
+                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                    ->icon('heroicon-m-exclamation-triangle')
+                    ->iconColor('primary')
+                    ->description('Pathways kept in draft mode will only be visible on the frontend with the correct URL. Mark the pathway as published for it to be visible to anyone expoloring/searching the frontend.')
+                    ->schema([
+                        Forms\Components\ToggleButtons::make('status')
+                            ->label('')
+                            ->columnStart(1)
+                            ->columnSpan(2)
+                            ->inline()
+                            ->default('Draft') 
+                            ->options([
+                                'Draft' => 'Draft - in progress',
+                                'Published' => 'Published - live on frontend'
+                            ])
+                            ->icons([
+                                'Draft' => 'heroicon-o-cog-8-tooth',
+                                'Published' => 'heroicon-o-check-circle',
+                            ])
+                            ->colors([
+                                'Draft' => 'warning',
+                                'Published' => 'success',
+                            ]),
+                        ]),
             ]);
     }
 

@@ -32,12 +32,13 @@ class SectionResource extends Resource
 
                 Forms\Components\Section::make('Module')
                     ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
-                    ->description('Which module does this section belong to?')
+                    ->description('Which module does this section belong in?')
                     ->icon('heroicon-m-arrow-turn-left-up')
                     ->iconColor('primary')
                     ->schema([
                         Forms\Components\Select::make('module_id')
                             ->label('')
+                            ->columnSpan(2)
                             ->relationship('module', 'name')
                             ->required()
                             ->preload()
@@ -46,7 +47,7 @@ class SectionResource extends Resource
                             ->noSearchResultsMessage('No modules match your search')
                             ->placeholder('Select a module')
                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
-                    ]),
+                    ])->columns(3),
 
                 Forms\Components\Section::make('Section Name')
                     ->description('A sensible, descriptive name for the section.')

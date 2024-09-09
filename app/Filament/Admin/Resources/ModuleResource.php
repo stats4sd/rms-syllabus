@@ -141,6 +141,7 @@ class ModuleResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('competencies')
                                             ->label('')
+                                            ->columnSpan(2)
                                             ->relationship('competencies', 'name')
                                             ->placeholder('Select competencies')
                                             ->multiple()
@@ -149,7 +150,7 @@ class ModuleResource extends Resource
                                             ->noSearchResultsMessage('No competencies match your search')
                                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                                             ->searchable()
-                    ]),
+                    ])->columns(3),
 
                     Forms\Components\Section::make('Prerequisites')
                     ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
@@ -159,6 +160,7 @@ class ModuleResource extends Resource
                         ->schema([
                             Forms\Components\Select::make('prerequisites')
                             ->label('')
+                            ->columnSpan(2)
                             ->relationship('prerequisites', 'name')
                             ->placeholder('Select modules')
                             ->multiple()
@@ -167,7 +169,7 @@ class ModuleResource extends Resource
                             ->noSearchResultsMessage('No modules match your search')
                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                             ->searchable()
-                        ]),
+                        ])->columns(3),
 
                 Forms\Components\Section::make('Time estimate')
                     ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
@@ -235,6 +237,7 @@ class ModuleResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('research_component_id')
                             ->label('')
+                            ->columnSpan(2)
                             ->relationship('researchComponents', 'name')
                             ->placeholder('Select research components')
                             ->multiple()
@@ -243,7 +246,7 @@ class ModuleResource extends Resource
                             ->noSearchResultsMessage('No research components match your search')
                             ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en'))
                             ->searchable()
-                        ]),
+                        ])->columns(3),
 
                 Forms\Components\Section::make('Cover image')
                     ->icon('heroicon-m-photo')
