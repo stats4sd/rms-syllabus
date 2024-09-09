@@ -116,17 +116,6 @@ class PathwayResource extends Resource
 
                 Forms\Components\Hidden::make('creator_id')->default(Auth::user()->id),
 
-                Forms\Components\Section::make('Module Order')
-                    ->icon('heroicon-m-numbered-list')
-                    ->iconColor('primary')
-                    ->description('Should the modules be completed in order? A section will display at the top of the module page letting users know they should already be familiar with the contents of previous modules in the pathway.')
-                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
-                    ->schema([
-                        Forms\Components\Checkbox::make('order_required')
-                                            ->columnSpan(2)
-                                            ->label('Tick this box if users should complete the modules in this pathway in sequential order'),
-                    ]),
-
                 Forms\Components\Section::make('Status')
                     ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
                     ->icon('heroicon-m-exclamation-triangle')
@@ -164,9 +153,6 @@ class PathwayResource extends Resource
                                 ->counts('modules')
                                 ->label('# Modules')
                                 ->sortable(),
-                Tables\Columns\IconColumn::make('order_required')
-                                ->boolean()
-                                ->label('Complete in order'),
                 Tables\Columns\TextColumn::make('status')
                                 ->badge()
                                 ->sortable()
