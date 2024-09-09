@@ -31,61 +31,82 @@ class CompetencyResource extends Resource
         return $form
             ->schema([
 
-                Forms\Components\Select::make('competency_category_id')
-                    ->relationship('competencyCategories', 'name')
-                    ->required()
-                    ->multiple()
-                    ->preload()
-                    ->placeholder('Select categories')
-                    ->loadingMessage('Loading categories...')
-                    ->searchable()
-                    ->noSearchResultsMessage('No categories match your search')
-                    ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
-
-                Forms\Components\Fieldset::make('name_field')
-                    ->label('Name')
+                Forms\Components\Section::make('Competency Categories')
                     ->columns(3)
+                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                    ->icon('heroicon-m-arrow-turn-left-up')
+                    ->iconColor('primary')
+                    ->description('Which competency category/categories does this competency belong in?')
+                    ->schema([
+                        Forms\Components\Select::make('competency_category_id')
+                            ->relationship('competencyCategories', 'name')
+                            ->label('')
+                            ->columnSpan(2)
+                            ->required()
+                            ->multiple()
+                            ->preload()
+                            ->placeholder('Select competency categories')
+                            ->loadingMessage('Loading competency categories...')
+                            ->searchable()
+                            ->noSearchResultsMessage('No competency categories match your search')
+                            ->getOptionLabelFromRecordUsing(fn($record, $livewire) => $record->getTranslation('name', 'en')),
+                        ]),
+
+                    Forms\Components\Section::make('Competency Name')
+                    ->columns(3)
+                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                    ->icon('heroicon-m-chat-bubble-oval-left-ellipsis')
+                    ->iconColor('primary')
+                    ->description('A sensible, descriptive name for the competency. Ideally not too long!')
                     ->schema([
                         Forms\Components\TextInput::make('name')->hiddenOn(['edit', 'create']),
                         Forms\Components\Textarea::make('name_en')
                                         ->label('English')
                                         ->rows(2)
+                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
                                         ->requiredWithoutAll('name_es, name_fr')
-                                        ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                            'required_without_all' => 'Enter the name in at least one language']),
                         Forms\Components\Textarea::make('name_es')
                                         ->label('Spanish')
                                         ->rows(2)
+                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
                                         ->requiredWithoutAll('name_en, name_fr')
-                                        ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                            'required_without_all' => 'Enter the name in at least one language']),
                         Forms\Components\Textarea::make('name_fr')
                                         ->label('French')
                                         ->rows(2)
+                                        ->regex('/^(?=.*[^\W_])[^\n]+$/')
                                         ->requiredWithoutAll('name_es, name_en')
-                                        ->validationMessages(['required_without_all' => 'Enter the name in at least one language']),
+                                        ->validationMessages(['regex' => 'Name cannot only contain special characters',
+                                                            'required_without_all' => 'Enter the name in at least one language']),
                     ]),
 
-                Forms\Components\Fieldset::make('description_field')
-                    ->label('Description')
+                Forms\Components\Section::make('Competency Description')
+                    ->icon('heroicon-m-document-text')
+                    ->iconColor('primary')
+                    ->extraAttributes(['style' => 'background-color: #E6E6E6;'])
+                    ->description('A brief explanation of the competency.')
                     ->columns(3)
                     ->schema([
                         Forms\Components\TextInput::make('description')->hiddenOn(['edit', 'create']),
                         Forms\Components\Textarea::make('description_en')
                                         ->label('English')
-                                        ->rows(4),
+                                        ->rows(6),
                                         // ->requiredWithoutAll('description_es, description_fr')
                                         // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                         Forms\Components\Textarea::make('description_es')
                                         ->label('Spanish')
-                                        ->rows(4),
+                                        ->rows(6),
                                         // ->requiredWithoutAll('description_en, description_fr')
                                         // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                         Forms\Components\Textarea::make('description_fr')
                                         ->label('French')
-                                        ->rows(4),
+                                        ->rows(6),
                                         // ->requiredWithoutAll('description_es, description_en')
                                         // ->validationMessages(['required_without_all' => 'Enter the description in at least one language']),
                     ]),
-
             ]);
     }
 

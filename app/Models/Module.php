@@ -27,7 +27,10 @@ class Module extends Model implements HasMedia
         'research_component_id',
         'time_estimate',
         'slug',
-        'creator_id'
+        'creator_id',
+        'guidance',
+        'why',
+        'learning_outcome'
     ];
 
     protected $casts = [
@@ -39,6 +42,9 @@ class Module extends Model implements HasMedia
         'name',
         'description',
         'time_estimate',
+        'guidance',
+        'why',
+        'learning_outcome'
     ];
 
     public function getRouteKeyName(): string
@@ -81,6 +87,11 @@ class Module extends Model implements HasMedia
     public function modulePathways(): HasMany
     {
         return $this->hasMany(ModulePathway::class);
+    }
+
+    public function prerequisites()
+    {
+        return $this->belongsToMany(Module::class, 'module_module', 'module_id', 'prerequisite_module_id');
     }
 
     public function getViewStatusAttribute()

@@ -65,9 +65,12 @@ class ModuleResource extends Resource
                         TextEntry::make('name')
                             ->label('')
                             ->weight(FontWeight::Bold)
+                            ->color('stats4sd')
                             ->size(TextEntry\TextEntrySize::Large),
+                        TextEntry::make('time_estimate')->inlineLabel()->suffix(' hours'),
                         TextEntry::make('description')
                             ->label(''),
+                        TextEntry::make('guidance'),
 
                         RepeatableEntry::make('activities')->label('')
                             ->schema([
@@ -101,7 +104,7 @@ class ModuleResource extends Resource
                                         })
                                         ->openUrlInNewTab()
                                         ->visible(Auth::guest()),
-                                    
+
                                     Action::make('open_auth')
                                         ->label('Open')
                                         ->icon('heroicon-m-arrow-top-right-on-square')
@@ -116,7 +119,7 @@ class ModuleResource extends Resource
                                                 $record->refresh();
                                                 $record->users;
                                             }
-                                           
+
                                             $trove = $record->trove;
                                             $url = 'https://stats4sd.org/resources/' . $trove->slug;
                                             redirect($url);
@@ -171,7 +174,11 @@ class ModuleResource extends Resource
                                         ->hidden(Auth::guest())
                                         ->visible(fn(Activity $record) => $record->completion_status == 'Completed'),
                                 ]),
-                            ])->columns(4)
+                                    TextEntry::make('guidance')
+                                        ->columnStart(1)
+                                        ->columnSpan(2),
+
+                            ])->columns(5)
                     ])->extraAttributes(['class' => 'px-20']),
 
                 Actions::make([
