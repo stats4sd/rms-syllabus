@@ -79,10 +79,14 @@ class AdminPanelProvider extends PanelProvider
                 ->groups([
                     NavigationGroup::make('')
                         ->items([
-                            ...PathwayResource::getNavigationItems(),
                             ...ModuleResource::getNavigationItems(),
                             ...SectionResource::getNavigationItems(),
                             ...ActivityResource::getNavigationItems(),
+                        ]),
+
+                    NavigationGroup::make('')
+                        ->items([
+                            ...PathwayResource::getNavigationItems(),
                         ]),
 
                     NavigationGroup::make('Module Tags')

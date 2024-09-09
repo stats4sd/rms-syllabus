@@ -17,7 +17,9 @@ class Section extends Model
         'name',
         'description',
         'module_id',
-        'creator_id'
+        'creator_id',
+        'time_estimate',
+        'guidance'
     ];
 
     protected $casts = [
@@ -28,6 +30,8 @@ class Section extends Model
     public $translatable = [
         'name',
         'description',
+        'time_estimate',
+        'guidance'
     ];
 
     public function activities(): BelongsToMany
