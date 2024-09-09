@@ -12,7 +12,7 @@ use App\Filament\App\Resources\PathwayResource;
             <h2 class="text-white">{{ $this->getRecord()->name }}</h2>
         </div>
 
-        
+
         <div class="flex flex-wrap w-full pt-5 px-20">
 
             <!-- time estimate -->
@@ -45,7 +45,7 @@ use App\Filament\App\Resources\PathwayResource;
 
             <!-- next module -->
             @if(!$this->lastInPathway())
-                <div class="w-full md:w-1/3 py-4 flex items-center flex items-center justify-end">
+                <div class="w-full md:w-1/3 py-4 flex items-center justify-end">
                     <a href="{{ $this->nextModuleUrl() }}" class="mr-4">
                         <button class="button-white button-small text-blue inline-flex items-center justify-center">
                             Next module
@@ -71,42 +71,66 @@ use App\Filament\App\Resources\PathwayResource;
                 </svg>
                 <h4 class="text-red ml-1">Return to pathway</h4>
             </a>
-        
+
             <!-- module info -->
             <div class="px-20 mt-10">
 
                 <!-- description -->
                 <h5 class="text-black">{{ $this->getRecord()->description }}</h5>
 
-                <!-- previous modules -->
-                @unless($this->firstInPathway() === 1)
-                    @if($this->parent->order_required === 1)
-                        <div class="flex items-center border-b pb-10 mb-10">
-                            
-                            <div class="mt-10 mr-20">
-                                <img src="/images/previous.png" alt="previous-image" class="w-24 h-auto">
-                            </div>
-                            
-                            <div>
-                                <h4>Before completing this module, you should be familiar with the contents of the following modules:</h4>
-                                    <ul class="list-disc list-inside space-y-2 pt-2">
-                                        @foreach($this->previousModules() as $previousModule)
-                                            <li>{{ $previousModule->name }}</li>
-                                        @endforeach
-                                    </ul>
-                            </div>
+                <div class="pt-4">
+                    <h4>Why do this module?</h4>
+                    <h5 class="text-black">{{ $this->getRecord()->why }}</h5>
+                </div>
 
+                <!-- previous modules -->
+                @unless($this->getRecord()->prerequisites->isEmpty())
+                    <div class="flex items-center border-b pb-10 mb-10">
+
+                        <div class="mt-10 mr-20">
+                            <img src="/images/previous.png" alt="previous-image" class="w-24 h-auto">
                         </div>
-                    @endif
+
+                        <div>
+                            <h4>Before completing this module, you should be familiar with the contents of the following modules:</h4>
+                                <ul class="list-disc list-inside space-y-2 pt-2">
+                                    @foreach($this->getRecord()->prerequisites as $prerequisite)
+                                        <li>{{ $prerequisite->name }}</li>
+                                    @endforeach
+                                </ul>
+                        </div>
+
+                    </div>
                 @endunless
 
+                <!-- learning outcome -->
+                <div class="flex items-center mt-10 border-b pb-10 mb-10">
+
+                        <div class="mr-20">
+                            <img src="/images/aimstarget_blue.png" alt="learning-outcome-image" class="w-24 h-auto">
+                        </div>
+
+                        @php
+                            $learning_outcome = $this->getRecord()->learning_outcome;
+                            $learning_outcome_update1 = str_replace('<ul>', '<ul class="list-disc list-inside space-y-2 pt-2">', $learning_outcome);
+                            $learning_outcome_update2 = str_replace('<p>', '<p class="pt-2">', $learning_outcome_update1);
+                            $learning_outcome_formatted = preg_replace('/<\/ul>\s*<p>/', '</ul><p class="pt-4">', $learning_outcome_update2);
+                        @endphp
+
+                        <div>
+                            <h4>When you have completed this module, you should be able to:</h4>
+                                {!! $learning_outcome_formatted !!}
+                        </div>
+
+                </div>
+
                 <!-- competencies -->
-                <div class="flex items-center mt-10 mb-20">
-                        
+                <div class="flex items-center mt-10 border-b pb-10 mb-10">
+
                         <div class="mr-20">
                             <img src="/images/competencies.png" alt="competencies-image" class="w-24 h-auto">
                         </div>
-                        
+
                         <div>
                             <h4>This module is linked to the following competencies:</h4>
                                 <ul class="list-disc list-inside space-y-2 pt-2">
@@ -114,6 +138,20 @@ use App\Filament\App\Resources\PathwayResource;
                                         <li>{{ $competency->name }}</li>
                                     @endforeach
                                 </ul>
+                        </div>
+
+                </div>
+
+                <!-- guidance -->
+                <div class="flex items-center mt-10 mb-20">
+
+                        <div class="mr-20">
+                            <img src="/images/guidance_blue.png" alt="guidance-image" class="w-24 h-auto">
+                        </div>
+
+                        <div>
+                            <h4>Guidance</h4>
+                            <h5 class="text-black">{{ $this->getRecord()->description }}</h5>
                         </div>
 
                 </div>

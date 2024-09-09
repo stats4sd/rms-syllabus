@@ -116,19 +116,19 @@ class ModuleResource extends Resource
                             ->columns(3)
                             ->schema([
                                 Forms\Components\TextInput::make('learning_outcome')->hiddenOn(['edit', 'create']),
-                                Forms\Components\Textarea::make('learning_outcome_en')
+                                Forms\Components\RichEditor::make('learning_outcome_en')
                                                 ->label('English')
-                                                ->rows(8),
+                                                ->toolbarButtons(['bulletList']),
                                                 // ->requiredWithoutAll('learning_outcome_es, learning_outcome_fr')
                                                 // ->validationMessages(['required_without_all' => 'Enter the learning_outcome in at least one language']),
-                                Forms\Components\Textarea::make('learning_outcome_es')
+                                Forms\Components\RichEditor::make('learning_outcome_es')
                                                 ->label('Spanish')
-                                                ->rows(8),
+                                                ->toolbarButtons(['bulletList']),
                                                 // ->requiredWithoutAll('learning_outcome_en, learning_outcome_fr')
                                                 // ->validationMessages(['required_without_all' => 'Enter the learning_outcome in at least one language']),
-                                Forms\Components\Textarea::make('learning_outcome_fr')
+                                Forms\Components\RichEditor::make('learning_outcome_fr')
                                                 ->label('French')
-                                                ->rows(8),
+                                                ->toolbarButtons(['bulletList']),
                                                 // ->requiredWithoutAll('learning_outcome_es, learning_outcome_en')
                                                 // ->validationMessages(['required_without_all' => 'Enter the learning_outcome in at least one language']),
                             ]),
