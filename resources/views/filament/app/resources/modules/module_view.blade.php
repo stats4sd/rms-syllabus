@@ -151,7 +151,7 @@ use App\Filament\App\Resources\PathwayResource;
 
                         <div>
                             <h4>Guidance</h4>
-                            <h5 class="text-black">{{ $this->getRecord()->description }}</h5>
+                            <h5 class="text-black">{{ $this->getRecord()->guidance }}</h5>
                         </div>
 
                 </div>
