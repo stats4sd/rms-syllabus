@@ -2,14 +2,16 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\App\Pages\LoginPage;
-use Filament\Actions\Action;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Actions\Action;
+use App\Filament\App\Pages\Home;
 use Filament\Support\Colors\Color;
+use App\Filament\App\Pages\LoginPage;
 use Filament\Navigation\NavigationItem;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Navigation\NavigationBuilder;
@@ -25,6 +27,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
+use App\Filament\App\Resources\PathwayResource\Pages\ListPathways;
 use DutchCodingCompany\FilamentSocialite\Facades\FilamentSocialite;
 
 class AppPanelProvider extends PanelProvider
@@ -50,9 +53,7 @@ class AppPanelProvider extends PanelProvider
             ->font('Open Sans')
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
-            ->pages([
-                // Pages\Dashboard::class,
-            ])
+            ->pages([Home::class, ListPathways::class])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->middleware([
                 EncryptCookies::class,

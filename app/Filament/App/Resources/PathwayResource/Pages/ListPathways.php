@@ -2,18 +2,36 @@
 
 namespace App\Filament\App\Resources\PathwayResource\Pages;
 
-use App\Filament\App\Resources\PathwayResource;
-use Filament\Actions;
+use App\Models\Pathway;
+use Filament\Pages\Page;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\App\Resources\PathwayResource;
 
 class ListPathways extends ListRecords
 {
     protected static string $resource = PathwayResource::class;
 
-    protected function getHeaderActions(): array
+    protected static string $view = 'filament.app.resources.pathways.list-pathways';
+
+    public function getTitle(): string
     {
-        return [
-            Actions\CreateAction::make(),
-        ];
+        return '';
     }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
+    }
+
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::Full;
+    }
+    
+    public function getPathways()
+    {
+        return Pathway::all();
+    }
+
 }

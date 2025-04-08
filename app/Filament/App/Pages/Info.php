@@ -4,6 +4,7 @@ namespace App\Filament\App\Pages;
 
 use Filament\Pages\Page;
 use Filament\Pages\Actions\Action;
+use Filament\Support\Enums\MaxWidth;
 
 class Info extends Page
 {
@@ -15,5 +16,8 @@ class Info extends Page
 
     protected static ?string $title = 'Find Out More';
 
-
+    public function getMaxContentWidth(): MaxWidth
+    {
+        return MaxWidth::Full;
+    }
 }
