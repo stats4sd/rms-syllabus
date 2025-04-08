@@ -6,6 +6,7 @@ use Filament\Forms;
 use Filament\Tables;
 use App\Models\Module;
 use App\Models\Pathway;
+use Pages\ListPathways;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Infolists\Infolist;
@@ -28,9 +29,9 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\PathwayResource\Pages;
 use App\Filament\App\Infolists\Actions\LoginPromptAction;
-use App\Filament\App\Infolists\Actions\LoginPromptWithFormAction;
 use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use App\Filament\App\Resources\PathwayResource\RelationManagers;
+use App\Filament\App\Infolists\Actions\LoginPromptWithFormAction;
 use App\Filament\App\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 
 class PathwayResource extends Resource
@@ -40,6 +41,9 @@ class PathwayResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $navigationLabel = 'Pathway';
+
+    protected static ?string $tenant = Pathway::class;
+    protected static ?string $tenantSlugAttribute = 'slug';
 
     public static function getNavigationItems(): array
     {
@@ -65,7 +69,7 @@ class PathwayResource extends Resource
                     ->schema([
                         Section::make('')
                             ->schema([
-                                Grid::make(3)
+                                Grid::make(6)
                                 ->schema([
 
                                     SpatieMediaLibraryImageEntryInRepeater::make('cover_image')
@@ -75,7 +79,6 @@ class PathwayResource extends Resource
                                         ->alignEnd()
                                         ->square(),
 
-
                                     Grid::make(1)
                                         ->schema([
                                             TextEntry::make('name')
@@ -83,48 +86,62 @@ class PathwayResource extends Resource
                                                 ->color('stats4sd')
                                                 ->size(TextEntry\TextEntrySize::Large)
                                                 ->weight(FontWeight::Bold),
+
                                             TextEntry::make('time_estimate')
                                                 ->label('')
                                                 ->icon('heroicon-m-clock')
-                                                ->prefix('Est. duration: ')
+                                                ->prefix('Est. time: ')
                                                 ->suffix(' hours'),
-                                            TextEntry::make('description')->label(''),
-                                            TextEntry::make('researchComponent.name')
-                                                ->label('')
-                                                ->badge()
-                                                ->color('darkblue'),
-                                            TextEntry::make('completion_status')
-                                                ->label('')
-                                                ->color('stats4sd')
-                                                ->badge()
-                                                ->hidden(Auth::guest())
-                                                ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
-                                            Actions::make([
-                                                LoginPromptWithFormAction::make('view')
-                                                ->cancelRedirectsTo(fn(Module $record, Pathway $pathway) => PathwayResource::getUrl('modules.view', ['record' => $record, 'parent' => $pathway])),
-                                                Action::make('view')
-                                                    ->label('View')
-                                                    ->icon('heroicon-m-arrow-long-right')
-                                                    ->color('stats4sd')
-                                                    ->action(function (Module $record, Pathway $pathway) {
-                                                        if ($record->view_status === 'Not Viewed' && $record->completion_status != 'Completed') {
-                                                            $record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
-                                                        } elseif ($record->view_status === 'Not Viewed' && $record->completion_status === 'Completed') {
-                                                            $record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
-                                                        }
-                                                        redirect(PathwayResource::getUrl('modules.view', ['record' => $record, 'parent' => $pathway]));
-                                                    })
-                                                    ->hidden(Auth::guest()),
-                                            ])
-                                                ->alignRight(),
                                         ])
-                                    ->columnSpan(2)
+                                        ->columnSpan(2),
 
-                                ]),
-                            ])
-                    ])
-                ->columns(1)
-            ])->columns(1);
+                                    TextEntry::make('researchComponents')
+                                    ->label('')
+                                    ->formatStateUsing(fn ($record) => $record->researchComponents->pluck('name')->implode('<br>'))->html(),
+
+                                    TextEntry::make('completion_status')
+                                        ->label('')
+                                        ->icon(fn(string $state): string => match ($state) {
+                                            'Not Started' => 'heroicon-m-exclamation-circle',
+                                            'In Progress' => 'heroicon-m-cog-8-tooth',
+                                            'Completed' => 'heroicon-m-check-badge',
+                                        })
+                                        ->iconColor(fn ($state) => match ($state) {
+                                            'Not Started' => 'stats4sd',
+                                            'In Progress' => 'darkblue',
+                                            'Completed' => 'success',
+                                        })
+                                        ->formatStateUsing(fn ($state) => match ($state) {
+                                            'Not Started' => 'NOT STARTED',
+                                            'In Progress' => 'IN PROGRESS',
+                                            'Completed' => 'COMPLETED',
+                                        })
+                                        ->hidden(Auth::guest()),
+                                        // ->visible(fn(Module $record) => $record->completion_status != 'Not Started'),
+
+                                    Actions::make([
+                                            LoginPromptWithFormAction::make('view')
+                                            ->cancelRedirectsTo(fn(Module $record, Pathway $pathway) => PathwayResource::getUrl('modules.view', ['record' => $record, 'parent' => $pathway])),
+                                            Action::make('view')
+                                                ->label('View')
+                                                ->icon('heroicon-m-arrow-long-right')
+                                                ->color('stats4sd')
+                                                ->action(function (Module $record, Pathway $pathway) {
+                                                    if ($record->view_status === 'Not Viewed' && $record->completion_status != 'Completed') {
+                                                        $record->users()->attach(auth()->id(), ['viewed' => 1, 'is_complete' => 0]);
+                                                    } elseif ($record->view_status === 'Not Viewed' && $record->completion_status === 'Completed') {
+                                                        $record->users()->updateExistingPivot(auth()->id(), ['viewed' => 1]);
+                                                    }
+                                                    redirect(PathwayResource::getUrl('modules.view', ['record' => $record, 'parent' => $pathway]));
+                                                })
+                                                ->hidden(Auth::guest()),
+                                        ])
+                                ])
+                            ]),
+                        ])
+            ])
+            ->columns(1);
+
     }
 
     public static function table(Table $table): Table
@@ -158,6 +175,7 @@ class PathwayResource extends Resource
     public static function getPages(): array
     {
         return [
+            'index' => Pages\ListPathways::route('/'),
             'view' => Pages\ViewPathway::route('/{record}'),
 
             // modules

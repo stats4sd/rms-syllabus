@@ -9,7 +9,7 @@ use App\Filament\App\Resources\PathwayResource;
 
     <div class="w-full sm:w-1/2 px-20">
         <h1 class="text-white pt-6">Research Methods <br>Syllabus</h1>
-        <p class="text-white pt-4">Your journey to build research methods <br>capacity and knowledge.</p>
+        <h4 class="text-white font-normal pt-2">Your journey to build research methods <br>capacity and knowledge.</h4>
     </div>
 
     <div class="w-full sm:w-1/2 flex justify-center items-center">
@@ -18,7 +18,7 @@ use App\Filament\App\Resources\PathwayResource;
     
 
     <div class="flex justify-center flex-col sm:flex-row mt-10 mb-5 px-20">
-        <a href="{{ url(PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])) }}" class="flex items-center mb-3 sm:mb-0 mr-20">
+        <a href="{{ url(PathwayResource::getUrl('index')) }}" class="flex items-center mb-3 sm:mb-0 mr-20">
             <button class="button-white text-blue inline-flex items-center justify-center">
                 Begin learning 
                 <svg class="w-6 h-6 ml-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -102,8 +102,8 @@ use App\Filament\App\Resources\PathwayResource;
     </div>
 
     <div class="flex justify-center flex-col sm:flex-row pt-20 mb-5 px-20">
-        <a href="{{ url(PathwayResource::getUrl('view', ['record' => 'essential-research-methods-for-agroecology'])) }}" class="flex items-center mb-3 sm:mb-0 mr-20">
-            <button class="button-red text-blue inline-flex items-center justify-center">
+        <a href="{{ url(PathwayResource::getUrl('index')) }}" class="flex items-center mb-3 sm:mb-0 mr-20">
+            <button class="button-red rounded-3xl text-blue inline-flex items-center justify-center">
                 Begin learning 
                 <svg class="w-6 h-6 ml-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />

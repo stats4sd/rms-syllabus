@@ -128,11 +128,9 @@ body {
   text-align: center;
   text-decoration: none;
   font-size: 19px;
-  border-radius: 50px;
   height: 45px;
   width: 250px;
 }
-
 .button-red:hover {
   background-color: var(--darkred);
 }
@@ -228,4 +226,13 @@ main.fi-main {
   color: black;
   width: 100%;
   max-width: 6rem;
+}
+
+.hover-effect {
+  transition: all 0.2s ease-in-out;
+}
+
+.hover-effect:hover {
+  background-color: var(--stats4sd);
+  @apply shadow-lg scale-[1.02];
 }

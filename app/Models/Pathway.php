@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Filament\Models\Contracts\HasTenants;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Pathway extends Model
+class Pathway extends Model implements HasTenants
 {
     use HasFactory;
     use HasTranslations;
@@ -30,6 +33,16 @@ class Pathway extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function canAccessTenant(Model $tenant): bool
+    {
+        return true;
+    }
+
+    public function getTenants(Panel $panel):  array|Collection
+    {
+        return self::all();
     }
 
     public function modules(): BelongsToMany
