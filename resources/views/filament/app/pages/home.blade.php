@@ -94,7 +94,7 @@ use App\Filament\App\Resources\PathwayResource;
                 <div class="max-w-md ml-8">
                     <p>
                         Develop your skills and learn about research methods using a range of materials including videos, books and interactive e-learning. Activities in the syllabus modules are hand-selected from our extensive 
-                        <a href="https://stats4sd.org/resources" target="_blank" class="text-red">resources database</a>.
+                        <a href="https://resources.stats4sd.org" target="_blank" class="text-red">resources database</a>.
                     </p>
                 </div>
             </div>
