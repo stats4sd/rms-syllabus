@@ -100,7 +100,7 @@ class ModuleResource extends Resource
                                         ->color('stats4sd')
                                         ->url(function (Activity $record) {
                                             $trove = $record->trove;
-                                            return 'https://resources.stats4sd.org/' . $trove->slug;
+                                            return 'https://resources.stats4sd.org/resources/' . $trove->slug;
                                         })
                                         ->openUrlInNewTab()
                                         ->visible(Auth::guest()),
@@ -121,7 +121,7 @@ class ModuleResource extends Resource
                                             }
 
                                             $trove = $record->trove;
-                                            $url = 'https://resources.stats4sd.org/' . $trove->slug;
+                                            $url = 'https://resources.stats4sd.org/resources/' . $trove->slug;
                                             redirect($url);
                                         })
                                         ->hidden(Auth::guest()),
