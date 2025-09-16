@@ -70,7 +70,18 @@ class ModuleResource extends Resource
                         TextEntry::make('time_estimate')->inlineLabel()->suffix(' hours'),
                         TextEntry::make('description')
                             ->label(''),
-                        TextEntry::make('guidance'),
+                        TextEntry::make('guidance')
+                            ->label('Guidance')
+                            ->visible(fn ($record) => !empty($record->guidance))
+                            ->formatStateUsing(fn ($state) => 
+                                preg_replace_callback('/<(ul|p)>/', function ($matches) {
+                                    return match($matches[1]) {
+                                        'ul' => '<ul class="list-disc list-inside space-y-2 pt-2">',
+                                        'p'  => '<p class="pt-2">',
+                                    };
+                                }, preg_replace('/<\/ul>\s*<p>/', '</ul><p class="pt-4">', $state))
+                            )
+                            ->html(),
 
                         RepeatableEntry::make('activities')->label('')
                             ->schema([
@@ -176,7 +187,17 @@ class ModuleResource extends Resource
                                 ]),
                                     TextEntry::make('guidance')
                                         ->columnStart(1)
-                                        ->columnSpan(2),
+                                        ->columnSpan(2)
+                                        ->visible(fn ($record) => !empty($record->guidance))
+                                        ->formatStateUsing(fn ($state) => 
+                                            preg_replace_callback('/<(ul|p)>/', function ($matches) {
+                                                return match($matches[1]) {
+                                                    'ul' => '<ul class="list-disc list-inside space-y-2 pt-2">',
+                                                    'p'  => '<p class="pt-2">',
+                                                };
+                                            }, preg_replace('/<\/ul>\s*<p>/', '</ul><p class="pt-4">', $state))
+                                        )
+                                        ->html(),
 
                             ])->columns(5)
                     ])->extraAttributes(['class' => 'px-20']),

@@ -107,19 +107,19 @@ class SectionResource extends Resource
                         ->columns(3)
                         ->schema([
                             Forms\Components\TextInput::make('guidance')->hiddenOn(['edit', 'create']),
-                            Forms\Components\Textarea::make('guidance_en')
+                            Forms\Components\RichEditor::make('guidance_en')
                                             ->label('English')
-                                            ->rows(8),
+                                            ->toolbarButtons(['bulletList']),
                                             // ->requiredWithoutAll('guidance_es, guidance_fr')
                                             // ->validationMessages(['required_without_all' => 'Enter guidance in at least one language']),
-                            Forms\Components\Textarea::make('guidance_es')
+                            Forms\Components\RichEditor::make('guidance_es')
                                             ->label('Spanish')
-                                            ->rows(8),
+                                            ->toolbarButtons(['bulletList']),
                                             // ->requiredWithoutAll('guidance_en, guidance_fr')
                                             // ->validationMessages(['required_without_all' => 'Enter guidance in at least one language']),
-                            Forms\Components\Textarea::make('guidance_fr')
+                            Forms\Components\RichEditor::make('guidance_fr')
                                             ->label('French')
-                                            ->rows(8),
+                                            ->toolbarButtons(['bulletList']),
                                             // ->requiredWithoutAll('guidance_es, guidance_en')
                                             // ->validationMessages(['required_without_all' => 'Enter guidance in at least one language']),
                         ]),
