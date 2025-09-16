@@ -112,9 +112,25 @@ use App\Filament\App\Resources\PathwayResource;
 
                         @php
                             $learning_outcome = $this->getRecord()->learning_outcome;
-                            $learning_outcome_update1 = str_replace('<ul>', '<ul class="list-disc list-inside space-y-2 pt-2">', $learning_outcome);
-                            $learning_outcome_update2 = str_replace('<p>', '<p class="pt-2">', $learning_outcome_update1);
-                            $learning_outcome_formatted = preg_replace('/<\/ul>\s*<p>/', '</ul><p class="pt-4">', $learning_outcome_update2);
+
+                            $learning_outcome_formatted = preg_replace_callback(
+                                '/<(ul|p)>/',
+                                function ($matches) {
+                                    switch ($matches[1]) {
+                                        case 'ul':
+                                            return '<ul class="list-disc list-inside space-y-2 pt-2">';
+                                        case 'p':
+                                            return '<p class="pt-2">';
+                                    }
+                                },
+                                $learning_outcome
+                            );
+
+                            $learning_outcome_formatted = preg_replace(
+                                '/<\/ul>\s*<p>/',
+                                '</ul><p class="pt-4">',
+                                $learning_outcome_formatted
+                            );
                         @endphp
 
                         <div>
@@ -145,14 +161,38 @@ use App\Filament\App\Resources\PathwayResource;
                 <!-- guidance -->
                 <div class="flex items-center mt-10 mb-20">
 
-                        <div class="mr-20">
-                            <img src="/images/guidance_blue.png" alt="guidance-image" class="w-24 h-auto">
-                        </div>
+                    <div class="mr-20">
+                        <img src="/images/guidance_blue.png" alt="guidance-image" class="w-24 h-auto">
+                    </div>
 
-                        <div>
-                            <h4>Guidance</h4>
-                            <h5 class="text-black">{{ $this->getRecord()->guidance }}</h5>
-                        </div>
+                    <div>
+                        <h4>Guidance</h4>
+                        @php
+                            $guidance = $this->getRecord()->guidance;
+
+
+                            $guidance_formatted = preg_replace_callback(
+                                '/<(ul|p)>/',
+                                function ($matches) {
+                                    switch ($matches[1]) {
+                                        case 'ul':
+                                            return '<ul class="list-disc list-inside space-y-2 pt-2">';
+                                        case 'p':
+                                            return '<p class="pt-2">';
+                                    }
+                                },
+                                $guidance
+                            );
+
+                            $guidance_formatted = preg_replace(
+                                '/<\/ul>\s*<p>/',
+                                '</ul><p class="pt-4">',
+                                $guidance_formatted
+                            );
+                        @endphp
+
+                        <h5 class="text-black">{!! $guidance_formatted !!}</h5>
+                    </div>
 
                 </div>
 
