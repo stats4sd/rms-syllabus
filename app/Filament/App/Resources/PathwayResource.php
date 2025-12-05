@@ -15,6 +15,7 @@ use ModuleResource\Pages\ViewModule;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Infolists\Components\Grid;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Infolists\Components\Split;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Actions;
@@ -28,9 +29,9 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\PathwayResource\Pages;
 use App\Filament\App\Infolists\Actions\LoginPromptAction;
-use App\Filament\App\Infolists\Actions\LoginPromptWithFormAction;
 use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use App\Filament\App\Resources\PathwayResource\RelationManagers;
+use App\Filament\App\Infolists\Actions\LoginPromptWithFormAction;
 use App\Filament\App\Infolists\Components\SpatieMediaLibraryImageEntryInRepeater;
 
 class PathwayResource extends Resource
@@ -131,21 +132,12 @@ class PathwayResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-
+                ViewColumn::make('custom_layout')
+                    ->label('')
+                    ->view('filament.app.resources.pathways.pathways_row')
+                    ->getStateUsing(fn (Pathway $record) => $record)
             ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                // Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->paginated(false);
     }
 
     public static function getRelations(): array
@@ -158,6 +150,7 @@ class PathwayResource extends Resource
     public static function getPages(): array
     {
         return [
+            'index' => Pages\ListPathways::route('/'),
             'view' => Pages\ViewPathway::route('/{record}'),
 
             // modules

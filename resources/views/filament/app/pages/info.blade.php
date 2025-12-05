@@ -1,5 +1,5 @@
 <x-filament-panels::page>
 
-This will be a video or more text about the syllabus
+Coming soon!
 
 </x-filament-panels::page>
