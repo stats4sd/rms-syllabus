@@ -69,6 +69,10 @@ body {
   background-color: var(--darkblue);
 }
 
+.border-darkblue {
+  border-color: var(--darkblue);
+}
+
 .bg-lightgrey {
   background-color: #FAF6F6;
 }
@@ -229,3 +233,17 @@ main.fi-main {
   width: 100%;
   max-width: 6rem;
 }
+
+.fi-ta-table {
+    width: max-content !important;
+    margin: 0 auto;
+    table-layout: auto !important;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+
+.fi-ta-header-cell {
+    display: none !important;
+}
+
+
