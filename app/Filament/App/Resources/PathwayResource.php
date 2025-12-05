@@ -128,6 +128,12 @@ class PathwayResource extends Resource
             ])->columns(1);
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('status', 'Published');
+    }
+
     public static function table(Table $table): Table
     {
         return $table
