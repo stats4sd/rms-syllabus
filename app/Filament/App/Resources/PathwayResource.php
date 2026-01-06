@@ -64,7 +64,7 @@ class PathwayResource extends Resource
 
                 RepeatableEntry::make('modules')->label('')
                     ->schema([
-                        Section::make('')
+                        Grid::make()
                             ->schema([
                                 Grid::make(3)
                                 ->schema([
