@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use DutchCodingCompany\FilamentSocialite\Models\Contracts\FilamentSocialiteUser as FilamentSocialiteUserContract;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use Filament\Http\Responses\Auth\Contracts\LogoutResponse;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use DutchCodingCompany\FilamentSocialite\Facades\FilamentSocialite;
 use Illuminate\Support\ServiceProvider;
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(LoginResponse::class, \App\Http\Responses\LoginResponse::class);
+        $this->app->singleton(LogoutResponse::class, \App\Http\Responses\LogoutResponse::class);
         $this->app->singleton(RegistrationResponse::class, \App\Http\Responses\RegistrationResponse::class);
     }
 
